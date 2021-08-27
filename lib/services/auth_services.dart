@@ -73,16 +73,15 @@ class AuthRepository with ChangeNotifier {
     }
   }
 
-  Future<bool> signIn(String email, String password) async {
+  Future<UserCredential?> signIn(String email, String password) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-      return true;
+      return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (e) {
       _status = Status.Unauthenticated;
       notifyListeners();
-      return false;
+      return null;
     }
   }
 

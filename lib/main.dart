@@ -3,17 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'data.dart';
 
-enum Page {instructions, caretakerid, login, avatar} ///and more
-class CurrPage extends ChangeNotifier{
-  Page page=Page.login;
-
-  void changePage(Page next){
-    page=next;
-    notifyListeners();
-  }
-
-}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,15 +16,15 @@ void main() async {
 class PageChooser extends StatelessWidget{
   @override
   Widget build(BuildContext c) {
-    return Consumer<CurrPage>(builder: (context, page, child) {
+    return Consumer<CurrData>(builder: (context, data, child) {
       Widget ret=Login();
-      switch(page.page) {
-        case Page.login: {
+      switch(data.page) {
+        case MyPage.login: {
           ret=Login();
         }
         break;
 
-        case Page.instructions: {
+        case MyPage.instructions: {
        //   ret=nstructions()
         }
         break;
@@ -49,7 +40,7 @@ class PageChooserWrapper extends StatelessWidget{
   @override
   Widget build(BuildContext c) {
     return ChangeNotifierProvider(
-      create: (context) => CurrPage(),
+      create: (context) => CurrData(),
       child: PageChooser(),
     );
   }
