@@ -9,21 +9,29 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  AuthRepository.instance().signUp('alon.kitin3@gmail.com', '123456789');////////////////////////////////here
+  //AuthRepository.instance().signUp('alon.kitin3@gmail.com', '123456789');////////////////////////////////here
   runApp(MyApp());
 }
 
-/*class MyApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return ChangeNotifierProvider(
+      create: (context) => AuthRepository.instance(),
+      child: MaterialApp(
+        title: "APP",
+        home: AuthWrapper(),
+    ),
+    );
+
+    /*MultiProvider(
       providers: [
-        Provider<AuthService>(
-          create: (_) => AuthService(FirebaseAuth.instance),
+        Provider<AuthRepository>(
+          create: (_) => AuthRepository.instance(),
         ),
         StreamProvider(
-          create: (context) => context.read<AuthService>().authStateChanges,
+          create: (context) => context.read<AuthRepository>().status,
           initialData: null
 
         ),
@@ -32,7 +40,7 @@ void main() async {
         title: "APP",
         home: AuthWrapper(),
       ),
-    );
+    );*/
   }
 }
 
@@ -47,8 +55,8 @@ class AuthWrapper extends StatelessWidget{
   //   return MainScreen();
   // }
   Widget build(BuildContext context) {
-    return Consumer<User?>(builder: (context, user, child) {
-      return (user!= null) ? HomeScreen(): MainScreen();
+    return Consumer<AuthRepository>(builder: (context, authrep, child) {
+      return (authrep.status !=Status.Authenticated) ? HomeScreen(): MainScreen();
     });
   }
 }
@@ -136,9 +144,9 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}*/
+}
 
-enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
+/*enum Status { Uninitialized, Authenticated, Authenticating, Unauthenticated }
 
 class AuthRepository with ChangeNotifier {
   FirebaseAuth _auth;
@@ -309,4 +317,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
+} */

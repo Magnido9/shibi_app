@@ -44,8 +44,8 @@ class _MainScreenState extends State<MainScreen> {
             Container(
               height: 40,
               width: MediaQuery.of(context).size.width / 3,
-              color: Colors.blue,
-              child: FlatButton(
+              color: Colors.green,
+              child: TextButton(
                 onPressed: () {
                   final String email = emailController.text.trim();
                   final String password = passwordController.text.trim();
@@ -56,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
                     if(password.isEmpty){
                       print("Password is Empty");
                     } else {
-                      context.read<AuthService>().login(
+                      Provider.of<AuthRepository>(context, listen: false).signIn(
                         email,
                         password,
                       );
@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
               height: 40,
               width: MediaQuery.of(context).size.width / 3,
               color: Colors.red,
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   final String email = emailController.text.trim();
                   final String password = passwordController.text.trim();
@@ -81,7 +81,7 @@ class _MainScreenState extends State<MainScreen> {
                     if(password.isEmpty){
                       print("Password is Empty");
                     } else {
-                      context.read<AuthService>().signUp(
+                      Provider.of<AuthRepository>(context, listen: false).signIn(
                         email,
                         password,
                       )/*.then((value) async {
