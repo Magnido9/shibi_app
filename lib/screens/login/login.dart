@@ -1,4 +1,6 @@
 library authantication;
+import 'package:application/data.dart';
+import 'package:application/screens/login/caretakerid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'homescreen.dart';
@@ -7,21 +9,9 @@ import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Login extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => AuthRepository.instance(),
-      child: MaterialApp(
-        title: "APP",
-        home: AuthWrapper(),
-      ),
-    );
-  }
-}
 
-class AuthWrapper extends StatelessWidget{
+
+class Login extends StatelessWidget{
   @override
   // Widget build(BuildContext context) {
   //   final user = context.watch<User>();
@@ -32,8 +22,8 @@ class AuthWrapper extends StatelessWidget{
   //   return MainScreen();
   // }
   Widget build(BuildContext context) {
-    return Consumer<AuthRepository>(builder: (context, authrep, child) {
-      return (authrep.status !=Status.Authenticated) ? HomeScreen(): MainScreen();
-    });
-  }
+
+      return MainScreen();
+    }
+
 }

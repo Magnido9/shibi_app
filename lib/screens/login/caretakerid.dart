@@ -1,5 +1,6 @@
 library authantication;
 import 'package:application/data.dart';
+import 'package:application/screens/login/homescreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../services/auth_services.dart';
@@ -14,27 +15,32 @@ class _Connection extends ChangeNotifier{
 
 
 
-  void _getCare(int pass,BuildContext context) async{
+  void _getCare(int pass,String name,BuildContext context) async{
 
     list= (await FirebaseFirestore.instance.collection("caretakers").where('usedId' ,isEqualTo: pass).get()).docs;
     //return q.docs[0].data()['uid'];
     if(list.isNotEmpty){
-      _signToCare(list[0].data()['uid'], context);
+      _signToCare(list[0].data()['uid'],name, context);
     }
     notifyListeners();
   }
-  void _signToCare(String carer, BuildContext context) async{
-    String? pid = Provider.of<CurrData>(context, listen: false).user?.uid;
-    if((await FirebaseFirestore.instance.collection("assigned").where('careid' ,isEqualTo: carer).where('patientid' ,isEqualTo: pid).get()).docs.isEmpty)
-    await FirebaseFirestore.instance.collection("assigned").doc(carer).set({
-      'careid': carer,
-      'patientid': pid,
+  void _signToCare(String carer,String name, BuildContext context) async {
+    String? pid = AuthRepository
+        .instance()
+        .user
+        ?.uid;
+    if ((await FirebaseFirestore.instance.collection("users").where(
+        'uid', isEqualTo: pid).get()).docs.isEmpty) {
+      await FirebaseFirestore.instance.collection("users").doc(pid).set({
+        'caretakeId': carer,
+        'name': name,
+        'uid': pid
+      });
 
-    });
-    Provider.of<CurrData>(context, listen: false).page=MyPage.instructions;
+    }
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions()));
   }
 }
-
 
 class CareTakerId extends StatefulWidget {
   @override
@@ -46,7 +52,8 @@ class CareTakerId extends StatefulWidget {
 
 
 class _CareTakerIdState extends State<CareTakerId>{
-  TextEditingController id = new TextEditingController();
+  TextEditingController pid = new TextEditingController();
+  TextEditingController name = new TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -61,11 +68,22 @@ class _CareTakerIdState extends State<CareTakerId>{
                 children: <Widget>[
                   TextField(
                     decoration:  InputDecoration(labelText: "Enter your number"),
-                    controller: id,
+                    controller: pid,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
                       FilteringTextInputFormatter.digitsOnly
                     ], // Only numbers can be entered
+                  ),
+                ],
+              )),
+          Container(
+              padding: const EdgeInsets.all(40.0),
+              child:  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  TextField(
+                    decoration:  InputDecoration(labelText: "Enter your name"),
+                    controller: name,
                   ),
                 ],
               )),
@@ -75,8 +93,8 @@ class _CareTakerIdState extends State<CareTakerId>{
             color: Colors.green,
             child:  TextButton(
               onPressed: () {
-                final int pass =int.parse(id.text.trim()) ;
-                _Connection()._getCare(pass, context);
+                final int pass =int.parse(pid.text.trim()) ;
+                _Connection()._getCare(pass,name.text.trim(), context);
                 },
               child: Text("continue"),
             ),

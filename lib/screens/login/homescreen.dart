@@ -27,8 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 /// This is the main application widget.
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class Instructions extends StatelessWidget {
+  const Instructions({Key? key}) : super(key: key);
 
   static const String _title = 'Flutter Code Sample';
 
@@ -37,15 +37,15 @@ class HomeScreen extends StatelessWidget {
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        body: const MyStatelessWidget(),
+        body: const _MyStatelessWidget(),
       ),
     );
   }
 }
 
 /// This is the stateless widget that the main application instantiates.
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({Key? key}) : super(key: key);
+class _MyStatelessWidget extends StatelessWidget {
+  const _MyStatelessWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
