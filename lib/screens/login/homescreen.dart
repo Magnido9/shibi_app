@@ -1,6 +1,7 @@
 library authantication;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import '../Avatar/avatar.dart';
 /*
 class HomeScreen extends StatefulWidget {
   @override
@@ -38,6 +39,7 @@ class Instructions extends StatelessWidget {
       title: _title,
       home: Scaffold(
         body: const _MyStatelessWidget(),
+
       ),
     );
   }
