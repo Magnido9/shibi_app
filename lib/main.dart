@@ -12,28 +12,25 @@ import 'data.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  //AuthRepository.instance().signUp('alon.kitin3@gmail.com', '123456789');////////////////////////////////here
-  runApp(PageChooserWrapper());
+  // await AuthRepository.instance().signOut();
+  runApp(Wrapper());
 }
 
-class PageChooser extends StatelessWidget{
+
+class Wrapper extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-
-      return Login();
-  }
-}
-
-class PageChooserWrapper extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
+    /*return ChangeNotifierProvider(
       create: (context) => AuthRepository.instance(),
       child: MaterialApp(
         title: "APP",
-        home: PageChooser(),
+        home: Login(),
       ),
-    );
+    );*/
+    return MaterialApp(
+      title: "app",
+      home: Login(isInit: AuthRepository.instance().isAuthenticated)
+    ) ;
   }
 }
 

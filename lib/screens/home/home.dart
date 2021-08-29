@@ -10,7 +10,8 @@ class Home extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Text('cat'),
+      appBar: AppBar(),
+      body: Center(child: Text('cat')),
         floatingActionButton: FloatingActionButton(onPressed: ()=>{Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()))
     }
     )

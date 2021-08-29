@@ -48,7 +48,7 @@ class Instructions extends StatelessWidget {
 /// This is the stateless widget that the main application instantiates.
 class _MyStatelessWidget extends StatelessWidget {
   const _MyStatelessWidget({Key? key}) : super(key: key);
-
+  void fr(){}
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController(initialPage: 0);
@@ -57,7 +57,7 @@ class _MyStatelessWidget extends StatelessWidget {
       /// Use [Axis.vertical] to scroll vertically.
       scrollDirection: Axis.horizontal,
       controller: controller,
-      children: const <Widget>[
+      children:  <Widget>[
         Center(
           child: Text('שלום!'),
         ),
@@ -65,9 +65,22 @@ class _MyStatelessWidget extends StatelessWidget {
           child: Text('זה אפליקציה שתתקן לך חרדה'),
         ),
         Center(
-          child: Text('ביי!'),
+          child: Column(
+              children: <Widget>[
+                 Text('בהצלחה'),
+                ElevatedButton(
+                    onPressed:  (){Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));},
+                    child: Text("יאללה בלגן"))
+          ])
         )
       ],
     );
   }
+}
+
+void fr(){}
+
+
+void _next(BuildContext context){
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));
 }
