@@ -12,7 +12,7 @@ import 'data.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await AuthRepository.instance().signOut();
+  await AuthRepository.instance().signOut();
   runApp(Wrapper());
 }
 
@@ -20,13 +20,7 @@ void main() async {
 class Wrapper extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    /*return ChangeNotifierProvider(
-      create: (context) => AuthRepository.instance(),
-      child: MaterialApp(
-        title: "APP",
-        home: Login(),
-      ),
-    );*/
+
     return MaterialApp(
       title: "app",
       home: Login(isInit: AuthRepository.instance().isAuthenticated)

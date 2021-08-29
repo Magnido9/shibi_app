@@ -136,9 +136,6 @@ class _AvatarPageState extends State<AvatarPage> {
                       right: 40.0,
                       child: Image.asset('$glasses',height: 50,width: 100)
                   ),
-
-
-
                 ]
             ),
             SingleChildScrollView(

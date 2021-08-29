@@ -3,6 +3,7 @@ import 'package:application/screens/login/caretakerid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../services/auth_services.dart';
 import '../home/home.dart';
+import 'password.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,18 +11,18 @@ class Login extends StatefulWidget {
   Login({Key? key, required this.isInit}) : super(key: key);
   final bool isInit;
   @override
-  _MainScreenState createState() => _MainScreenState(isInit: isInit);
+  _MainScreenState createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<Login> {
-  _MainScreenState({required this.isInit});
-  bool isInit;
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return (isInit)? Home() :Scaffold(
+    if(widget.isInit)
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Password(first:false)));
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -107,7 +108,7 @@ class _MainScreenState extends State<Login> {
 void _checkIn(Future<UserCredential?> f, BuildContext context) async{
   if ((await f)!= null) Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Home()),
+    MaterialPageRoute(builder: (context) => Password(first: false)),
   );
 }
 void _checkUp(Future<UserCredential?> f, BuildContext context) async{

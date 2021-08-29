@@ -12,7 +12,7 @@ class Home extends StatelessWidget{
     return Scaffold(
       appBar: AppBar(),
       body: Center(child: Text('cat')),
-        floatingActionButton: FloatingActionButton(onPressed: ()=>{Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()))
+        floatingActionButton: FloatingActionButton(onPressed: ()=>{Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar())),
     }
     )
     );
