@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
-
+String error_message="";
 /*class AuthService {
   final FirebaseAuth _auth;
 
@@ -67,6 +67,7 @@ class AuthRepository with ChangeNotifier {
           email: email, password: password);
     } catch (e) {
       print(e);
+      error_message=e.toString();
       _status = Status.Unauthenticated;
       notifyListeners();
       return null;
@@ -79,6 +80,8 @@ class AuthRepository with ChangeNotifier {
       notifyListeners();
       return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (e) {
+      print(e);
+      error_message=e.toString();
       _status = Status.Unauthenticated;
       notifyListeners();
       return null;

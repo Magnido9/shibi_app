@@ -12,7 +12,7 @@ import 'data.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await AuthRepository.instance().signOut();
+  //await AuthRepository.instance().signOut();
   runApp(Wrapper());
 }
 

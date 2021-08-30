@@ -98,6 +98,7 @@ class _MainScreenState extends State<Login> {
                 child: Text("SIGN UP"),
               ),
             ),
+            Text(error_message)
           ],
         ),
       ),
