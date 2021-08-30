@@ -59,13 +59,21 @@ class AuthRepository with ChangeNotifier {
 
   bool get isAuthenticated => status == Status.Authenticated;
 
-  Future<UserCredential?> signUp(String email, String password) async {
+  Future<UserCredential?> signUp(String email, String password,BuildContext context) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
       return await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
     } catch (e) {
+      final snackBar = SnackBar(
+        content: const Text("You must use a proper email, and password must be 6 or longer"),
+
+      );
+
+      // Find the ScaffoldMessenger in the widget tree
+      // and use it to show a SnackBar.
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(e);
       error_message=e.toString();
       _status = Status.Unauthenticated;
@@ -74,12 +82,20 @@ class AuthRepository with ChangeNotifier {
     }
   }
 
-  Future<UserCredential?> signIn(String email, String password) async {
+  Future<UserCredential?> signIn(String email, String password,BuildContext context) async {
     try {
       _status = Status.Authenticating;
       notifyListeners();
       return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (e) {
+      final snackBar = SnackBar(
+        content: const Text('Wrong Password/Username'),
+
+      );
+
+      // Find the ScaffoldMessenger in the widget tree
+      // and use it to show a SnackBar.
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       print(e);
       error_message=e.toString();
       _status = Status.Unauthenticated;

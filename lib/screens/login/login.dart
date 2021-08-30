@@ -64,7 +64,7 @@ class _MainScreenState extends State<Login> {
                     } else {
                       _checkIn(AuthRepository.instance().signIn(
                         email,
-                        password,
+                        password,context
                       ), context);
 
                     }
@@ -90,7 +90,7 @@ class _MainScreenState extends State<Login> {
                     } else {
                       _checkUp(AuthRepository.instance().signUp(
                         email,
-                        password,
+                        password,context
                       ),context);
                     }
                   }
@@ -98,7 +98,6 @@ class _MainScreenState extends State<Login> {
                 child: Text("SIGN UP"),
               ),
             ),
-            Text(error_message)
           ],
         ),
       ),
