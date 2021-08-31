@@ -7,21 +7,32 @@ import 'password.dart';
 
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  Login({Key? key, required this.isInit}) : super(key: key);
-  final bool isInit;
+class Login extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'app',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: LoginPage(),
+    );
+  }
+}
+
+class LoginPage extends StatefulWidget {
+  LoginPage({Key? key}) : super(key: key);
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<Login> {
+class _MainScreenState extends State<LoginPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    if(widget.isInit)
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Password(first:false)));
     return Scaffold(
       body: Center(
         child: Column(

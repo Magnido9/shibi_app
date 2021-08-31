@@ -45,7 +45,7 @@ class Home extends StatelessWidget{
                         await FirebaseAuth.instance.signOut();
                       }
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) => Login(isInit: false)));
+                          builder: (BuildContext context) => Login()));
                       ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
                       ///Navigator.pop(context);
                       },

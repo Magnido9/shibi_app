@@ -78,6 +78,7 @@ class AuthRepository with ChangeNotifier {
       error_message=e.toString();
       _status = Status.Unauthenticated;
       notifyListeners();
+      throw(e);
       return null;
     }
   }
@@ -122,3 +123,4 @@ class AuthRepository with ChangeNotifier {
     notifyListeners();
   }
 }
+

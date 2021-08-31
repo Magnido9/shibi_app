@@ -1,7 +1,20 @@
 
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../home/home.dart';
+import 'package:application/screens/login/password.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../services/auth_services.dart';
+
+String _body_default='images/poo.png';
+
+class AvatarData{
+  AvatarData({required this.body, this.glasses});
+  String body;
+  String? glasses;
+}
 
 class Avatar extends StatelessWidget {
   // This widget is the root of your application.
@@ -28,16 +41,6 @@ class Avatar extends StatelessWidget {
 
 class AvatarPage extends StatefulWidget {
   AvatarPage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -45,71 +48,43 @@ class AvatarPage extends StatefulWidget {
 }
 
 class _AvatarPageState extends State<AvatarPage> {
-  String glasses='images/glasses1.png';
 
-  void _glasses1() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      glasses='images/glasses1.png';
-    });}
+  AvatarData data = AvatarData(body:_body_default);
 
-  void _glasses2() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      glasses='images/glasses2.png';
+  void _save() async{
+    String? pid = AuthRepository.instance().user?.uid;
+    await FirebaseFirestore.instance.collection("avatars").doc(pid).set({
+      'body': data.body,
+      'glasses' : data.glasses
     });
   }
 
-  void _glasses3() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      glasses='images/glasses3.png';
-    });
-  }
 
-  void _glasses4() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      glasses='images/glasses4.png';
-    });
-  }
+  Widget _glasses(String image){
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: () {  setState(() {data.glasses=image;}); },
+      child: Container(
+        height: 50,
+        width: 100,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image:AssetImage(image),
+                fit:BoxFit.contain
+            )
+        ),
+      ),
+    );
 
-  void _glasses5() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      glasses='images/glasses5.png';
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    double _width=MediaQuery.of(context).size.width;
+    double _height=MediaQuery.of(context).size.height;
+    double _min=min(_width, _height);
     return Scaffold(
+
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -130,101 +105,115 @@ class _AvatarPageState extends State<AvatarPage> {
           // horizontal).
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            new Stack(
-                children:
-                  <Widget>[ Text ("Hey! help me choose clothing :)"),
-                    Image.asset('images/poo.png'),
-                  new Positioned(
-                      top: 30.0,
-                      right: 40.0,
-                      child: Image.asset('$glasses',height: 50,width: 100)
-                  ),
-                ]
-            ),
+            Container(margin: EdgeInsets.only(top:_min/8)),
+            Text ("תלביש אותי מתוק",),
+            Container(
+                color: Colors.green,
+                width:_min/2 ,
+                height: _min/2,
+                child: AvatarStack(data: data,)),
             SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child:Row(children: <Widget>[
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: _glasses2,
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:AssetImage('images/glasses2.png'),
-                              fit:BoxFit.contain
-                          )
-                      ),
-                    ),
-                  ),
-
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: _glasses1,
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:AssetImage('images/glasses1.png'),
-                              fit:BoxFit.contain
-                          )
-                      ),
-                    ),
-                  ),
-
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: _glasses3,
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:AssetImage('images/glasses3.png'),
-                              fit:BoxFit.contain
-                          )
-                      ),
-                    ),
-                  ),
-
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: _glasses4,
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:AssetImage('images/glasses4.png'),
-                              fit:BoxFit.contain
-                          )
-                      ),
-                    ),
-                  ),
-
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: _glasses5,
-                    child: Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image:AssetImage('images/glasses5.png'),
-                              fit:BoxFit.contain
-                          )
-                      ),
-                    ),
-                  ),
+                  _glasses('images/glasses1.png'),
+                  _glasses('images/glasses2.png'),
+                  _glasses('images/glasses3.png'),
+                  _glasses('images/glasses4.png'),
+                  _glasses('images/glasses5.png'),
 
                 ]))
           ],
         ),
-         ),  floatingActionButton: FloatingActionButton.extended(onPressed: ()=>{Navigator.push(context, MaterialPageRoute(builder: (context) => Home())),
-    },label:Text("חזור"),)
+         ),  floatingActionButton:
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+      FloatingActionButton.extended(
+        onPressed: ()=>{Navigator.pop(context),},
+        label:Text("חזור"),),
+      FloatingActionButton.extended(
+        onPressed: ()=>{_save()},
+        label:Text("שמור"),),
+
+
+    ],)
     );
 
   }
+
 }
+
+class AvatarStack extends StatelessWidget{
+  AvatarStack({required this.data, Key? key}) :super(key:key);
+
+  final AvatarData data;
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+        child:Stack(
+        children:
+        <Widget>[
+          Center(child:Image.asset(data.body)),
+          if(data.glasses!=null)
+            LayoutBuilder(builder:
+            (BuildContext context, BoxConstraints constraints){
+              return Row(mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
+                    Container(
+                      child: Image.asset(data.glasses ?? ''),
+                      height: constraints.maxHeight/4,
+                      margin: EdgeInsets.only(
+                        top: constraints.maxHeight/5,
+                      // left: constraints.maxWidth/14
+                    ),
+
+              )]);
+
+            }
+              ,)
+        ]
+    ));
+  }
+
+}
+
+class LoadAvatar extends StatefulWidget{
+
+  @override
+  _LoadAvatarState createState() =>_LoadAvatarState();
+}
+
+class _LoadAvatarState extends State<LoadAvatar> {
+  Future<AvatarData>? _data;
+
+  @override
+  void initState() {
+    super.initState();
+    _data = _load();
+  }
+  Future<AvatarData> _load() async{
+    String? pid = AuthRepository.instance().user?.uid;
+    return AvatarData(
+        body: (await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'body'],
+        glasses:(await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'glasses']
+    );
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: _data,
+        builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot){
+          if(snapshot.hasData){ return AvatarStack(data:( snapshot.data ?? AvatarData(body: _body_default)) );}
+          else return  CircularProgressIndicator();
+        }
+
+
+    );
+
+
+  }
+
+}
+

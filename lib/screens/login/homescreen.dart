@@ -2,6 +2,7 @@ library authantication;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Avatar/avatar.dart';
+import '../home/home.dart';
 /*
 class HomeScreen extends StatefulWidget {
   @override
@@ -78,9 +79,8 @@ class _MyStatelessWidget extends StatelessWidget {
   }
 }
 
-void fr(){}
 
 
 void _next(BuildContext context){
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));
+  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
 }
