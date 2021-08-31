@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../home/home.dart';
 
 class Avatar extends StatelessWidget {
   // This widget is the root of your application.
@@ -130,7 +131,9 @@ class _AvatarPageState extends State<AvatarPage> {
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             new Stack(
-                children: <Widget>[Image.asset('images/poo.png'),
+                children:
+                  <Widget>[ Text ("Hey! help me choose clothing :)"),
+                    Image.asset('images/poo.png'),
                   new Positioned(
                       top: 30.0,
                       right: 40.0,
@@ -219,7 +222,8 @@ class _AvatarPageState extends State<AvatarPage> {
                 ]))
           ],
         ),
-      ),
+         ),  floatingActionButton: FloatingActionButton.extended(onPressed: ()=>{Navigator.push(context, MaterialPageRoute(builder: (context) => Home())),
+    },label:Text("חזור"),)
     );
 
   }

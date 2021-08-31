@@ -6,8 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../home/home.dart';
 import 'homescreen.dart';
 import 'package:flutter/services.dart';
-String pattern_error="";
-bool a=false;
 class Password extends StatelessWidget {
   Password({required this.first});
   bool first;
@@ -40,13 +38,10 @@ class _MyHomePageState extends State<PasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    void setState(){
-
-    }
     var _width = MediaQuery.of(context).size.width;
     var _sizePainter = Size.square(_width);
     var button =widget.first ? ElevatedButton(onPressed: _submit, child: Text('submit')) :
-                                ElevatedButton(onPressed:_continue, child: Text('continue'));
+                                ElevatedButton(onPressed: _continue, child: Text('continue'));
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: Column(
@@ -67,14 +62,7 @@ class _MyHomePageState extends State<PasswordPage> {
             ),
           ),
           button,
-          ElevatedButton(child: Text("CLEAR CODE"), onPressed: _clearCodes),
-        /*  FutureBuilder(
-                future: wait_cont(),
-                builder: (context, snapshot){
-                  print('In Builder');
-                  return Text(pattern_error);
-                }
-            )*/
+          ElevatedButton(child: Text("CLEAR CODE"), onPressed: _clearCodes)
         ],
       ),
     );
@@ -103,27 +91,15 @@ class _MyHomePageState extends State<PasswordPage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions()));
 
   }
+
   _continue() async{
-    a=true;
     String? pid = AuthRepository
         .instance()
         .user
         ?.uid;
-      String n_pass = (await FirebaseFirestore.instance.collection("users").doc(
-          pid).get())[ 'password'];
-      if(n_pass==(codes.join())){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-      }
-      else{
-    final snackBar = SnackBar(
-      content: const Text('Wrong Password'),
-
-    );
-
-    // Find the ScaffoldMessenger in the widget tree
-    // and use it to show a SnackBar.
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+    String n_pass= (await FirebaseFirestore.instance.collection("users").doc(pid).get())[ 'password'];
+    if(n_pass==(codes.join())){
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     }
 
   }
@@ -226,8 +202,7 @@ class _LockScreenPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_LockScreenPainter oldDelegate) {
-    if((offset != oldDelegate.offset))
-      pattern_error="Wrong pattern, please repaint";
+
     return offset != oldDelegate.offset;
   }
 }
