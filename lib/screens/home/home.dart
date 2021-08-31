@@ -14,42 +14,50 @@ class Home extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 40,
-              width: MediaQuery.of(context).size.width / 3,
-              color: Colors.brown,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));
-                },
-                child: Text("עצב דמות"),
-              ),
-            ),
-            Container(
-              height: 40,
-              width: MediaQuery.of(context).size.width / 3,
-              color: Colors.black,
-              child: TextButton(
-                onPressed: () {
-                  Future<void> _signOut() async {
-                    await FirebaseAuth.instance.signOut();
-                                    }
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
-                },
-                child: Text("התנתק"),
-              ),
-            ),
-          ],
+        appBar: AppBar(title: null),
+        body: const Center(
+          child: Text('My Page!'),
         ),
-      ),
-    );
-  }
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                  decoration: BoxDecoration(
+                  color: Colors.blue,
+                  ),
+                  child: Text("אפשרויות"),
+                  ),
+                  ListTile(
+                  title: const Text("עצב דמות"),
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => Avatar()));
+                    ///Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));
+                    ///Navigator.pop(context);
+                  },
+                  ),
+                  ListTile(
+                    title: const Text("התנתק"),
+                    onTap: () {
+                      Future<void> _signOut() async {
+                        await FirebaseAuth.instance.signOut();
+                      }
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => Login(isInit: false)));
+                      ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
+                      ///Navigator.pop(context);
+                      },
+                  ),
+
+                    ]
+                  ),
+                ),
+
+            );
+
+      }
 }
 
 
