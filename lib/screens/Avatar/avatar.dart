@@ -129,10 +129,14 @@ class _AvatarPageState extends State<AvatarPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
       FloatingActionButton.extended(
-        onPressed: ()=>{Navigator.pop(context),},
+        onPressed: ()=>{Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => Home()))},
         label:Text("חזור"),),
       FloatingActionButton.extended(
-        onPressed: ()=>{_save()},
+        onPressed: ()=>{
+          _save(),
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => Home()))},
         label:Text("שמור"),),
 
 

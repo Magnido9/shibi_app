@@ -81,7 +81,7 @@ class _MainScreenState extends State<LoginPage> {
                     }
                   }
                 },
-                child: Text("LOG IN"),
+                child: Text("כניסה"),
               ),
             ),
             Container(
@@ -106,7 +106,7 @@ class _MainScreenState extends State<LoginPage> {
                     }
                   }
                 },
-                child: Text("SIGN UP"),
+                child: Text("הרשמה"),
               ),
             ),
           ],
