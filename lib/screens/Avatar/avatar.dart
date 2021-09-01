@@ -128,11 +128,14 @@ class _AvatarPageState extends State<AvatarPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
       FloatingActionButton.extended(
-        onPressed: ()=>{  Navigator.of(context).pushReplacement(MaterialPageRoute(
+        onPressed: ()=>{Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (BuildContext context) => Home()))},
         label:Text("חזור"),),
       FloatingActionButton.extended(
-        onPressed: ()=>{_save()},
+        onPressed: ()=>{
+          _save(),
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => Home()))},
         label:Text("שמור"),),
 
 
@@ -201,6 +204,7 @@ class _LoadAvatarState extends State<LoadAvatar> {
     _data = _load();
   }
 
+  }
 
   @override
   Widget build(BuildContext context) {

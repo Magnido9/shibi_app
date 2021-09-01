@@ -66,7 +66,7 @@ class _CareTakerIdState extends State<CareTakerId>{
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextField(
-                    decoration:  InputDecoration(labelText: "Enter your number"),
+                    decoration:  InputDecoration(labelText: "הכנס את הקוד שקיבלת מהמטפל"),
                     controller: pid,
                     keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[
@@ -81,7 +81,7 @@ class _CareTakerIdState extends State<CareTakerId>{
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextField(
-                    decoration:  InputDecoration(labelText: "Enter your name"),
+                    decoration:  InputDecoration(labelText: "הכנס את שמך"),
                     controller: name,
                   ),
                 ],
@@ -95,7 +95,7 @@ class _CareTakerIdState extends State<CareTakerId>{
                 final int pass =int.parse(pid.text.trim()) ;
                 _Connection()._getCare(pass,name.text.trim(), context);
                 },
-              child: Text("continue"),
+              child: Text("המשך"),
             ),
           ),
         ],
