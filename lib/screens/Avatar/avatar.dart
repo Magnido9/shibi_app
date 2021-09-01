@@ -150,29 +150,38 @@ class AvatarStack extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Center(
-        child:Stack(
-        children:
-        <Widget>[
-          Center(child:Image.asset(data.body)),
-          if(data.glasses!=null)
-            LayoutBuilder(builder:
-            (BuildContext context, BoxConstraints constraints){
-              return Row(mainAxisAlignment: MainAxisAlignment.center,
-                  children:[
-                    Container(
-                      child: Image.asset(data.glasses ?? ''),
-                      height: constraints.maxHeight/4,
-                      margin: EdgeInsets.only(
-                        top: constraints.maxHeight/5,
-                      // left: constraints.maxWidth/14
-                    ),
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints cons){
+            return Container(
+              width: min(cons.maxWidth, cons.maxHeight),
+              height: min(cons.maxWidth, cons.maxHeight),
+              child: Stack(
+                  children:
+                  <Widget>[
+                    Center(child:Image.asset(data.body)),
+                    if(data.glasses!=null)
+                      LayoutBuilder(builder:
+                          (BuildContext context, BoxConstraints constraints){
+                        return Row(mainAxisAlignment: MainAxisAlignment.center,
+                            children:[
+                              Container(
+                                child: Image.asset(data.glasses ?? ''),
+                                height: constraints.maxHeight/4,
+                                margin: EdgeInsets.only(
+                                  top: constraints.maxHeight/5,
+                                  // left: constraints.maxWidth/14
+                                ),
 
-              )]);
+                              )]);
 
-            }
-              ,)
-        ]
-    ));
+                      }
+                        ,)
+                  ]
+              )
+            );
+          }
+        )
+    );
   }
 
 }
@@ -216,4 +225,5 @@ class _LoadAvatarState extends State<LoadAvatar> {
   }
 
 }
+
 

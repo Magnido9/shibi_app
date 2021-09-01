@@ -23,11 +23,16 @@ class Home extends StatelessWidget{
           child: ListView(
             padding: EdgeInsets.zero,
                 children: [
-                  const DrawerHeader(
+                  DrawerHeader(
                   decoration: BoxDecoration(
                   color: Colors.blue,
                   ),
-                  child: Text("אפשרויות"),
+                  child: Row(
+                    children: [
+                      Text('hello'),
+                      LoadAvatar(),
+                    ],
+                  )
                   ),
                   ListTile(
                   title: const Text("עצב דמות"),
