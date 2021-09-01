@@ -91,15 +91,26 @@ class _MyHomePageState extends State<PasswordPage> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions()));
 
   }
-
   _continue() async{
     String? pid = AuthRepository
         .instance()
         .user
         ?.uid;
-    String n_pass= (await FirebaseFirestore.instance.collection("users").doc(pid).get())[ 'password'];
+    String n_pass = (await FirebaseFirestore.instance.collection("users").doc(
+        pid).get())[ 'password'];
     if(n_pass==(codes.join())){
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+    }
+    else{
+      final snackBar = SnackBar(
+        content: const Text('Wrong Password'),
+
+      );
+
+      // Find the ScaffoldMessenger in the widget tree
+      // and use it to show a SnackBar.
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
     }
 
   }

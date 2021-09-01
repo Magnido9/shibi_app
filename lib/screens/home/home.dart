@@ -1,4 +1,5 @@
 library home;
+import 'package:application/screens/map/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Avatar/avatar.dart';
@@ -71,6 +72,18 @@ class Home extends StatelessWidget{
                       ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
                       ///Navigator.pop(context);
                       },
+                  ),
+                  ListTile(
+                    title: const Text("מפה!"),
+                    onTap: () {
+                      Future<void> _signOut() async {
+                        await FirebaseAuth.instance.signOut();
+                      }
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => MapPage()));
+                      ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
+                      ///Navigator.pop(context);
+                    },
                   ),
 
                     ]
