@@ -34,28 +34,37 @@ class Avatar extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: AvatarPage(title: 'Avatar'),
+      home:
+       FutureBuilder(
+          future: _load(),
+          builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot){
+            if(snapshot.hasData){ return AvatarPage(title:"hey", data:( snapshot.data ?? AvatarData(body: _body_default)) );}
+            else return  CircularProgressIndicator();
+
+
+
+    }
+       ),
     );
   }
 }
 
 class AvatarPage extends StatefulWidget {
-  AvatarPage({Key? key, required this.title}) : super(key: key);
+  AvatarPage({Key? key, required this.title, required this.data}) : super(key: key);
   final String title;
 
   @override
   _AvatarPageState createState() => _AvatarPageState();
+  final AvatarData data;
 }
 
 class _AvatarPageState extends State<AvatarPage> {
 
-  AvatarData data = AvatarData(body:_body_default);
-
   void _save() async{
     String? pid = AuthRepository.instance().user?.uid;
     await FirebaseFirestore.instance.collection("avatars").doc(pid).set({
-      'body': data.body,
-      'glasses' : data.glasses
+      'body': widget.data.body,
+      'glasses' : widget.data.glasses
     });
   }
 
@@ -63,7 +72,7 @@ class _AvatarPageState extends State<AvatarPage> {
   Widget _glasses(String image){
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () {  setState(() {data.glasses=image;}); },
+      onTap: () {  setState(() {widget.data.glasses=image;}); },
       child: Container(
         height: 50,
         width: 100,
@@ -110,7 +119,7 @@ class _AvatarPageState extends State<AvatarPage> {
             Container(
                 width:_min/2 ,
                 height: _min/2,
-                child: AvatarStack(data: data,)),
+                child: AvatarStack(data: widget.data,)),
             SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child:Row(children: <Widget>[
