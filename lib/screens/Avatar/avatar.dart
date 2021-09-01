@@ -233,9 +233,10 @@ class _LoadAvatarState extends State<LoadAvatar> {
 
 Future<AvatarData> _load() async{
   String? pid = AuthRepository.instance().user?.uid;
+  var v= (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
   return AvatarData(
-      body: (await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'body'],
-      glasses:(await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'glasses']
+      body: v[ 'body'],
+      glasses: v[ 'glasses']
   );
 
 }
