@@ -6,6 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import '../login/login.dart';
+import '../../services/auth_services.dart';
+
 
 
 
@@ -29,7 +31,22 @@ class Home extends StatelessWidget{
                   ),
                   child: Row(
                     children: [
-                      Text('hello'),
+                  FutureBuilder<DocumentSnapshot>(
+                  future: FirebaseFirestore.instance.collection("users").doc(AuthRepository
+                      .instance()
+                      .user
+                      ?.uid).get(),
+          builder:
+              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            // ...
+            if (snapshot.connectionState == ConnectionState.done) {
+              Map<String, dynamic> data = snapshot.data?.data() ??
+                  {'name': " "};
+              return Text('Hello ${data['name']}');
+            }
+            return CircularProgressIndicator();
+          },
+        ),
                       LoadAvatar(),
                     ],
                   )

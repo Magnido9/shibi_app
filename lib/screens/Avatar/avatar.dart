@@ -106,7 +106,7 @@ class _AvatarPageState extends State<AvatarPage> {
           // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(margin: EdgeInsets.only(top:_min/8)),
-            Text ("תלביש אותי מתוק",),
+            Text ("תעזור לי לבחור בגדים",),
             Container(
                 width:_min/2 ,
                 height: _min/2,
@@ -204,7 +204,7 @@ class _LoadAvatarState extends State<LoadAvatar> {
     _data = _load();
   }
 
-  }
+
 
   @override
   Widget build(BuildContext context) {
