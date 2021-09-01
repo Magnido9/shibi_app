@@ -66,20 +66,13 @@ class _MainScreenState extends State<LoginPage> {
                 onPressed: () {
                   final String email = emailController.text.trim();
                   final String password = passwordController.text.trim();
-
-                  if(email.isEmpty){
-                    print("Email is Empty");
-                  } else {
-                    if(password.isEmpty){
-                      print("Password is Empty");
-                    } else {
-                      _checkIn(AuthRepository.instance().signIn(
+                  _checkIn(AuthRepository.instance().signIn(
                         email,
                         password,context
                       ), context);
 
-                    }
-                  }
+
+
                 },
                 child: Text("כניסה"),
               ),
@@ -92,19 +85,12 @@ class _MainScreenState extends State<LoginPage> {
                 onPressed: () {
                   final String email = emailController.text.trim();
                   final String password = passwordController.text.trim();
-
-                  if(email.isEmpty){
-                    print("Email is Empty");
-                  } else {
-                    if(password.isEmpty){
-                      print("Password is Empty");
-                    } else {
                       _checkUp(AuthRepository.instance().signUp(
                         email,
                         password,context
                       ),context);
-                    }
-                  }
+
+
                 },
                 child: Text("הרשמה"),
               ),
