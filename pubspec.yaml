@@ -74,6 +74,7 @@ flutter:
     - images/glasses3.png
     - images/glasses4.png
     - images/glasses5.png
+    - images/World_1.jpg
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
