@@ -1,4 +1,6 @@
 library home;
+import 'package:application/screens/home/home.dart';
+import 'package:application/screens/map/questioneer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Avatar/avatar.dart';
@@ -17,8 +19,15 @@ class MapPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body:SingleChildScrollView(child: Image.network("https://static.wikia.nocookie.net/candy-crush-saga/images/5/5c/World_1.jpg/revision/latest?cb=20160623022238")),
-
+          body:SingleChildScrollView(child: Stack(children: <Widget>[
+            Image.network("https://static.wikia.nocookie.net/candy-crush-saga/images/5/5c/World_1.jpg/revision/latest?cb=20160623022238"),
+            Positioned(left:20,top:930,child: FloatingActionButton(onPressed:() {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    builder: (BuildContext context) => MyQuestions()));
+    ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
+    ///Navigator.pop(context);
+    }
+    ))])),
 
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
