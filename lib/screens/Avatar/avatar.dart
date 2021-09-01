@@ -108,7 +108,6 @@ class _AvatarPageState extends State<AvatarPage> {
             Container(margin: EdgeInsets.only(top:_min/8)),
             Text ("תלביש אותי מתוק",),
             Container(
-                color: Colors.green,
                 width:_min/2 ,
                 height: _min/2,
                 child: AvatarStack(data: data,)),
@@ -129,7 +128,8 @@ class _AvatarPageState extends State<AvatarPage> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
       FloatingActionButton.extended(
-        onPressed: ()=>{Navigator.pop(context),},
+        onPressed: ()=>{  Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => Home()))},
         label:Text("חזור"),),
       FloatingActionButton.extended(
         onPressed: ()=>{_save()},
@@ -200,14 +200,7 @@ class _LoadAvatarState extends State<LoadAvatar> {
     super.initState();
     _data = _load();
   }
-  Future<AvatarData> _load() async{
-    String? pid = AuthRepository.instance().user?.uid;
-    return AvatarData(
-        body: (await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'body'],
-        glasses:(await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'glasses']
-    );
 
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -223,6 +216,15 @@ class _LoadAvatarState extends State<LoadAvatar> {
 
 
   }
+
+}
+
+Future<AvatarData> _load() async{
+  String? pid = AuthRepository.instance().user?.uid;
+  return AvatarData(
+      body: (await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'body'],
+      glasses:(await FirebaseFirestore.instance.collection("avatars").doc(pid).get())[ 'glasses']
+  );
 
 }
 

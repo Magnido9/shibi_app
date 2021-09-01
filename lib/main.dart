@@ -24,10 +24,8 @@ class Wrapper extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      title: "app",
-      home:  (AuthRepository.instance().isAuthenticated)? Password(first: false) :Login( )
-    ) ;
+    return   (AuthRepository.instance().isAuthenticated)? Password(first: false) :Login( )
+     ;
   }
 }
 

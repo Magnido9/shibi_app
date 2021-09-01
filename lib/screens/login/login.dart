@@ -117,14 +117,14 @@ class _MainScreenState extends State<LoginPage> {
 }
 
 void _checkIn(Future<UserCredential?> f, BuildContext context) async{
-  if ((await f)!= null) Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => Password(first: false)),
+  if ((await f)!= null)
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => Password(first: false))
   );
 }
 void _checkUp(Future<UserCredential?> f, BuildContext context) async{
-  if ((await f)!= null) Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => CareTakerId()),
-  );
+  if ((await f)!= null)
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => CareTakerId()));
+
 }

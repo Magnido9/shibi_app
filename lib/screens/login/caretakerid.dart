@@ -36,7 +36,8 @@ class _Connection extends ChangeNotifier{
       });
 
     }
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Password(first: true)));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (BuildContext context) => Password(first: true)));
   }
 }
 

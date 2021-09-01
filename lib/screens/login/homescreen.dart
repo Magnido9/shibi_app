@@ -70,7 +70,8 @@ class _MyStatelessWidget extends StatelessWidget {
               children: <Widget>[
                  Text('בהצלחה'),
                 ElevatedButton(
-                    onPressed:  (){Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));},
+                    onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => Avatar()));},
                     child: Text("יאללה בלגן"))
           ])
         )
@@ -82,5 +83,6 @@ class _MyStatelessWidget extends StatelessWidget {
 
 
 void _next(BuildContext context){
-  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+  Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (BuildContext context) => Home()));
 }
