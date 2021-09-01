@@ -18,7 +18,7 @@ class Home extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: null),
+        // appBar: AppBar(title: null),
         body: const Center(
           child: Text('My Page!'),
         ),
