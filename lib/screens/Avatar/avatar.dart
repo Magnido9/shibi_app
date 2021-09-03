@@ -7,12 +7,22 @@ import 'package:application/screens/login/password.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services/auth_services.dart';
 
-String _body_default='images/poo.png';
 
 class AvatarData{
   AvatarData({required this.body, this.glasses});
   String body;
   String? glasses;
+
+  static String body_default = "images/poo.png";
+  static  Future<AvatarData> load() async{
+    String? pid = AuthRepository.instance().user?.uid;
+    var v= (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
+    return AvatarData(
+        body: v[ 'body'],
+        glasses: v[ 'glasses']
+    );
+
+  }
 }
 
 class Avatar extends StatelessWidget {
@@ -35,9 +45,9 @@ class Avatar extends StatelessWidget {
       ),
       home:
        FutureBuilder(
-          future: _load(),
+          future: AvatarData.load(),
           builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot){
-            if(snapshot.hasData){ return AvatarPage(title:"hey", data:( snapshot.data ?? AvatarData(body: _body_default)) );}
+            if(snapshot.hasData){ return AvatarPage(title:"hey", data:( snapshot.data ?? AvatarData(body: AvatarData.body_default)) );}
             else return  CircularProgressIndicator();
 
 
@@ -209,7 +219,7 @@ class _LoadAvatarState extends State<LoadAvatar> {
   @override
   void initState() {
     super.initState();
-    _data = _load();
+    _data = AvatarData.load();
   }
 
 
@@ -219,8 +229,8 @@ class _LoadAvatarState extends State<LoadAvatar> {
     return FutureBuilder(
         future: _data,
         builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot){
-          if(snapshot.hasData){ return AvatarStack(data:( snapshot.data ?? AvatarData(body: _body_default)) );}
-          else return  CircularProgressIndicator();
+          if(snapshot.hasData){ return AvatarStack(data:( snapshot.data ?? AvatarData(body: AvatarData.body_default)) );}
+          else return  CircularProgressIndicator(color: Colors.green,);
         }
 
 
@@ -231,14 +241,6 @@ class _LoadAvatarState extends State<LoadAvatar> {
 
 }
 
-Future<AvatarData> _load() async{
-  String? pid = AuthRepository.instance().user?.uid;
-  var v= (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
-  return AvatarData(
-      body: v[ 'body'],
-      glasses: v[ 'glasses']
-  );
 
-}
 
 

@@ -10,15 +10,32 @@ import '../login/login.dart';
 import '../../services/auth_services.dart';
 
 
+class Home extends StatefulWidget{
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home>{
+  Future<AvatarData>? _adata;
+  Future<String>? _name;
 
 
-class Home extends StatelessWidget{
+  @override
+  void initState() {
+    super.initState();
+    _adata = AvatarData.load();
+    _name =  _getname();
+  }
 
+  Future<String> _getname() async{
+    return (await FirebaseFirestore.instance.collection("users").doc(AuthRepository.instance().user?.uid).get())['name'];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(title: null),
+        appBar: AppBar(title: null),
         body: const Center(
           child: Text('My Page!'),
         ),
@@ -32,23 +49,30 @@ class Home extends StatelessWidget{
                   ),
                   child: Row(
                     children: [
-                  FutureBuilder<DocumentSnapshot>(
-                  future: FirebaseFirestore.instance.collection("users").doc(AuthRepository
-                      .instance()
-                      .user
-                      ?.uid).get(),
-          builder:
-              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  FutureBuilder<String>(
+                    future: _name,
+                    builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
             // ...
-            if (snapshot.connectionState == ConnectionState.done) {
-              Map<String, dynamic> data = snapshot.data?.data() ??
-                  {'name': " "};
-              return Text('Hello ${data['name']}');
-            }
-            return CircularProgressIndicator();
-          },
-        ),
-                      LoadAvatar(),
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          String data = snapshot.data ?? '';
+                          return Text('Hello $data');
+                        }
+                        return CircularProgressIndicator();
+                      },
+                  ),
+                  FutureBuilder<AvatarData>(
+                        future: _adata,
+                        builder:
+                            (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
+                          // ...
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return AvatarStack(data:( snapshot.data ?? AvatarData(body: AvatarData.body_default)) );
+
+                          }
+                          return CircularProgressIndicator();
+                        },
+                      ),
                     ],
                   )
                   ),

@@ -41,7 +41,7 @@ class _MyHomePageState extends State<PasswordPage> {
     var _width = MediaQuery.of(context).size.width;
     var _sizePainter = Size.square(_width);
     var button =widget.first ? ElevatedButton(onPressed: _submit, child: Text('submit')) :
-                                ElevatedButton(onPressed: _continue, child: Text('continue'));
+                                Container();
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: Column(
@@ -62,7 +62,7 @@ class _MyHomePageState extends State<PasswordPage> {
             ),
           ),
           button,
-          ElevatedButton(child: Text("CLEAR CODE"), onPressed: _clearCodes)
+          if(widget.first) ElevatedButton(child: Text("CLEAR CODE"), onPressed: _clearCodes)
         ],
       ),
     );
@@ -73,7 +73,11 @@ class _MyHomePageState extends State<PasswordPage> {
   _onPanUpdate(DragUpdateDetails event) =>
       setState(() => offset = event.localPosition);
 
-  _onPanEnd(DragEndDetails event) => setState(() => offset = Offset(0,0));
+  _onPanEnd(DragEndDetails event) async {
+    setState(() => {offset = Offset(0, 0)});
+    await _continue();
+    if(!widget.first) _clearCodes();
+  }
 
   _onSelect(int code) {
     if (codes.isEmpty || !codes.contains(code)) {

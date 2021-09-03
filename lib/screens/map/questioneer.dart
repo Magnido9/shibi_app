@@ -128,7 +128,7 @@ class _MyQuestionsState extends State<MyQuestions> {
             questions: _questions,
           ) //Quiz
               : Result(_totalScore, _resetQuiz),
-        ), //Padding
+        ), //Paddingk
       ), //Scaffold
       debugShowCheckedModeBanner: false,
     ); //MaterialApp
