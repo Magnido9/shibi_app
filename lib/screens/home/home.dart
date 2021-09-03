@@ -35,7 +35,30 @@ class _HomeState extends State<Home>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: null),
+        appBar: AppBar(
+          leading: Builder(
+            builder: (context) => GestureDetector(
+              onTap: (){ Scaffold.of(context).openDrawer();
+              print('fdfd');},
+              child: Container(
+                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+                child: FutureBuilder<AvatarData>(
+                  future: _adata,
+                  builder:
+                      (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
+                    // ...
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return AvatarStack(data:( snapshot.data ?? AvatarData(body: AvatarData.body_default)) );
+
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+
+              ),
+            ),
+          ) ,
+        ),
         body: const Center(
           child: Text('My Page!'),
         ),
