@@ -1,9 +1,12 @@
 library authantication;
+import 'package:application/screens/caretaker/home.dart';
 import 'package:application/screens/login/caretakerid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../services/auth_services.dart';
 import '../home/home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'password.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
 
@@ -30,6 +33,32 @@ class LoginPage extends StatefulWidget {
 class _MainScreenState extends State<LoginPage> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  bool isCare =false;
+
+  void _checkIn(Future<UserCredential?> f, BuildContext context) async{
+    UserCredential? u=await f;
+    bool care= (await FirebaseFirestore.instance.collection('caretakers').doc(u?.user?.uid).get()).exists;
+    //print( (u?.user?.uid)?? 'null ' +" - "+care.toString());
+
+    (await SharedPreferences.getInstance()).setBool('isCare', care);
+
+    if ((await f)!= null)
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) =>care ? CareHome() :Password(first: false))
+      );
+  }
+
+  void _checkUp(Future<UserCredential?> f, BuildContext context) async{
+    (await SharedPreferences.getInstance()).setBool('isCare', isCare);
+
+    if ((await f)!= null)
+      if(isCare) FirebaseFirestore.instance.collection("caretakers").doc(AuthRepository.instance().user?.uid).set({
+        'uid': AuthRepository.instance().user?.uid
+      },SetOptions(merge: true));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) => isCare ? CareHome() :CareTakerId()));
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +95,7 @@ class _MainScreenState extends State<LoginPage> {
                 onPressed: () {
                   final String email = emailController.text.trim();
                   final String password = passwordController.text.trim();
+
                   _checkIn(AuthRepository.instance().signIn(
                         email,
                         password,context
@@ -95,6 +125,20 @@ class _MainScreenState extends State<LoginPage> {
                 child: Text("הרשמה"),
               ),
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.center,
+              children:[
+                Text('מטפל?'),
+                Switch(
+                  value: isCare,
+                  onChanged: (value) {
+                      setState(() {
+                        isCare = value;
+                      print(isCare);
+                      });
+                    },
+                )
+              ]
+            )
           ],
         ),
       ),
@@ -102,15 +146,3 @@ class _MainScreenState extends State<LoginPage> {
   }
 }
 
-void _checkIn(Future<UserCredential?> f, BuildContext context) async{
-  if ((await f)!= null)
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => Password(first: false))
-  );
-}
-void _checkUp(Future<UserCredential?> f, BuildContext context) async{
-  if ((await f)!= null)
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => CareTakerId()));
-
-}

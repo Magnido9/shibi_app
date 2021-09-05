@@ -79,7 +79,6 @@ class AuthRepository with ChangeNotifier {
       _status = Status.Unauthenticated;
       notifyListeners();
       throw(e);
-      return null;
     }
   }
 
