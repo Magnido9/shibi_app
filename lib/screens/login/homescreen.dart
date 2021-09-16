@@ -71,7 +71,7 @@ class _MyStatelessWidget extends StatelessWidget {
                  Text('בהצלחה'),
                 ElevatedButton(
                     onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => Avatar()));},
+                        builder: (BuildContext context) => Avatar(first:true)));},
                     child: Text("יאללה בלגן"))
           ])
         )

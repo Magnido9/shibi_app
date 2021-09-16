@@ -27,6 +27,8 @@ class AvatarData{
 
 class Avatar extends StatelessWidget {
   // This widget is the root of your application.
+  Avatar({required this.first});
+  final bool first;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -44,11 +46,14 @@ class Avatar extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home:
-       FutureBuilder(
+      (first)?
+          AvatarPage(title:"hey",data: AvatarData(body: AvatarData.body_default))
+          :
+          FutureBuilder(
           future: AvatarData.load(),
           builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot){
             if(snapshot.hasData){ return AvatarPage(title:"hey", data:( snapshot.data ?? AvatarData(body: AvatarData.body_default)) );}
-            else return  CircularProgressIndicator();
+            else return  AvatarPage(title:"hey", data:( AvatarData(body: AvatarData.body_default)));
 
 
 
@@ -174,12 +179,31 @@ class AvatarStack extends StatelessWidget{
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints cons){
             return Container(
+              // color:Colors.grey,
               width: min(cons.maxWidth, cons.maxHeight),
               height: min(cons.maxWidth, cons.maxHeight),
               child: Stack(
                   children:
                   <Widget>[
-                    Center(child:Image.asset(data.body)),
+                    //body
+                    LayoutBuilder(builder:
+                        (BuildContext context, BoxConstraints constraints){
+                      return Container(
+
+                            child: FittedBox(
+                              child:Image.asset(data.body),
+                              fit: BoxFit.fill,
+
+                        ),
+                        height: constraints.maxHeight,
+                        width: constraints.maxWidth,
+                      );
+
+                    }
+                      ,),
+  
+
+                    //glasses
                     if(data.glasses!=null)
                       LayoutBuilder(builder:
                           (BuildContext context, BoxConstraints constraints){

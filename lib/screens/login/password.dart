@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../home/home.dart';
 import 'homescreen.dart';
+import 'login.dart';
 import 'package:flutter/services.dart';
 class Password extends StatelessWidget {
   Password({required this.first});
@@ -43,7 +44,17 @@ class _MyHomePageState extends State<PasswordPage> {
     var button =widget.first ? ElevatedButton(onPressed: _submit, child: Text('submit')) :
                                 Container();
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+          leading: Builder(
+            builder: (context) => GestureDetector(
+                onTap: (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => Login()));
+                },
+                child: Icon(Icons.keyboard_return)
+            ),
+          ) ,
+          title: Text(widget.title)
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
