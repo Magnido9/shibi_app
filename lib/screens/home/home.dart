@@ -36,142 +36,146 @@ class _HomeState extends State<Home>{
 
   @override
   Widget build(BuildContext context) {
-    var size=Size.square(min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height));
     return MaterialApp(
       title: 'home',
-      home: Scaffold(
-        appBar: AppBar(
-          leading: Builder(
-            builder: (context) => GestureDetector(
-                onTap: (){ Scaffold.of(context).openDrawer();
-                print('fdfd');},
-                child: Icon(Icons.menu)
-            ),
-          ) ,
-        ),
-        body: Stack(
-          children: [
-            CustomPaint(
-              painter: _HomeScreenPainter(last:DateTime.now() ,current:DateTime.now(), target: DateTime.now(),size: size),
-              size: size
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children:  [Container(
-                // color: Colors.green,
-                  width: size.width*0.5,
-                  height: size.height*0.5,
-                  child: FutureBuilder<AvatarData>(
-                    future: _adata,
-                    builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        var data = snapshot.data ?? AvatarData(body: AvatarData.body_default);
-                        return AvatarStack(data: data);
-                      }
-                      return CircularProgressIndicator();
-                    },
+      home: Builder(
+        builder: (context){
+          var size=Size.square(min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height));
+
+          return Scaffold(
+              appBar: AppBar(
+                leading: Builder(
+                  builder: (context) => GestureDetector(
+                      onTap: (){ Scaffold.of(context).openDrawer();
+                      print('fdfd');},
+                      child: Icon(Icons.menu)
+                  ),
+                ) ,
+              ),
+              body: Stack(
+                children: [
+                  CustomPaint(
+                      painter: _HomeScreenPainter(last:DateTime.now() ,current:DateTime.now(), target: DateTime.now(),size: size),
+                      size: size
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children:  [Container(
+                        // color: Colors.green,
+                          width: size.width*0.5,
+                          height: size.height*0.5,
+                          child: FutureBuilder<AvatarData>(
+                            future: _adata,
+                            builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.done) {
+                                var data = snapshot.data ?? AvatarData(body: AvatarData.body_default);
+                                return AvatarStack(data: data);
+                              }
+                              return CircularProgressIndicator();
+                            },
+                          )
+                      ),]
                   )
-              ),]
-            )
-          ],
-        ),
-        drawer: Drawer(
-          child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
+                ],
+              ),
+              drawer: Drawer(
+                child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: [
+                      DrawerHeader(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                          ),
+                          child: Row(
+                            children: [
+                              FutureBuilder<String>(
+                                future: _name,
+                                builder:
+                                    (BuildContext context, AsyncSnapshot<String> snapshot) {
+                                  // ...
+                                  if (snapshot.connectionState == ConnectionState.done) {
+                                    String data = snapshot.data ?? '';
+                                    return Text('Hello $data');
+                                  }
+                                  return CircularProgressIndicator();
+                                },
+                              ),
+                              FutureBuilder<AvatarData>(
+                                future: _adata,
+                                builder:
+                                    (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
+                                  // ...
+                                  if (snapshot.connectionState == ConnectionState.done) {
+                                    return AvatarStack(data:( snapshot.data ?? AvatarData(body: AvatarData.body_default)) );
+
+                                  }
+                                  return CircularProgressIndicator();
+                                },
+                              ),
+                            ],
+                          )
+                      ),
+                      ListTile(
+                        title: const Text("עצב דמות"),
+                        onTap: () {
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (BuildContext context) => Avatar(first:false)));
+                          ///Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));
+                          ///Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: const Text("התנתק"),
+                        onTap: () {
+                          Future<void> _signOut() async {
+                            await FirebaseAuth.instance.signOut();
+                          }
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (BuildContext context) => Login()));
+                          ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
+                          ///Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: const Text("מפה!"),
+                        onTap: () {
+                          Future<void> _signOut() async {
+                            await FirebaseAuth.instance.signOut();
+                          }
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (BuildContext context) => MapPage()));
+                          ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
+                          ///Navigator.pop(context);
+                        },
+                      ),
+
+                    ]
+                ),
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+                  type : BottomNavigationBarType.fixed,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.thumb_up_outlined),
+
+                      label: 'מפת דרכים',
                     ),
-                    child: Row(
-                      children: [
-                        FutureBuilder<String>(
-                          future: _name,
-                          builder:
-                              (BuildContext context, AsyncSnapshot<String> snapshot) {
-                            // ...
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              String data = snapshot.data ?? '';
-                              return Text('Hello $data');
-                            }
-                            return CircularProgressIndicator();
-                          },
-                        ),
-                        FutureBuilder<AvatarData>(
-                          future: _adata,
-                          builder:
-                              (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
-                            // ...
-                            if (snapshot.connectionState == ConnectionState.done) {
-                              return AvatarStack(data:( snapshot.data ?? AvatarData(body: AvatarData.body_default)) );
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.cloud_queue_rounded),
+                      label: 'יומן',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.face),
+                      label: 'פסיכנוך',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.accessibility_new_outlined),
+                      label: 'תרגילים',
+                    ),
+                  ]
+              )
 
-                            }
-                            return CircularProgressIndicator();
-                          },
-                        ),
-                      ],
-                    )
-                ),
-                ListTile(
-                  title: const Text("עצב דמות"),
-                  onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => Avatar(first:false)));
-                    ///Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar()));
-                    ///Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: const Text("התנתק"),
-                  onTap: () {
-                    Future<void> _signOut() async {
-                      await FirebaseAuth.instance.signOut();
-                    }
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => Login()));
-                    ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
-                    ///Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: const Text("מפה!"),
-                  onTap: () {
-                    Future<void> _signOut() async {
-                      await FirebaseAuth.instance.signOut();
-                    }
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => MapPage()));
-                    ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
-                    ///Navigator.pop(context);
-                  },
-                ),
-
-              ]
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-              type : BottomNavigationBarType.fixed,
-              items: [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.thumb_up_outlined),
-
-                  label: 'מפת דרכים',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.cloud_queue_rounded),
-                  label: 'יומן',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.face),
-                  label: 'פסיכנוך',
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.accessibility_new_outlined),
-                  label: 'תרגילים',
-                ),
-              ]
-          )
-
+          );},
       )
     );
 
