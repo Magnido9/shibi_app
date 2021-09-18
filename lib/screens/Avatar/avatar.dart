@@ -146,7 +146,8 @@ class _AvatarPageState extends State<AvatarPage> {
                 ]))
           ],
         ),
-         ),  floatingActionButton:
+         ),
+        floatingActionButton:
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

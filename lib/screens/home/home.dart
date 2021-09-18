@@ -52,30 +52,50 @@ class _HomeState extends State<Home>{
                   ),
                 ) ,
               ),
-              body: Stack(
+              body: Column(
                 children: [
-                  CustomPaint(
-                      painter: _HomeScreenPainter(last:DateTime.now() ,current:DateTime.now(), target: DateTime.now(),size: size),
-                      size: size
+                  Stack(
+                    children: [
+                      TweenAnimationBuilder<double>(
+                          tween: Tween<double>(begin: 0, end: 0.7),
+                          duration: Duration(seconds: 1),
+                          builder: (BuildContext context, double percent, Widget? child){
+                            return CustomPaint(
+                                painter: _LoadBar(percent: percent,size: size),
+                                size: size
+                            );
+                          }
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:  [Container(
+                            // color: Colors.green,
+                              width: size.width*0.5,
+                              height: size.height*0.5,
+                              child: FutureBuilder<AvatarData>(
+                                future: _adata,
+                                builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.done) {
+                                    var data = snapshot.data ?? AvatarData(body: AvatarData.body_default);
+                                    return AvatarStack(data: data);
+                                  }
+                                  return CircularProgressIndicator();
+                                },
+                              )
+                          ),]
+                      )
+                    ],
                   ),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children:  [Container(
-                        // color: Colors.green,
-                          width: size.width*0.5,
-                          height: size.height*0.5,
-                          child: FutureBuilder<AvatarData>(
-                            future: _adata,
-                            builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
-                              if (snapshot.connectionState == ConnectionState.done) {
-                                var data = snapshot.data ?? AvatarData(body: AvatarData.body_default);
-                                return AvatarStack(data: data);
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          )
-                      ),]
+                  Container(
+                    height: 100,
+                    width: 100,
+                    child: _TaskIcon(
+                      text: 'test',
+                      slices: 5,
+                      complete: 3,
+                    ),
                   )
+
                 ],
               ),
               drawer: Drawer(
@@ -183,13 +203,11 @@ class _HomeState extends State<Home>{
 }
 
 
-class _HomeScreenPainter extends CustomPainter {
- final DateTime current, target, last;
+class _LoadBar extends CustomPainter {
+ final double percent;
  final Size size;
-  _HomeScreenPainter({
-    required this.last,
-    required this.current,
-    required this.target,
+ _LoadBar({
+    required this.percent,
     required this.size,
   });
 
@@ -202,8 +220,7 @@ class _HomeScreenPainter extends CustomPainter {
     Offset center = Offset(size.width/2,-size.width*0.3);
     canvas.drawArc(Rect.fromCircle(center:center , radius: size.width), 0,pi, false, painter);
     double pad=0.1;
-    double prog= ((target.day-last.day)==0)?1:(target.day-current.day)/(target.day-last.day);
-    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width), pi/2-pi/6+pad ,(2*pi/6-2*pad)*prog, false, painter..color=Colors.deepPurple);
+    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width), pi/2-pi/6+pad ,(2*pi/6-2*pad)*percent, false, painter..color=Colors.deepPurple);
 
     Offset off1= center+Offset(-sin(pi/6-pad)*size.width, cos(pi/6-pad)*size.width);
     painter..color = Colors.grey..style = PaintingStyle.fill..strokeWidth = 2;
@@ -218,8 +235,89 @@ class _HomeScreenPainter extends CustomPainter {
 
 
   @override
-  bool shouldRepaint(_HomeScreenPainter oldDelegate) {
+  bool shouldRepaint(_LoadBar oldDelegate) {
 
-    return current != oldDelegate.current;
+    return percent != oldDelegate.percent;
+  }
+}
+
+class _TaskIcon extends StatelessWidget{
+  _TaskIcon({
+    this.text,
+    this.surprise = false,
+    this.daily = false,
+    required this. slices,
+    required this. complete
+  });
+
+  final String? text;
+  final bool surprise, daily;
+  final int slices, complete;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints){
+          return Column(
+            children: [
+              CustomPaint(
+                size: Size.square(0.7*min(constraints.maxWidth,constraints.maxHeight)),
+                painter: _PaintTask(slices: slices, complete: complete),
+              ),
+              if(text!=null) Text((text ?? ''))
+            ],
+          );
+        }
+        );
+  }
+
+}
+
+class _PaintTask extends CustomPainter {
+  final int slices, complete;
+
+  _PaintTask({
+    required this.slices,
+    required this.complete
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double sw = 7;
+    var painter=Paint()
+    ..color = Color(0xFFC4C4C4)
+      // ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth =sw;
+    Offset c=Offset(size.height/2,size.width/2);
+    double radius = size.height/2;
+    canvas.drawCircle(c, radius, painter);
+
+    canvas.drawArc(Rect.fromCircle(center:c , radius: radius), -pi/2,2*pi*complete/slices, false, painter..color = Colors.green);
+
+
+    if( slices>1){
+      for (int i=0; i<slices; i++){
+        var painter2=Paint()
+          ..color = Colors.black
+          ..style = PaintingStyle.stroke
+          ..strokeWidth =2;
+
+        double phea=2*pi*i/slices-pi/2;
+        Offset start=c+Offset((radius-sw/2)* cos(phea),(radius-sw/2)* sin(phea));
+        Offset end=c+Offset((radius+sw/2)* cos(phea),(radius+sw/2)* sin(phea));
+        canvas.drawLine(start, end, painter2);
+
+      }
+    }
+    canvas.drawCircle(Offset(size.height/2,size.width/2), radius*0.85, painter..style=PaintingStyle.fill..color = Color(0xFFEBE9D6));
+
+  }
+
+
+  @override
+  bool shouldRepaint(_PaintTask oldDelegate) {
+
+    return (slices!=oldDelegate.slices) || (complete!=oldDelegate.complete);
   }
 }
