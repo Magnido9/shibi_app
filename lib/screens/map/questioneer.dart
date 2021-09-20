@@ -75,11 +75,19 @@ class _MyQuestionsState extends State<MyQuestions> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: "Assistant"),
       home: Scaffold(
+        backgroundColor: Colors.white,
+
+
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
-          title: Text('Geeks for Geeks'),
+          centerTitle: true,
+
+          title: Text('${(_questionIndex+1).toString()} of ${_questions.length.toString()}',
+          style: TextStyle(color: Colors.black,fontFamily: "Assistant" )),
+
           iconTheme: IconThemeData(
               color: Colors.black
           ),
@@ -92,12 +100,15 @@ class _MyQuestionsState extends State<MyQuestions> {
           ) ,
         ),
         body: Padding(
+
           padding: const EdgeInsets.all(30.0),
           child: _questionIndex < _questions.length
               ? Quiz(
             answerQuestion: _answerQuestion,
             questionIndex: _questionIndex,
             questions: _questions,
+
+
           ) //Quiz
               : Result(_totalScore, _resetQuiz),
         ), //Paddingk
@@ -141,6 +152,8 @@ class Question extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+
+
       width: double.infinity,
       margin: EdgeInsets.all(10),
       child: Text(
@@ -160,10 +173,18 @@ class Answer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      //width: double.infinity,
       child: RaisedButton(
-        color: Color(0xFF00E676),
-        textColor: Colors.white,
+
+        splashColor: Colors.yellow[200],
+        shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(18.0),
+        side: BorderSide(color: Colors.black),
+
+        ),
+
+        //color: Colors.red.withOpacity(0),
+        textColor: Colors.black,
         child: Text(answerText),
         onPressed: (){selectHandler();},
       ), //RaisedButton
@@ -234,14 +255,24 @@ class Result extends StatelessWidget {
            //Text
           Text(
             'תודה ששיתפת',
-            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontFamily: "Assistant",
+              fontWeight: FontWeight.w700,
+            ),
             textAlign: TextAlign.center,
           ), //Text
           FlatButton(
             child: Text(
               'חזור למסך הבית',
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 14,
+                fontFamily: "Assistant",
+                fontWeight: FontWeight.w700,
+              ),
             ), //Text
-            textColor: Colors.blue,
             onPressed: ()=>{Navigator.of(context).pushReplacement(MaterialPageRoute(
                 builder: (BuildContext context) => Home()))},
           ), //FlatButton
