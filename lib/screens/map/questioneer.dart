@@ -85,10 +85,19 @@ class _MyQuestionsState extends State<MyQuestions> {
           elevation: 0.0,
           centerTitle: true,
 
-          title: Text('${(_questionIndex+1).toString()} of ${_questions.length.toString()}',
-          style: TextStyle(color: Colors.black,fontFamily: "Assistant" )),
+          title: Text(
+            "שאלון חרדה יומי",
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 30,
+              fontFamily: "Assistant",
+              fontWeight: FontWeight.w700,
+            ),
+          ),
 
-          iconTheme: IconThemeData(
+
+            iconTheme: IconThemeData(
               color: Colors.black
           ),
           leading: Builder(
@@ -130,8 +139,21 @@ class Quiz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Container(
+        width:  MediaQuery.of(context).size.width*0.95,
+        height:  MediaQuery.of(context).size.height*0.8,
+        decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+    border: Border.all(color: Color(0xff8ec3aa), width: 9, ),
+    ),child:Column(
       children: [
+        Text(' שאלה ${(questionIndex+1).toString()} מתוך ${questions.length.toString()}\n\n\n\n\n',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 12,
+            fontFamily: "Assistant",
+            fontWeight: FontWeight.w700,
+          ),),
         Question(
           questions[questionIndex]['questionText'].toString(),
         ), //Question
@@ -140,7 +162,7 @@ class Quiz extends StatelessWidget {
           return Answer(() => answerQuestion(answer['score']), answer['text'].toString());
         }).toList()
       ],
-    ); //Column
+    )); //Column
   }
 }
 
@@ -157,8 +179,13 @@ class Question extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.all(10),
       child: Text(
-        questionText,
-        style: TextStyle(fontSize: 28),
+        questionText+"\n\n",
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 18,
+          fontFamily: "Assistant",
+          fontWeight: FontWeight.w700,
+        ),
         textAlign: TextAlign.center,
       ), //Text
     ); //Container
@@ -174,14 +201,12 @@ class Answer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       //width: double.infinity,
-      child: RaisedButton(
-
+      child: MaterialButton(
+        minWidth: 189,
+        height: 37,
+        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(25) ,side: BorderSide(color:Color(0xff8ec3aa), width: 2) ),
+        color: Colors.white,
         splashColor: Colors.yellow[200],
-        shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(18.0),
-        side: BorderSide(color: Colors.black),
-
-        ),
 
         //color: Colors.red.withOpacity(0),
         textColor: Colors.black,
