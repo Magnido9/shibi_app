@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import '../home/home.dart';
 import 'package:flutter/material.dart';
 
 
@@ -13,75 +13,36 @@ class MyQuestions extends StatefulWidget {
 class _MyQuestionsState extends State<MyQuestions> {
   final _questions = const [
     {
-      'questionText': 'ללכת לבית הספר',
+      'questionText': 'כשאני מפחד, קשה לי לנשום',
       'answers': [
-        {'text': '1', 'score': 0},
-        {'text': '2', 'score': 1},
-        {'text': '3', 'score': 2},
-        {'text': '4', 'score': 3},
-        {'text': '5', 'score': 4},
-        {'text': '6', 'score': 5},
-        {'text': '7', 'score': 6},
-        {'text': '8', 'score': 7},
-        {'text': '9', 'score': 8},
-        {'text': '10', 'score': 9},
+        {'text': 'לעיתים קרובות', 'score': 2},
+        {'text': 'לפעמים', 'score': 1},
+        {'text': 'כמעט אף פעם', 'score': 0},
       ],
-    },
-    {
-      'questionText': 'להיפגש עם חברים',
-      'answers': [
-        {'text': '1', 'score': 0},
-        {'text': '2', 'score': 1},
-        {'text': '3', 'score': 2},
-        {'text': '4', 'score': 3},
-        {'text': '5', 'score': 4},
-        {'text': '6', 'score': 5},
-        {'text': '7', 'score': 6},
-        {'text': '8', 'score': 7},
-        {'text': '9', 'score': 8},
-        {'text': '10', 'score': 9},
 
+    },
+    {
+      'questionText': 'אני מודאג מאנשים שלא יחבבו אותי',
+      'answers': [
+        {'text': 'לעיתים קרובות', 'score': 2},
+        {'text': 'לפעמים', 'score': 1},
+        {'text': 'כמעט אף פעם', 'score': 0},
       ],
     },
     {
-      'questionText': ' לבקש בננה',
+      'questionText': 'שאלה 3',
       'answers': [
-        {'text': '1', 'score': 0},
-        {'text': '2', 'score': 1},
-        {'text': '3', 'score': 2},
-        {'text': '4', 'score': 3},
-        {'text': '5', 'score': 4},
-        {'text': '6', 'score': 5},
-        {'text': '7', 'score': 6},
-        {'text': '8', 'score': 7},
-        {'text': '9', 'score': 8},
-        {'text': '10', 'score': 9},
+        {'text': 'לעיתים קרובות', 'score': 2},
+        {'text': 'לפעמים', 'score': 1},
+        {'text': 'כמעט אף פעם', 'score': 0},
       ],
     },
     {
-      'questionText': 'לעשות סלטה',
+      'questionText': 'שאלה 4',
       'answers': [
-        {'text': '1', 'score': 0},
-        {'text': '2', 'score': 1},
-        {'text': '3', 'score': 2},
-        {'text': '4', 'score': 3},
-        {'text': '5', 'score': 4},
-        {'text': '6', 'score': 5},
-        {'text': '7', 'score': 6},
-        {'text': '8', 'score': 7},
-        {'text': '9', 'score': 8},
-        {'text': '10', 'score': 9},
-      ],
-    },
-    {
-      'questionText':
-      'חרדה?',
-      'answers': [
-        {
-          'text': 'Yes',
-          'score': 0,
-        },
-        {'text': 'No', 'score': 0},
+        {'text': 'לעיתים קרובות', 'score': 2},
+        {'text': 'לפעמים', 'score': 1},
+        {'text': 'כמעט אף פעם', 'score': 0},
       ],
     },
   ];
@@ -116,8 +77,19 @@ class _MyQuestionsState extends State<MyQuestions> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
           title: Text('Geeks for Geeks'),
-          backgroundColor: Color(0xFF00E676),
+          iconTheme: IconThemeData(
+              color: Colors.black
+          ),
+          leading: Builder(
+            builder: (context) => GestureDetector(
+                onTap: ()=>{Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => Home()))},
+                child: Icon(Icons.arrow_back)
+            ),
+          ) ,
         ),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -224,7 +196,7 @@ class Result extends StatelessWidget {
     return resultText;
   }
 
-  @override
+ /* @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
@@ -250,5 +222,32 @@ class Result extends StatelessWidget {
         ], //<Widget>[]
       ), //Column
     ); //Center
+  }*/
+
+
+ @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+           //Text
+          Text(
+            'תודה ששיתפת',
+            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+          ), //Text
+          FlatButton(
+            child: Text(
+              'חזור למסך הבית',
+            ), //Text
+            textColor: Colors.blue,
+            onPressed: ()=>{Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (BuildContext context) => Home()))},
+          ), //FlatButton
+        ], //<Widget>[]
+      ), //Column
+    ); //Center
   }
+
 }

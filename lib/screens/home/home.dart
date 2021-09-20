@@ -38,12 +38,20 @@ class _HomeState extends State<Home>{
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'home',
+
       home: Builder(
         builder: (context){
           var size=Size.square(min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height));
 
           return Scaffold(
+              backgroundColor: Colors.white,
+
               appBar: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0.0,
+                iconTheme: IconThemeData(
+                    color: Colors.black
+                ),
                 leading: Builder(
                   builder: (context) => GestureDetector(
                       onTap: (){ Scaffold.of(context).openDrawer();
@@ -144,6 +152,19 @@ class _HomeState extends State<Home>{
                           ///Navigator.pop(context);
                         },
                       ),
+
+                      ListTile(
+                        title: const Text("מפה"),
+                        onTap: () {
+                          Future<void> _signOut() async {
+                            await FirebaseAuth.instance.signOut();
+                          }
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (BuildContext context) => MapPage()));
+                          ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
+                          ///Navigator.pop(context);
+                        },
+                      ),
                       ListTile(
                         title: const Text("התנתק"),
                         onTap: () {
@@ -152,18 +173,6 @@ class _HomeState extends State<Home>{
                           }
                           Navigator.of(context).pushReplacement(MaterialPageRoute(
                               builder: (BuildContext context) => Login()));
-                          ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
-                          ///Navigator.pop(context);
-                        },
-                      ),
-                      ListTile(
-                        title: const Text("מפה!"),
-                        onTap: () {
-                          Future<void> _signOut() async {
-                            await FirebaseAuth.instance.signOut();
-                          }
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(
-                              builder: (BuildContext context) => MapPage()));
                           ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
                           ///Navigator.pop(context);
                         },
@@ -186,7 +195,7 @@ class _HomeState extends State<Home>{
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.face),
-                      label: 'פסיכנוך',
+                      label: 'פסיכוחינוך',
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.accessibility_new_outlined),
