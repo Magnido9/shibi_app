@@ -1,4 +1,5 @@
 import 'package:application/screens/caretaker/home.dart';
+import 'package:application/screens/checkin/checkin.dart';
 import 'package:application/screens/login/homescreen.dart';
 import 'package:application/screens/login/password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // await AuthRepository.instance().signOut();
-  runApp(Instructions());
+  runApp(Feelings());
   // runApp(Wrapper());
   }
 

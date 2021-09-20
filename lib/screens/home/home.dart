@@ -41,7 +41,8 @@ class _HomeState extends State<Home>{
 
       home: Builder(
         builder: (context){
-          var size=Size.square(min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height));
+          var x = min(MediaQuery.of(context).size.width,MediaQuery.of(context).size.height);
+          var size=Size(x,0.7*x);
 
           return Scaffold(
               backgroundColor: Colors.white,
@@ -61,25 +62,29 @@ class _HomeState extends State<Home>{
                 ) ,
               ),
               body: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Stack(
                     children: [
-                      TweenAnimationBuilder<double>(
-                          tween: Tween<double>(begin: 0, end: 0.7),
-                          duration: Duration(seconds: 1),
-                          builder: (BuildContext context, double percent, Widget? child){
-                            return CustomPaint(
-                                painter: _LoadBar(percent: percent,size: size),
-                                size: size
-                            );
-                          }
+                      Container(
+                          child:TweenAnimationBuilder<double>(
+                              tween: Tween<double>(begin: 0, end: 0.7),
+                              duration: Duration(seconds: 1),
+                              builder: (BuildContext context, double percent, Widget? child){
+                                return CustomPaint(
+                                    painter: _LoadBar(percent: percent,size: size),
+                                    size: size
+                                );
+                              }
+                          ),
+                          // color:Colors.green
                       ),
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children:  [Container(
                             // color: Colors.green,
                               width: size.width*0.5,
-                              height: size.height*0.5,
+                              height: size.height,
                               child: FutureBuilder<AvatarData>(
                                 future: _adata,
                                 builder: (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
@@ -94,38 +99,24 @@ class _HomeState extends State<Home>{
                       )
                     ],
                   ),
+                  Container(height: 30,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: _TaskIcon(
-                          daily: true,
-                          text: 'test',
-                          slices: 5,
-                          complete: 3,
+                      Flexible(
+                        flex:1,
+                        child: Container(
+                          width: 100,
+                          height: 100,
+                          child: _TaskIcon(
+                            daily: true,
+                            text: 'test',
+                            slices: 5,
+                            complete: 3,
+                          ),
                         ),
                       ),
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: _TaskIcon(
-                          surprise: true,
-                          text: 'test',
-                          slices: 5,
-                          complete: 3,
-                        ),
-                      ),
-                      Container(
-                        height: 100,
-                        width: 100,
-                        child: _TaskIcon(
-                          text: 'test',
-                          slices: 5,
-                          complete: 3,
-                        ),
-                      ),
+
                     ],
                   )
 
@@ -296,8 +287,8 @@ class _TaskIcon extends StatelessWidget{
           return Column(
             children: [
               Container(
-                height: constraints.maxHeight*0.7,
-                width: constraints.maxWidth*0.7,
+                height: 0.7*min(constraints.maxWidth,constraints.maxHeight),
+                width: 0.7*min(constraints.maxWidth,constraints.maxHeight),
                 child:Stack(children:[
                   CustomPaint(
                     size: Size.square(0.7*min(constraints.maxWidth,constraints.maxHeight)),
@@ -351,7 +342,7 @@ class _PaintTask extends CustomPainter {
     canvas.drawArc(Rect.fromCircle(center:c , radius: radius), -pi/2,2*pi*complete/slices, false, painter..color = Colors.green);
 
 
-    if( slices>1){
+    if( slices>1 && slices<21){
       for (int i=0; i<slices; i++){
         var painter2=Paint()
           ..color = Colors.black
