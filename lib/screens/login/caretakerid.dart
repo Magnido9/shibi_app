@@ -53,10 +53,40 @@ class CareTakerId extends StatefulWidget {
 class _CareTakerIdState extends State<CareTakerId>{
   TextEditingController pid = new TextEditingController();
   TextEditingController name = new TextEditingController();
+  FocusNode? pin2FocusNode;
+  FocusNode? pin3FocusNode;
+  FocusNode? pin4FocusNode;
+  FocusNode? pin5FocusNode;
+  int code=0;
+
+  @override
+  void initState() {
+    super.initState();
+    code=0;
+    pin2FocusNode = FocusNode();
+    pin3FocusNode = FocusNode();
+    pin4FocusNode = FocusNode();
+    pin5FocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pin2FocusNode!.dispose();
+    pin3FocusNode!.dispose();
+    pin4FocusNode!.dispose();
+    pin5FocusNode!.dispose();
+  }
+
+  void nextField(String value, FocusNode? focusNode) {
+    if (value.length == 1) {
+      focusNode!.requestFocus();
+    }
+  }
 
   @override
   Widget build(BuildContext context){
-    return  Scaffold(
+    return  /*Scaffold(
       backgroundColor: Colors.white,
       body:  Column(
         children: [
@@ -101,7 +131,181 @@ class _CareTakerIdState extends State<CareTakerId>{
         ],
       )
 
-    );
+    )*/
+        Material(
+          child: Column(
+            children: [Text(
+              "\n\n\n\nשלום דנה",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                fontFamily: "Assistant",
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+              Text(
+                "?לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך\n\n",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontFamily: "Assistant",
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              SizedBox(height:  MediaQuery.of(context).size.height * 0.15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      width: 57,
+                      height: 108,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
+                      ),
+    child: SizedBox(
+                    width: 60,
+                    child: TextFormField(
+                      autofocus: true,
+                      obscureText: true,
+                      style: TextStyle(color: Color(0xff6f6f6f),
+                        fontSize: 36,
+                        fontFamily: "Assistant",
+                        fontWeight: FontWeight.w700,),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+
+                      onChanged: (value) {
+                        code=code*10+(int.parse(value));
+                        nextField(value, pin2FocusNode);
+                      },
+                    ),
+                  )),
+    Container(
+    width: 57,
+    height: 108,
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(8),
+    border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
+    ),
+    child: SizedBox(
+                    width: 60,
+                    child: TextFormField(
+                      focusNode: pin2FocusNode,
+                      obscureText: true,
+                      style: TextStyle(color: Color(0xff6f6f6f),
+                        fontSize: 36,
+                        fontFamily: "Assistant",
+                        fontWeight: FontWeight.w700,),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        code=code*10+(int.parse(value));
+                        nextField(value, pin3FocusNode);
+                        },
+                    ),
+                  )),
+                  Container(
+                      width: 57,
+                      height: 108,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
+                      ),
+                      child: SizedBox(
+                    width: (60),
+                    child: TextFormField(
+                      focusNode: pin3FocusNode,
+                      obscureText: true,
+                      style: TextStyle(
+                        color: Color(0xff6f6f6f),
+                        fontSize: 36,
+                        fontFamily: "Assistant",
+                        fontWeight: FontWeight.w700,),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        code=code*10+(int.parse(value));
+                        nextField(value, pin4FocusNode);},
+                    ),
+                  )),
+    Container(
+    width: 57,
+    height: 108,
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(8),
+    border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
+    ),
+    child: SizedBox(
+                    width: (60),
+                    child: TextFormField(
+                      focusNode: pin4FocusNode,
+                      obscureText: true,
+                      style: TextStyle(color: Color(0xff6f6f6f),
+                        fontSize: 36,
+                        fontFamily: "Assistant",
+                        fontWeight: FontWeight.w700,),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+    code=code*10+(int.parse(value)); nextField(value, pin5FocusNode);},
+                    ),
+                  )),
+
+    Container(
+    width: 57,
+    height: 108,
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(8),
+    border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
+    ),
+    child: SizedBox(
+                    width: (60),
+                    child: TextFormField(
+                      focusNode: pin5FocusNode,
+                      obscureText: true,
+                      style: TextStyle(color: Color(0xff6f6f6f),
+                        fontSize: 36,
+                        fontFamily: "Assistant",
+                        fontWeight: FontWeight.w700,),
+                      keyboardType: TextInputType.number,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        if (value.length == 1) {
+                          code=code*10+  (int.parse(value));
+                          print(code);
+
+                          pin5FocusNode!.unfocus();
+                          // Then you need to check is the code is correct or not
+                        }
+                      },
+                    ),
+                  )),
+                ],
+              ),
+              SizedBox(height:  MediaQuery.of(context).size.height * 0.1),
+              MaterialButton(
+                color: Color(0xfff1b31c),
+                shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
+                onPressed:  (){  _Connection()._getCare(code,name.text.trim(), context);},
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    '               שלח               ',
+                    style:TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontFamily: "Assistant",
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
   }
 }
 
