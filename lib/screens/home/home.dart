@@ -94,14 +94,39 @@ class _HomeState extends State<Home>{
                       )
                     ],
                   ),
-                  Container(
-                    height: 100,
-                    width: 100,
-                    child: _TaskIcon(
-                      text: 'test',
-                      slices: 5,
-                      complete: 3,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                        child: _TaskIcon(
+                          daily: true,
+                          text: 'test',
+                          slices: 5,
+                          complete: 3,
+                        ),
+                      ),
+                      Container(
+                        height: 100,
+                        width: 100,
+                        child: _TaskIcon(
+                          surprise: true,
+                          text: 'test',
+                          slices: 5,
+                          complete: 3,
+                        ),
+                      ),
+                      Container(
+                        height: 100,
+                        width: 100,
+                        child: _TaskIcon(
+                          text: 'test',
+                          slices: 5,
+                          complete: 3,
+                        ),
+                      ),
+                    ],
                   )
 
                 ],
@@ -265,15 +290,36 @@ class _TaskIcon extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    DateTime date =DateTime.now();
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints){
           return Column(
             children: [
-              CustomPaint(
-                size: Size.square(0.7*min(constraints.maxWidth,constraints.maxHeight)),
-                painter: _PaintTask(slices: slices, complete: complete),
+              Container(
+                height: constraints.maxHeight*0.7,
+                width: constraints.maxWidth*0.7,
+                child:Stack(children:[
+                  CustomPaint(
+                    size: Size.square(0.7*min(constraints.maxWidth,constraints.maxHeight)),
+                    painter: _PaintTask(slices: slices, complete: complete),
+                  ),
+                  Center(
+                    child: Container(
+
+                      height: 0.5*constraints.maxHeight,
+                      width: 0.5*constraints.maxWidth,
+                      child: Center(
+                        child:  Text((surprise) ? '?' : ((daily)? date.day.toString()+'/'+(date.month.toString()) : "") ,style: TextStyle(fontWeight: FontWeight.bold) ,),
+                      ),
+                    ),
+                  )
+                ]
+
+                ),
               ),
-              if(text!=null) Text((text ?? ''))
+              if(daily) Text('עדכון יומי') ,
+              if(surprise) Text('הפתעה') ,
+              if(text!=null && !daily && !surprise) Text((text ?? ''))
             ],
           );
         }
