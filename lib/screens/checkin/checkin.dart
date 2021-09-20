@@ -45,18 +45,20 @@ class _FeelingState extends State<FeelingPage>{
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(4),
+          Center(
+            child:Container(
+              margin: EdgeInsets.all(4),
 
-            child: GestureDetector(
-              child: CustomPaint(
-                painter: _FeelingPainter(
-                   offset: offset),
-                size: _sizePainter,
+              child: GestureDetector(
+                child: CustomPaint(
+                  painter: _FeelingPainter(
+                      offset: offset),
+                  size: _sizePainter,
+                ),
+                onPanStart: _onPanStart,
+                onPanUpdate: _onPanUpdate,
+                onPanEnd: _onPanEnd,
               ),
-              onPanStart: _onPanStart,
-              onPanUpdate: _onPanUpdate,
-              onPanEnd: _onPanEnd,
             ),
           ),
 
@@ -91,13 +93,21 @@ class _FeelingPainter extends CustomPainter{
 
   @override
   void paint(Canvas canvas, Size size) {
-
+    Offset center= Offset(size.width/2, size.height/2);
+    double radius =  size.width/2;
+    double phea = atan( (center.dx-offset.dx) / ( center.dy - offset.dy) );
+    phea= (offset.dy>center.dy) ? ((offset.dx< center.dx)? (phea+pi) :(phea-pi)) : phea;
+    double phea_abs = (phea<0) ? -phea : phea;
+    print((phea/pi).toString()+' pi');
     var painter = Paint()
       ..style = PaintingStyle.stroke
-      ..color =Color.alphaBlend(Colors.blue, Colors.green)
-      ..strokeWidth = 4;
-    Offset center= Offset(size.width/2, size.height/2);
-    canvas.drawCircle(center, size.width/2, painter);
+      ..color =Color.alphaBlend(Color(0xff8EB0C3).withOpacity(phea_abs/pi), Color(0xffECA5DC).withOpacity(1-phea_abs/pi))
+      ..strokeWidth = 20;
+    canvas.drawCircle(center,radius, painter);
+    canvas.drawCircle(center,radius*0.8, painter..style = PaintingStyle.fill);
+    canvas.drawCircle(center+ Offset(-radius*sin(phea),-radius*cos(phea)),15, painter..color= Colors.grey);
+    canvas.drawCircle(center,radius*0.3, painter..color= Colors.white);
+
   }
 
   @override
