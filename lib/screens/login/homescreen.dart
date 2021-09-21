@@ -136,7 +136,7 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> {
   final _items = <Widget>[
-  Center(
+    Center(
   child: Column(children:<Widget>[
 
  Text(
@@ -171,7 +171,8 @@ class HomePageState extends State<HomePage> {
 
         ]
         )
-    ),Center(
+    ),
+    Center(
         child: Column(children:<Widget>[
 
 
@@ -238,18 +239,31 @@ class HomePageState extends State<HomePage> {
     ));
   }
 
+  Color _chooseColor(){
+    int i= _currentPageNotifier.value;
+    if(i==0) return Color(0xff8EC3AA);
+    if(i==1) return Color(0xff35258A);
+    if(i==2) return Color(0xffF1B31C);
+    else return Color(0xffFE615E);
+
+
+  }
+
   _buildPageView() {
     return  Container(
       width: 330,
-      height: 550,
+      height: 400,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: Color(0xff8ec3aa), width: 9, ),
+        border: Border.all(color: _chooseColor(), width: 9, ),
       ),
       child: PageView.builder(
           scrollDirection: Axis.horizontal,
           onPageChanged: (int index) {
             _currentPageNotifier.value = index;
+            setState(() {
+
+            });
           },
           itemCount: 4,
           controller: _pageController,
