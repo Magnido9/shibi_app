@@ -17,8 +17,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // await AuthRepository.instance().signOut();
-  runApp(Instructions());
-  // runApp(Wrapper());
+  //runApp(Feelings());
+  runApp(Wrapper());
   }
 
 

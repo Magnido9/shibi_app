@@ -134,9 +134,14 @@ class _CareTakerIdState extends State<CareTakerId>{
     )*/
         Material(
           child: Column(
-            children: [Text(
-              "\n\n\n\nשלום דנה",
-              textAlign: TextAlign.left,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Align(
+              alignment: Alignment.centerRight,
+              child:
+              Text(
+              "היי",
+              //textAlign: TextAlign.right,
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 30,
@@ -144,16 +149,23 @@ class _CareTakerIdState extends State<CareTakerId>{
                 fontWeight: FontWeight.w700,
               ),
             ),
+              ),
+              Align(
+                alignment: Alignment.centerRight,
+                child:
               Text(
-                "?לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך\n\n",
-                textAlign: TextAlign.left,
+                "?לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך",
+                //textAlign: TextAlign.right,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 12,
+                  fontSize: 18,
                   fontFamily: "Assistant",
                   fontWeight: FontWeight.w700,
                 ),
               ),
+
+              ),
+
               SizedBox(height:  MediaQuery.of(context).size.height * 0.15),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -287,12 +299,15 @@ class _CareTakerIdState extends State<CareTakerId>{
               ),
               SizedBox(height:  MediaQuery.of(context).size.height * 0.1),
               MaterialButton(
-                color: Color(0xfff1b31c),
+
+                color: Color(0xFF1A237E),
                 shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
                 onPressed:  (){  _Connection()._getCare(code,name.text.trim(), context);},
-                child: Padding(
+
+
+                  child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text(
+                  child:  Text(
                     '               שלח               ',
                     style:TextStyle(
                       color: Colors.white,

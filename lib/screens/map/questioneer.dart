@@ -207,8 +207,6 @@ class Answer extends StatelessWidget {
         shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(25) ,side: BorderSide(color:Color(0xff8ec3aa), width: 2) ),
         color: Colors.white,
         splashColor: Colors.yellow[200],
-
-        //color: Colors.red.withOpacity(0),
         textColor: Colors.black,
         child: Text(answerText),
         onPressed: (){selectHandler();},
