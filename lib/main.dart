@@ -5,6 +5,7 @@ import 'package:application/screens/login/password.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/login/login.dart';
+import 'screens/login/caretakerid.dart';
 import 'screens/home/home.dart';
 import 'services/auth_services.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // await AuthRepository.instance().signOut();
-  //runApp(Feelings());
-  runApp(Wrapper());
+  runApp(Password(first:true));
+  // runApp(Wrapper());
   }
 
 
