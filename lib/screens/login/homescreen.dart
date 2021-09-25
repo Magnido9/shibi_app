@@ -143,8 +143,8 @@ class HomePageState extends State<HomePage> {
         "\n?איך היא גורמת לך להרגיש\n\n",
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: Colors.black,
-          fontSize: 14,
+          color: Color(0xff35258a),
+          fontSize: 18,
           fontFamily: "Assistant",
           fontWeight: FontWeight.w700,
         ),
@@ -161,8 +161,8 @@ class HomePageState extends State<HomePage> {
               "\n?מה משמר ומעצים אותה\n\n",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 14,
+                color: Color(0xff35258a),
+                fontSize: 18,
                 fontFamily: "Assistant",
                 fontWeight: FontWeight.w700,
 
@@ -180,8 +180,8 @@ class HomePageState extends State<HomePage> {
               "\n?איך ניתן להתגבר עליה\n\n",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.black,
-                fontSize: 14,
+                color: Color(0xff35258a),
+                fontSize: 18,
                 fontFamily: "Assistant",
                 fontWeight: FontWeight.w700,
               ),
@@ -205,60 +205,70 @@ class HomePageState extends State<HomePage> {
   }
 
   _buildBody() {
-    return Center(child:Column(
+    return Stack(children: <Widget>[_buildPageView(),
+      Positioned(
+      right:MediaQuery.of(context).size.width*0.05 ,
+      child:
+      Align(
+        alignment: Alignment.topRight,child:Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+
       children: <Widget>[
+
         Text(
           "\nשלום דנה",
-          textAlign: TextAlign.right,
+          textAlign: TextAlign.left,
           style: TextStyle(
             color: Colors.black,
             fontSize: 30,
             fontFamily: "Assistant",
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w900,
           ),
-        ),
-        Text(
-          "\nבאפליקציה הזו אנו מציעים\n ידע חשוב על החרדה שלך\n\n\n\n",
-          textAlign: TextAlign.center,
+        ), Text(
+          "\nהאפליקציה הזו מציעה",
+          textAlign: TextAlign.left,
           style: TextStyle(
             color: Colors.black,
-            fontSize: 12,
+            fontSize: 18,
             fontFamily: "Assistant",
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w900,
+          ),
+        ), Text(
+          "ידע חשוב על החרדה שלך",
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 18,
+            fontFamily: "Assistant",
+            fontWeight: FontWeight.w900,
           ),
         ),
-        Stack(
-          children: <Widget>[
 
-            _buildPageView(),
           ],
-        ),
-
-        _buildCircleIndicator(),
+        ))),
+        Align( alignment:Alignment.centerLeft,child:_buildCircleIndicator()),
       ],
-    ));
+    );
   }
 
   Color _chooseColor(){
     int i= _currentPageNotifier.value;
-    if(i==0) return Color(0xff8EC3AA);
-    if(i==1) return Color(0xff35258A);
-    if(i==2) return Color(0xffF1B31C);
-    else return Color(0xffFE615E);
+    if(i==0) return Color(0x42a6d6c3);
+    if(i==1) return Color(0x4271e5b7);
+    if(i==2) return Color(0x4280b2cf);
+    else return Color(0x428280cf);
 
 
   }
 
   _buildPageView() {
-    return  Container(
-      width: 330,
-      height: 400,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: _chooseColor(), width: 9, ),
-      ),
-      child: PageView.builder(
-          scrollDirection: Axis.horizontal,
+    return Stack(
+        children:[
+
+     Positioned(top:MediaQuery.of(context).size.height*0.4,child: Container(width:MediaQuery.of(context).size.width,height:MediaQuery.of(context).size.height/2,child:Center(child:PageView.builder(
+          scrollDirection: Axis.vertical,
           onPageChanged: (int index) {
             _currentPageNotifier.value = index;
             setState(() {
@@ -282,37 +292,29 @@ class HomePageState extends State<HomePage> {
                   child: Column(children:<Widget>[
 
                     Text(
-                      "\n\n\n\n:ועכשיו, הגיע הזמן לעצב את האוואטר שלך\n\n\n",
+                      "\nבעזרת ליווי, כלים ותרגול \nנעבוד יחד עד שתלמדי להכיר ולנהל\nאת החרדה שלך בעצמך:\n\n",
+                      textDirection: TextDirection.rtl,
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
+                        color: Color(0xff35258a),
+                        fontSize: 18,
                         fontFamily: "Assistant",
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
-                    Column(children:<Widget>[Text(
-                          "\n\n",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: "Assistant",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                    Column(children:<Widget>[
                       MaterialButton(
-                        color: Colors.lightGreenAccent,
-                        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(10) ),
+                        color: Color(0xff35258a),
+                        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
                         onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (BuildContext context) => Avatar(first:true)));},
                         child: Padding(
-                          padding: const EdgeInsets.all(50),
+                          padding: const EdgeInsets.all(10),
                           child: Text(
-                            '!עצב',
+                            'אני מוכנה',
                             style:TextStyle(
-                              color: Colors.black,
-                              fontSize: 24,
+                              color: Colors.white,
+                              fontSize: 18,
                               fontFamily: "Assistant",
                               fontWeight: FontWeight.w700,
                             ),
@@ -331,8 +333,23 @@ class HomePageState extends State<HomePage> {
             }
             return _items[index];
           },
-          ),
-    );
+          ),)
+        )),
+          Positioned(
+              left:-((0.8125*MediaQuery.of(context).size.height) -MediaQuery.of(context).size.width)/2,
+              top: -0.1
+                  *MediaQuery.of(context).size.height,
+              child:Container(
+                  width: 0.8125
+                      *MediaQuery.of(context).size.height,
+                  height: 0.8125
+                      *MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color:_chooseColor(),
+                  ))),
+
+        ]);
   }
 
   _buildCircleIndicator() {
@@ -342,7 +359,8 @@ class HomePageState extends State<HomePage> {
       bottom: 0.0,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: CirclePageIndicator(
+        child: RotatedBox(quarterTurns: 1,
+        child:CirclePageIndicator(
           itemCount: 4,
           currentPageNotifier: _currentPageNotifier,
           size: 20,
@@ -351,7 +369,7 @@ class HomePageState extends State<HomePage> {
           selectedDotColor: Color(0xff8ec3aa) ,
         ),
       ),
-    );
+    ));
   }
 
 
