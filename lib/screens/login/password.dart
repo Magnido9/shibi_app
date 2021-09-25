@@ -114,7 +114,51 @@ class _MyHomePageState extends State<PasswordPage> {
                   );
                 },
               ),
-              button,
+              Center(child:Stack(children:[
+                Container(width:200,
+                    height: 39,
+
+                    child:MaterialButton(
+                        onPressed: (){
+                          if(widget.first){_submit();}
+                        else{_continue();}
+                          }
+                        ,
+
+                        minWidth: 200,
+                        height: 39,
+                        shape:RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
+                        color: Color(0xff35258a),
+                        child: Stack(children:<Widget>[
+
+                          Positioned(
+                            top:5,
+                            right: 50,
+                            child: Text(
+                              "המשך",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: "Assistant",
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          )
+                        ]
+                        )
+                    )
+                ),
+                Positioned(
+                    top:5,
+                    right:165,
+                    child: Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(36),
+                          border: Border.all(color: Colors.white, width: 9 ),
+                        ))),])),
             ],
           )
     ))],
