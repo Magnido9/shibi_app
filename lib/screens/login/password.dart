@@ -1,6 +1,7 @@
 library authentication;
 import 'package:application/screens/Avatar/avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../services/auth_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -45,17 +46,7 @@ class _MyHomePageState extends State<PasswordPage> {
     var button =widget.first ? ElevatedButton(onPressed: _submit, child: Text('submit')) :
                                 Container();
     return Scaffold(
-      appBar: AppBar(
-          leading: Builder(
-            builder: (context) => GestureDetector(
-                onTap: (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => Login()));
-                },
-                child: Icon(Icons.keyboard_return)
-            ),
-          ) ,
-          title: Text(widget.title)
-      ),
+
       body:Stack(
         children: [
           CustomPaint(
@@ -65,6 +56,37 @@ class _MyHomePageState extends State<PasswordPage> {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
+              Text(
+                "ציירי את הסיסמה שלך",
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  fontFamily: "Assistant",
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+    Text(
+    ",בכדי שנוכל לשמור על פרטיותך \n    .צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
+
+      textAlign: TextAlign.right,
+    style: TextStyle(
+    color: Colors.black,
+    fontSize: 16,
+    fontFamily: "Assistant",
+    fontWeight: FontWeight.w700,
+    ),
+    ),Text(
+                "הסיסמא היא אישית לך \nואינה ניתנת לגורמים אחרים",
+
+                textAlign: TextAlign.right,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: "Assistant",
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints){
                   return Center(
