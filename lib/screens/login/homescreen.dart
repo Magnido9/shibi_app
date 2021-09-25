@@ -5,111 +5,10 @@ import '../Avatar/avatar.dart';
 import '../home/home.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 
-/*
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("THIS IS HOME"),
-      ),
-    );
-  }
-}
-*/
-
-/*
-/// This is the main application widget.
-class Instructions extends StatelessWidget {
-   const Instructions({Key? key}) : super(key: key);
-  static const String _title = 'Flutter Code Sample';
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: _title,
-      home: Scaffold(
-        body:  _MyStatelessWidget(),
-
-      ),
-    );
-  }
-
-}
-
-/// This is the stateless widget that the main application instantiates.
-class _MyStatelessWidget extends StatelessWidget {
-  const _MyStatelessWidget({Key? key}) : super(key: key);
-  final _currentPageNotifier = ValueNotifier<int>(0);
-  void fr(){}
-  @override
-  Widget build(BuildContext context) {
-    final PageController controller = PageController(initialPage: 0);
-    return Column(
-    children: <Widget>[PageView(
-      /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-      /// Use [Axis.vertical] to scroll vertically.
-      scrollDirection: Axis.horizontal,
-      controller: controller,
-      onPageChanged: (int index) {
-          _currentPageNotifier.value = index;
-        },
-      children:  <Widget>[
-        Center(
-          child: Text('שלום!'),
-        ),
-        Center(
-          child: Text('זה אפליקציה שתתקן לך חרדה'),
-        ),
-        Center(
-          child: Column(
-              children: <Widget>[
-                 Text('בהצלחה'),
-                ElevatedButton(
-                    onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => Avatar(first:true)));},
-                    child: Text("יאללה בלגן"))
-          ])
-        )
-      ],
-    ),
-    Positioned(
-    left: 0.0,
-    right: 0.0,
-    bottom: 0.0,
-    child: Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: CirclePageIndicator(
-    itemCount: 3,
-    currentPageNotifier: _currentPageNotifier,
-    ),
-    ),
-    )
- ],
-    );
-
-  }
-}
-
-
-
-void _next(BuildContext context){
-  Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (BuildContext context) => Home()));
-}*/
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
+
+import 'privacy.dart';
 
 
 class Instructions extends StatelessWidget {
@@ -266,6 +165,19 @@ class HomePageState extends State<HomePage> {
   _buildPageView() {
     return Stack(
         children:[
+          Positioned(
+              left:-((0.8125*MediaQuery.of(context).size.height) -MediaQuery.of(context).size.width)/2,
+              top: -0.1
+                  *MediaQuery.of(context).size.height,
+              child:Container(
+                  width: 0.8125
+                      *MediaQuery.of(context).size.height,
+                  height: 0.8125
+                      *MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color:_chooseColor(),
+                  ))),
 
      Positioned(top:MediaQuery.of(context).size.height*0.4,child: Container(width:MediaQuery.of(context).size.width,height:MediaQuery.of(context).size.height/2,child:Center(child:PageView.builder(
           scrollDirection: Axis.vertical,
@@ -302,12 +214,11 @@ class HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.w800,
                       ),
                     ),
-                    Column(children:<Widget>[
                       MaterialButton(
                         color: Color(0xff35258a),
                         shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
                         onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) => Avatar(first:true)));},
+                            builder: (BuildContext context) => Privacy()));},
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
@@ -320,10 +231,10 @@ class HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                      )
 
 
-                      ]
+
+
                         )
 
 
@@ -335,29 +246,12 @@ class HomePageState extends State<HomePage> {
           },
           ),)
         )),
-          Positioned(
-              left:-((0.8125*MediaQuery.of(context).size.height) -MediaQuery.of(context).size.width)/2,
-              top: -0.1
-                  *MediaQuery.of(context).size.height,
-              child:Container(
-                  width: 0.8125
-                      *MediaQuery.of(context).size.height,
-                  height: 0.8125
-                      *MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color:_chooseColor(),
-                  ))),
 
         ]);
   }
 
   _buildCircleIndicator() {
-    return Positioned(
-      left: 0.0,
-      right: 0.0,
-      bottom: 0.0,
-      child: Padding(
+    return  Padding(
         padding: const EdgeInsets.all(8.0),
         child: RotatedBox(quarterTurns: 1,
         child:CirclePageIndicator(
@@ -369,7 +263,7 @@ class HomePageState extends State<HomePage> {
           selectedDotColor: Color(0xff8ec3aa) ,
         ),
       ),
-    ));
+    );
   }
 
 
