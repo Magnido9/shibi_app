@@ -133,30 +133,9 @@ class _CareTakerIdState extends State<CareTakerId>{
 
     )*/
         Material(
-          child:Stack(
-            children:[
-          Positioned(
-          left: -0.5
-              *MediaQuery.of(context).size.width,
-          top: -0.01
-              *MediaQuery.of(context).size.height,
-          child: Align(
-          alignment: Alignment.topLeft,
-            child: Container(
-              width: 0.8125
-              *MediaQuery.of(context).size.height,
-              height: 0.8125
-                  *MediaQuery.of(context).size.height,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0x236f6ca7),
-              ),
-            ),
-          ),
-        ), Column(
+          child: Column(
             children: [Text(
-
-              "\n\n\n\n                                             היי",
+              "\n\n\n\nשלום דנה",
               textAlign: TextAlign.left,
               style: TextStyle(
                 color: Colors.black,
@@ -166,11 +145,11 @@ class _CareTakerIdState extends State<CareTakerId>{
               ),
             ),
               Text(
-                "?לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך\n",
+                "?לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך\n\n",
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 18,
+                  fontSize: 12,
                   fontFamily: "Assistant",
                   fontWeight: FontWeight.w700,
                 ),
@@ -183,7 +162,6 @@ class _CareTakerIdState extends State<CareTakerId>{
                       width: 57,
                       height: 108,
                       decoration: BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
                       ),
@@ -209,7 +187,6 @@ class _CareTakerIdState extends State<CareTakerId>{
     width: 57,
     height: 108,
     decoration: BoxDecoration(
-      color: Colors.white,
     borderRadius: BorderRadius.circular(8),
     border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
     ),
@@ -234,7 +211,6 @@ class _CareTakerIdState extends State<CareTakerId>{
                       width: 57,
                       height: 108,
                       decoration: BoxDecoration(
-                        color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
                         border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
                       ),
@@ -259,7 +235,6 @@ class _CareTakerIdState extends State<CareTakerId>{
     width: 57,
     height: 108,
     decoration: BoxDecoration(
-      color: Colors.white,
     borderRadius: BorderRadius.circular(8),
     border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
     ),
@@ -283,7 +258,6 @@ class _CareTakerIdState extends State<CareTakerId>{
     width: 57,
     height: 108,
     decoration: BoxDecoration(
-      color: Colors.white,
     borderRadius: BorderRadius.circular(8),
     border: Border.all(color: Color(0xff8ec3aa), width: 4, ),
     ),
@@ -311,9 +285,9 @@ class _CareTakerIdState extends State<CareTakerId>{
                   )),
                 ],
               ),
-              SizedBox(height:  MediaQuery.of(context).size.height * 0.05),
+              SizedBox(height:  MediaQuery.of(context).size.height * 0.1),
               MaterialButton(
-                color: Color(0xff35258a),
+                color: Color(0xfff1b31c),
                 shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
                 onPressed:  (){  _Connection()._getCare(code,name.text.trim(), context);},
                 child: Padding(
@@ -331,7 +305,7 @@ class _CareTakerIdState extends State<CareTakerId>{
               )
             ],
           ),
-        ]));
+        );
   }
 }
 

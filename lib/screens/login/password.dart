@@ -40,7 +40,7 @@ class _MyHomePageState extends State<PasswordPage> {
   @override
   Widget build(BuildContext context) {
     var _width = MediaQuery.of(context).size.width;
-    var _sizePainter = Size.square(_width);
+    var sizeOfPattern = 0.6;
     var button =widget.first ? ElevatedButton(onPressed: _submit, child: Text('submit')) :
                                 Container();
     return Scaffold(
@@ -55,25 +55,38 @@ class _MyHomePageState extends State<PasswordPage> {
           ) ,
           title: Text(widget.title)
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.all(4),
-
-            child: GestureDetector(
-              child: CustomPaint(
-                painter: _LockScreenPainter(
-                    codes: codes, offset: offset, onSelect: _onSelect),
-                size: _sizePainter,
-              ),
-              onPanStart: _onPanStart,
-              onPanUpdate: _onPanUpdate,
-              onPanEnd: _onPanEnd,
-            ),
+      body:Stack(
+        children: [
+          CustomPaint(
+            painter: _Painter(),
+            size: MediaQuery.of(context).size,
           ),
-          button,
-          if(widget.first) ElevatedButton(child: Text("CLEAR CODE"), onPressed: _clearCodes)
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints){
+                  return Center(
+                    child: Container(
+                      margin: EdgeInsets.all(4),
+
+                      child: GestureDetector(
+                        child: CustomPaint(
+                          painter: _LockScreenPainter(
+                              codes: codes, offset: offset, onSelect: _onSelect),
+                          size: Size.square(constraints.maxWidth*sizeOfPattern),
+                        ),
+                        onPanStart: _onPanStart,
+                        onPanUpdate: _onPanUpdate,
+                        onPanEnd: _onPanEnd,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              button,
+            ],
+          )
         ],
       ),
     );
@@ -86,7 +99,7 @@ class _MyHomePageState extends State<PasswordPage> {
 
   _onPanEnd(DragEndDetails event) async {
     setState(() => {offset = Offset(0, 0)});
-    await _continue();
+    if(!widget.first) await _continue();
     if(!widget.first) _clearCodes();
   }
 
@@ -102,7 +115,7 @@ class _MyHomePageState extends State<PasswordPage> {
         .user
         ?.uid;
     await FirebaseFirestore.instance.collection("users").doc(pid).set({
-      'password' : codes.join() },SetOptions(merge: true));
+      'password' : codes.join(' ') },SetOptions(merge: true));
     Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions()));
 
   }
@@ -138,8 +151,8 @@ class _MyHomePageState extends State<PasswordPage> {
 }
 
 class _LockScreenPainter extends CustomPainter {
-  final int _total = 9;
-  final int _col = 3;
+  final int _total = 16;
+  final int _col = 4;
   Size size = Size(0, 0);
 
   final List<int> codes;
@@ -167,11 +180,9 @@ class _LockScreenPainter extends CustomPainter {
       var _offset = _getOffetByIndex(i);
       var _color = _getColorByIndex(i);
 
-      var _radiusIn = _sizeCode / 2.0 * 0.2;
-      _drawCircle(canvas, _offset, _radiusIn, _color, true);
 
       var _radiusOut = _sizeCode / 2.0 * 0.6;
-      _drawCircle(canvas, _offset, _radiusOut, _color);
+      _drawCircle(canvas, _offset, _radiusOut,i);
 
       var _pathGesture = _getCirclePath(_offset, _radiusOut);
       if (offset != Offset(0, 0) && _pathGesture.contains(offset)) onSelect(i);
@@ -195,18 +206,20 @@ class _LockScreenPainter extends CustomPainter {
       ..addOval(_rect);
   }
 
-  void _drawCircle(Canvas canvas, Offset offset, double radius, Color color,
-      [bool isDot = false]) {
+  void _drawCircle(Canvas canvas, Offset offset, double radius, int i) {
     var _path = _getCirclePath(offset, radius);
     var _painter = this._painter
-      ..color = color
-      ..style = isDot ? PaintingStyle.fill : PaintingStyle.stroke;
+      ..color = _getColorByIndex(i,def:true)
+      ..style =PaintingStyle.fill;
     canvas.drawPath(_path, _painter);
+    _path = _getCirclePath(offset, radius*0.5);
+    canvas.drawPath(_path, _painter..color = _getColorByIndex(i,def: false));
+
   }
 
   void _drawLine(Canvas canvas, Offset start, Offset end) {
     var _painter = this._painter
-      ..color = Colors.grey.shade700
+      ..color = Color(0xff35258A)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 6.0;
     var _path = Path();
@@ -215,8 +228,9 @@ class _LockScreenPainter extends CustomPainter {
     canvas.drawPath(_path, _painter);
   }
 
-  Color _getColorByIndex(int i) {
-    return codes.contains(i) ? Colors.grey.shade700 : Colors.grey;
+  Color _getColorByIndex(int i, {bool def=false}) {
+    if (def) return  Color(0xffC4C4C4);
+    return codes.contains(i) ? Color(0xff35258A) : Color(0xffC4C4C4);
   }
 
   Offset _getOffetByIndex(int i) {
@@ -230,5 +244,28 @@ class _LockScreenPainter extends CustomPainter {
   bool shouldRepaint(_LockScreenPainter oldDelegate) {
 
     return offset != oldDelegate.offset;
+  }
+}
+
+
+
+
+class _Painter extends CustomPainter{
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Offset center= Offset(size.width*0.5, size.height*0.2);
+    double radius =  size.width;
+    var painter = Paint()
+      ..style = PaintingStyle.fill
+      ..color =Color(0xffC1DBBF).withOpacity(0.26);
+    canvas.drawCircle(center,radius, painter);
+
+  }
+
+  @override
+  bool shouldRepaint(_Painter oldDelegate) {
+
+    return false;
   }
 }
