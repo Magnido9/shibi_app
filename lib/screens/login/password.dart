@@ -53,7 +53,7 @@ class _MyHomePageState extends State<PasswordPage> {
             painter: _Painter(),
             size: MediaQuery.of(context).size,
           ),
-          Center(child:Container(width:MediaQuery.of(context).size.width*0.8, child:
+          Center(child:Container(width:MediaQuery.of(context).size.width*0.9, child:
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -72,14 +72,14 @@ class _MyHomePageState extends State<PasswordPage> {
               Container(height: 10),
 
               Text(
-    ",בכדי שנוכל לשמור על פרטיותך \n    .צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
+    ",בכדי שנוכל לשמור על פרטיותך \n    צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
 
       textAlign: TextAlign.right,
     style: TextStyle(
     color: Colors.black,
     fontSize: 16,
     fontFamily: "Assistant",
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w400,
     ),
     ),
               Container(height: 10),Text(
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<PasswordPage> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Container(height: 10),
+              Container(height: 30),
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints){
                   return Center(
@@ -114,6 +114,7 @@ class _MyHomePageState extends State<PasswordPage> {
                   );
                 },
               ),
+              Container(height: 20),
               Center(child:Stack(children:[
                 Container(width:200,
                     height: 39,
@@ -133,9 +134,9 @@ class _MyHomePageState extends State<PasswordPage> {
 
                           Positioned(
                             top:5,
-                            right: 50,
+                            right: 30,
                             child: Text(
-                              "המשך",
+                              "!יוצאים לדרך",
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.white,
