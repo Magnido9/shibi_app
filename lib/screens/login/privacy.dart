@@ -152,7 +152,7 @@ class _PrivacyState extends State<Privacy>{
           child:MaterialButton(
             onPressed: (){
               if(isChecked)
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => Avatar(first: true)));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => Password(first: true)));
               else{
                 final snackBar = SnackBar(
                   content: const Text('יש לאשר את הסכם הפרטיות בכדי להמשיך'),

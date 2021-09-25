@@ -1,4 +1,5 @@
 library authentication;
+import 'package:application/screens/Avatar/avatar.dart';
 import 'package:flutter/material.dart';
 import '../../services/auth_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -116,7 +117,7 @@ class _MyHomePageState extends State<PasswordPage> {
         ?.uid;
     await FirebaseFirestore.instance.collection("users").doc(pid).set({
       'password' : codes.join(' ') },SetOptions(merge: true));
-    Navigator.push(context, MaterialPageRoute(builder: (context) => Instructions()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Avatar(first: true)));
 
   }
   _continue() async{
