@@ -53,9 +53,12 @@ class _MyHomePageState extends State<PasswordPage> {
             painter: _Painter(),
             size: MediaQuery.of(context).size,
           ),
+          Center(child:Container(width:MediaQuery.of(context).size.width*0.8, child:
           Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
+              Container(height: MediaQuery.of(context).size.height*0.1),
               Text(
                 "ציירי את הסיסמה שלך",
                 textAlign: TextAlign.right,
@@ -66,7 +69,9 @@ class _MyHomePageState extends State<PasswordPage> {
                   fontWeight: FontWeight.w900,
                 ),
               ),
-    Text(
+              Container(height: 10),
+
+              Text(
     ",בכדי שנוכל לשמור על פרטיותך \n    .צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
 
       textAlign: TextAlign.right,
@@ -76,17 +81,19 @@ class _MyHomePageState extends State<PasswordPage> {
     fontFamily: "Assistant",
     fontWeight: FontWeight.w700,
     ),
-    ),Text(
+    ),
+              Container(height: 10),Text(
                 "הסיסמא היא אישית לך \nואינה ניתנת לגורמים אחרים",
 
                 textAlign: TextAlign.right,
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Color(0xff6f6ca7),
                   fontSize: 16,
                   fontFamily: "Assistant",
                   fontWeight: FontWeight.w700,
                 ),
               ),
+              Container(height: 10),
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints){
                   return Center(
@@ -110,7 +117,7 @@ class _MyHomePageState extends State<PasswordPage> {
               button,
             ],
           )
-        ],
+    ))],
       ),
     );
   }
