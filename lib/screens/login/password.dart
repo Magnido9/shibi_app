@@ -45,6 +45,7 @@ class _MyHomePageState extends State<PasswordPage> {
     var sizeOfPattern = 0.6;
     var button =widget.first ? ElevatedButton(onPressed: _submit, child: Text('submit')) :
                                 Container();
+    var button_text=widget.first ? "!יוצאים לדרך" : "כניסה לשיבי";
     return Scaffold(
 
       body:Stack(
@@ -136,7 +137,12 @@ class _MyHomePageState extends State<PasswordPage> {
                             top:5,
                             right: 30,
                             child: Text(
-                              "!יוצאים לדרך",
+                              ((() {
+                                if(widget.first){
+                                  return "!יוצאים לדרך" ;}
+
+                                return "כניסה לשיבי";
+                              })()),
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                 color: Colors.white,

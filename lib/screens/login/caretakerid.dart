@@ -2,8 +2,10 @@ library authantication;
 import 'dart:ffi';
 import 'dart:math';
 
+import 'package:application/screens/home/home.dart';
 import 'package:application/screens/login/homescreen.dart';
 import 'package:application/screens/login/password.dart';
+import 'package:application/screens/login/privacy.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import '../../services/auth_services.dart';
@@ -41,7 +43,7 @@ class _Connection extends ChangeNotifier{
 
     }
     Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) => Password(first: true)));
+        builder: (BuildContext context) => HomePage()));
   }
 }
 
