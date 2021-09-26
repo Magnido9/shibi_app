@@ -5,6 +5,7 @@ import 'package:application/screens/Avatar/avatar.dart';
 import 'package:application/screens/login/homescreen.dart';
 import 'package:application/screens/login/password.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
 
@@ -63,10 +64,9 @@ class _PrivacyState extends State<Privacy>{
         "פרטיות באפליקציה",
         textDirection: TextDirection.rtl,
         textAlign: TextAlign.right,
-        style: TextStyle(
+        style: GoogleFonts.assistant(
           color: Colors.black,
           fontSize: 30,
-          fontFamily: "Assistant",
           fontWeight: FontWeight.w900,
         ),
 
@@ -76,28 +76,26 @@ class _PrivacyState extends State<Privacy>{
     Text(
        "רק למטפל\\ת שלך יש גישה למידע\nהמועלה באפליקציה"
       ,textDirection: TextDirection.rtl,textAlign: TextAlign.start,
-          style: TextStyle(
+          style: GoogleFonts.assistant(
             color: Colors.black,
-            fontSize: 18,fontFamily: "Assistant",
+            fontSize: 18,
             fontWeight: FontWeight.w400,
           ),
         ),
       Container(height:5,),
       Text("כולל יומן מחשבות ורגשות, "
         ,textDirection: TextDirection.rtl,textAlign: TextAlign.right,
-        style:  TextStyle(
+        style:  GoogleFonts.assistant(
             color: Color(0xff6f6ca7),
             fontSize: 18,
-            fontFamily: "Assistant",
             fontWeight: FontWeight.w900,
           ),
       ),
       Text("דפי עבודה וניתור תגובותיך לכל תרגיל.",textAlign: TextAlign.start
     ,textDirection: TextDirection.rtl,
-    style:  TextStyle(
+    style:  GoogleFonts.assistant(
     color: Color(0xff6f6ca7),
     fontSize: 18,
-    fontFamily: "Assistant",
     fontWeight: FontWeight.w900,
     ),
     ),
@@ -112,9 +110,9 @@ class _PrivacyState extends State<Privacy>{
       Container(height:5,),Text(
         "אבל המטפל\\ת שלך לא תמיד רואה\nאת מה שאת מעלה בזמן אמת -\nלכן, האפליקציה לא מאפשרת מענה חירום."
         ,textDirection: TextDirection.rtl,textAlign: TextAlign.right,
-        style: TextStyle(
+        style: GoogleFonts.assistant(
           color: Colors.black,
-          fontSize: 18,fontFamily: "Assistant",
+          fontSize: 18,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -137,10 +135,9 @@ class _PrivacyState extends State<Privacy>{
     Text(
       "אני מאשרת שקראתי",
       textAlign: TextAlign.right,
-      style: TextStyle(
+      style: GoogleFonts.assistant(
         color: Colors.black,
         fontSize: 18,
-        fontFamily: "Assistant",
         fontWeight: FontWeight.w700,
       ),
     ),
@@ -174,10 +171,9 @@ class _PrivacyState extends State<Privacy>{
             "מעולה!",
             textDirection: TextDirection.rtl,
             textAlign: TextAlign.left,
-            style: TextStyle(
+            style: GoogleFonts.assistant(
               color: Colors.white,
-              fontSize: 18,
-              fontFamily: "Assistant",
+              fontSize: 20,
               fontWeight: FontWeight.w700,
             ),
           ),

@@ -2,6 +2,7 @@ library home;
 import 'dart:math';
 
 import 'package:application/screens/map/map.dart';
+import 'package:application/screens/map/meditation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Avatar/avatar.dart';
@@ -177,6 +178,18 @@ class _HomeState extends State<Home>{
                           }
                           Navigator.of(context).pushReplacement(MaterialPageRoute(
                               builder: (BuildContext context) => MapPage()));
+                          ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
+                          ///Navigator.pop(context);
+                        },
+                      ),
+                      ListTile(
+                        title: const Text("אין לי מה לעשות אז מדיטציה"),
+                        onTap: () {
+                          Future<void> _signOut() async {
+                            await FirebaseAuth.instance.signOut();
+                          }
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (BuildContext context) => StopWatchTimerPage()));
                           ///Navigator.push(context, MaterialPageRoute(builder: (context) => Login(isInit: false)));
                           ///Navigator.pop(context);
                         },

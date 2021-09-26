@@ -78,6 +78,7 @@ flutter:
     - images/World_1.jpg
     - images/logo.png
     - images/sheba.png
+    - music/meditation.mp3
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:

@@ -1,6 +1,7 @@
 library authentication;
 import 'package:application/screens/Avatar/avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../services/auth_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -63,10 +64,9 @@ class _MyHomePageState extends State<PasswordPage> {
               Text(
                 "ציירי את הסיסמה שלך",
                 textAlign: TextAlign.right,
-                style: TextStyle(
+                style: GoogleFonts.assistant(
                   color: Colors.black,
                   fontSize: 30,
-                  fontFamily: "Assistant",
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -76,10 +76,9 @@ class _MyHomePageState extends State<PasswordPage> {
     ",בכדי שנוכל לשמור על פרטיותך \n    צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
 
       textAlign: TextAlign.right,
-    style: TextStyle(
+    style: GoogleFonts.assistant(
     color: Colors.black,
     fontSize: 16,
-    fontFamily: "Assistant",
     fontWeight: FontWeight.w400,
     ),
     ),
@@ -87,10 +86,9 @@ class _MyHomePageState extends State<PasswordPage> {
                 "הסיסמא היא אישית לך \nואינה ניתנת לגורמים אחרים",
 
                 textAlign: TextAlign.right,
-                style: TextStyle(
+                style:GoogleFonts.assistant(
                   color: Color(0xff6f6ca7),
                   fontSize: 16,
-                  fontFamily: "Assistant",
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -144,10 +142,9 @@ class _MyHomePageState extends State<PasswordPage> {
                                 return "כניסה לשיבי";
                               })()),
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: GoogleFonts.assistant(
                                 color: Colors.white,
-                                fontSize: 18,
-                                fontFamily: "Assistant",
+                                fontSize: 20,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),

@@ -7,6 +7,9 @@ import 'package:application/screens/login/homescreen.dart';
 import 'package:application/screens/login/password.dart';
 import 'package:application/screens/login/privacy.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_html/shims/dart_ui_real.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
@@ -159,11 +162,10 @@ class _CareTakerIdState extends State<CareTakerId>{
                             Text(
                               "היי",
                               //textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: GoogleFonts.assistant(
                                 color: Colors.black,
                                 fontSize: 30,
-                                fontFamily: "Assistant",
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w800,
                               ),
                             ),
                           ),
@@ -173,10 +175,9 @@ class _CareTakerIdState extends State<CareTakerId>{
                             Text(
                               "לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך",
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: GoogleFonts.assistant(
                                 color: Colors.black,
                                 fontSize: 18,
-                                fontFamily: "Assistant",
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -201,9 +202,8 @@ class _CareTakerIdState extends State<CareTakerId>{
                                     child: TextFormField(
                                       autofocus: true,
                                       obscureText: true,
-                                      style: TextStyle(color: Color(0xff6f6f6f),
+                                      style: GoogleFonts.assistant(color: Color(0xff6f6f6f),
                                         fontSize: 36,
-                                        fontFamily: "Assistant",
                                         fontWeight: FontWeight.w700,),
                                       keyboardType: TextInputType.number,
                                       textAlign: TextAlign.center,

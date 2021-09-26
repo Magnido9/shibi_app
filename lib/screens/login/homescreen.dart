@@ -1,6 +1,7 @@
 library authantication;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../Avatar/avatar.dart';
 import '../home/home.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
@@ -41,10 +42,9 @@ class HomePageState extends State<HomePage> {
  Text(
         "\n?איך היא גורמת לך להרגיש\n\n",
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: GoogleFonts.assistant(
           color: Color(0xff35258a),
           fontSize: 18,
-          fontFamily: "Assistant",
           fontWeight: FontWeight.w700,
         ),
 
@@ -59,10 +59,9 @@ class HomePageState extends State<HomePage> {
  Text(
               "\n?מה משמר ומעצים אותה\n\n",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.assistant(
                 color: Color(0xff35258a),
                 fontSize: 18,
-                fontFamily: "Assistant",
                 fontWeight: FontWeight.w700,
 
             ),
@@ -78,10 +77,9 @@ class HomePageState extends State<HomePage> {
              Text(
               "\n?איך ניתן להתגבר עליה\n\n",
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: GoogleFonts.assistant(
                 color: Color(0xff35258a),
                 fontSize: 18,
-                fontFamily: "Assistant",
                 fontWeight: FontWeight.w700,
               ),
 
@@ -119,28 +117,25 @@ class HomePageState extends State<HomePage> {
         Text(
           "\nשלום דנה",
           textAlign: TextAlign.left,
-          style: TextStyle(
+          style: GoogleFonts.assistant(
             color: Colors.black,
             fontSize: 30,
-            fontFamily: "Assistant",
             fontWeight: FontWeight.w900,
           ),
         ), Text(
           "\nהאפליקציה הזו מציעה",
           textAlign: TextAlign.left,
-          style: TextStyle(
+          style: GoogleFonts.assistant(
             color: Colors.black,
             fontSize: 18,
-            fontFamily: "Assistant",
             fontWeight: FontWeight.w900,
           ),
         ), Text(
           "ידע חשוב על החרדה שלך",
           textAlign: TextAlign.left,
-          style: TextStyle(
+          style: GoogleFonts.assistant(
             color: Colors.black,
             fontSize: 18,
-            fontFamily: "Assistant",
             fontWeight: FontWeight.w900,
           ),
         ),
@@ -207,13 +202,12 @@ class HomePageState extends State<HomePage> {
                       "\nבעזרת ליווי, כלים ותרגול \nנעבוד יחד עד שתלמדי להכיר ולנהל\nאת החרדה שלך בעצמך:\n\n",
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.right,
-                      style: TextStyle(
+                      style: GoogleFonts.assistant(
                         color: Color(0xff35258a),
                         fontSize: 18,
-                        fontFamily: "Assistant",
                         fontWeight: FontWeight.w800,
                       ),
-                    ),
+                    ),/*
                       MaterialButton(
                         color: Color(0xff35258a),
                         shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
@@ -223,10 +217,9 @@ class HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.all(10),
                           child: Text(
                             'אני מוכנה',
-                            style:TextStyle(
+                            style:GoogleFonts.assistant(
                               color: Colors.white,
                               fontSize: 18,
-                              fontFamily: "Assistant",
                               fontWeight: FontWeight.w700,
                             ),
                           ),
@@ -235,7 +228,48 @@ class HomePageState extends State<HomePage> {
 
 
 
-                        )
+                        )*/Positioned(top:MediaQuery.of(context).size.height*0.6,right:MediaQuery.of(context).size.width/2-100,child: Stack(children:[
+                      Container(width:200,
+                          height: 39,
+
+                          child:MaterialButton(
+                              onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                  builder: (BuildContext context) => Privacy()));},
+
+                              minWidth: 200,
+                              height: 39,
+                              shape:RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
+                              color: Color(0xff35258a),
+                              child: Stack(children:<Widget>[
+
+                                Positioned(
+                                  top:5,
+                                  right: 35,
+                                  child: Text(
+                                    "אני מוכנ/ה!",
+                                    textDirection: TextDirection.rtl,
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.assistant(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                )
+                              ]
+                              )
+                          )
+                      ),
+                      Positioned(
+                          top:5,
+                          right:165,
+                          child: Container(
+                              width: 28,
+                              height: 28,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(36),
+                                border: Border.all(color: Colors.white, width: 9 ),
+                              ))),]))
 
 
                   ]
