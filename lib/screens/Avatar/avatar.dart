@@ -124,8 +124,16 @@ class _AvatarPageState extends State<AvatarPage> {
                     _glasses('images/glasses3.png'),
                     _glasses('images/glasses4.png'),
                     _glasses('images/glasses5.png'),
-                  ]))
-            ],
+                  ])),
+              MaterialButton(
+                onPressed: () => {
+                  _save(),
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (BuildContext context) => Home()))
+                },
+                color: Colors.yellow,
+                child: Text("שמור"),
+              ),],
           ),
         ),
         floatingActionButton: Row(
@@ -138,14 +146,7 @@ class _AvatarPageState extends State<AvatarPage> {
               },
               label: Text("חזור"),
             ),
-            FloatingActionButton.extended(
-              onPressed: () => {
-                _save(),
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => Home()))
-              },
-              label: Text("שמור"),
-            ),
+
           ],
         ));
   }

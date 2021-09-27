@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
   int page_index = 0;
   @override
   void dispose() {
+    super.dispose();
     timer?.cancel();
   }
 
