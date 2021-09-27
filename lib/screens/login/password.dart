@@ -223,7 +223,9 @@ class _MyHomePageState extends State<PasswordPage> {
         .collection("users")
         .doc(pid)
         .get())['password'];
-    if (n_pass == (codes.join())) {
+    // print(n_pass.toString());
+    // print(codes.toString());
+    if (n_pass == codes.join(' ')) {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     } else {
       final snackBar = SnackBar(

@@ -78,6 +78,7 @@ class _StopWatchTimerPageState extends State<StopWatchTimerPage> {
     medistage = 0;
     setState(() => timer?.cancel());
   }
+
   Widget medBody(){return Stack(children: [
     Positioned(
         left: -((0.8125 * MediaQuery.of(context).size.height) -
@@ -112,6 +113,7 @@ class _StopWatchTimerPageState extends State<StopWatchTimerPage> {
       ),
     ),
   ]);}
+
   @override
   Widget build(BuildContext context) => Scaffold(
       backgroundColor: Colors.white,

@@ -18,9 +18,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await AuthRepository.instance().signOut();
-  runApp(Privacy());
-  // runApp(Wrapper());
+  // await AuthRepository.instance().signOut();
+  // runApp(CareHome());
+  runApp(Wrapper());
 }
 
 class Wrapper extends StatefulWidget {

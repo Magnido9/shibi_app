@@ -16,7 +16,7 @@ class CareHome extends StatefulWidget {
 
 class _HomeState extends State<CareHome> {
   bool createPass = false;
-  TextEditingController password = TextEditingController();
+  TextEditingController password = TextEditingController(text: Random().nextInt(999999).toString(),);
 
   @override
   Widget build(BuildContext context) {
@@ -42,21 +42,56 @@ class _HomeState extends State<CareHome> {
                     child: ListView.separated(
                         itemBuilder: (context, index) {
                           final Map<String, dynamic> item = data[index].data();
-                          // final userId = data[index].id;
-                          return ListTile(
+                          var b=(item['name'] !=null && item['name'] !='');
+                          return (b)
+                              ?ListTile(
                             title: Text(
-                              item['name'],
+                                item['name'],
                               style: TextStyle(color: Colors.black),
                             ),
-                            leading: IconButton(
-                              icon: Icon(Icons.thumb_down),
-                              onPressed: () {},
-                            ),
+
                             trailing: IconButton(
                               icon: Icon(Icons.delete_outline),
                               onPressed: () {},
                             ),
-                          );
+                          )
+                              :LayoutBuilder(
+                            builder: (BuildContext context, BoxConstraints con){
+                              return Container(
+                                  color: Colors.white30,
+                                  width: con.maxWidth*1,
+                                  child: Builder(
+                                    builder: (context){
+                                      TextEditingController controller =  TextEditingController();
+                                      return Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: con.maxWidth*0.5,
+                                            child: TextFormField(
+                                              controller: controller,
+                                              decoration: InputDecoration(
+                                                hintText: "שם הפציינט",
+                                              ),
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                              onPressed: (){
+                                                final String name = controller.text.trim();
+                                                FirebaseFirestore.instance
+                                                    .collection("users")
+                                                    .doc(item['uid'])
+                                                    .set({'name': name},
+                                                    SetOptions(merge: true));
+                                              },
+                                              child: Icon(Icons.arrow_forward_rounded))
+                                        ],
+                                      );
+                                    },
+                                  )
+                              );
+                            },
+                          ) ;
                         },
                         separatorBuilder: (_, __) => Divider(),
                         itemCount: data.length),
@@ -126,7 +161,6 @@ class _HomeState extends State<CareHome> {
                         Container(
                             width: MediaQuery.of(context).size.width * 0.5,
                             child: TextFormField(
-                              initialValue: Random().nextInt(999999).toString(),
                               keyboardType: TextInputType.number,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
@@ -160,3 +194,4 @@ class _HomeState extends State<CareHome> {
             )));
   }
 }
+

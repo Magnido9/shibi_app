@@ -240,8 +240,7 @@ class _PsychoState extends State<Psycho> {
                       }
                       if (page == 3) {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
+                            context, MaterialPageRoute(
                                 builder: (context) => StopWatchTimerPage()));
                       }
                     },
