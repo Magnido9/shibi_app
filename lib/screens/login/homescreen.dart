@@ -33,60 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final _items = <Widget>[
-    Center(
-  child: Column(children:<Widget>[
 
- Text(
-        "\n?איך היא גורמת לך להרגיש\n\n",
-        textAlign: TextAlign.center,
-        style: GoogleFonts.assistant(
-          color: Color(0xff35258a),
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
-        ),
-
-    )
-
-  ]
-  )
-  ),
-    Center(
-        child: Column(children:<Widget>[
-
- Text(
-              "\n?מה משמר ומעצים אותה\n\n",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.assistant(
-                color: Color(0xff35258a),
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-
-            ),
-          )
-
-        ]
-        )
-    ),
-    Center(
-        child: Column(children:<Widget>[
-
-
-             Text(
-              "\n?איך ניתן להתגבר עליה\n\n",
-              textAlign: TextAlign.center,
-              style: GoogleFonts.assistant(
-                color: Color(0xff35258a),
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
-
-          )
-
-        ]
-        )
-    )
-  ];
   final _pageController = PageController();
   final _currentPageNotifier = ValueNotifier<int>(0);
   final _boxHeight = 150.0;
@@ -95,55 +42,55 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: _buildBody(),
-    );
-  }
+      body:
+        Stack(
+          children: <Widget>[
+            _buildPageView(),
+            Positioned(
+                right:MediaQuery.of(context).size.width*0.05 ,
+                child:
+                Align(
+                    alignment: Alignment.topRight,child:Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
 
-  _buildBody() {
-    return Stack(children: <Widget>[_buildPageView(),
-      Positioned(
-      right:MediaQuery.of(context).size.width*0.05 ,
-      child:
-      Align(
-        alignment: Alignment.topRight,child:Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
 
-      children: <Widget>[
+                    Text(
+                      "\nשלום דנה",
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.assistant(
+                        color: Colors.black,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ), Text(
+                      "\nהאפליקציה הזו מציעה",
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.assistant(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ), Text(
+                      "ידע חשוב על החרדה שלך",
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.assistant(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
 
-        Text(
-          "\nשלום דנה",
-          textAlign: TextAlign.left,
-          style: GoogleFonts.assistant(
-            color: Colors.black,
-            fontSize: 30,
-            fontWeight: FontWeight.w900,
-          ),
-        ), Text(
-          "\nהאפליקציה הזו מציעה",
-          textAlign: TextAlign.left,
-          style: GoogleFonts.assistant(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
-          ),
-        ), Text(
-          "ידע חשוב על החרדה שלך",
-          textAlign: TextAlign.left,
-          style: GoogleFonts.assistant(
-            color: Colors.black,
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-
+                  ],
+                ))),
+            Align( alignment:Alignment.centerLeft,child:_buildCircleIndicator()),
           ],
-        ))),
-        Align( alignment:Alignment.centerLeft,child:_buildCircleIndicator()),
-      ],
+      ),
     );
   }
+
 
   Color _chooseColor(){
     int i= _currentPageNotifier.value;
@@ -156,56 +103,72 @@ class HomePageState extends State<HomePage> {
   }
 
   _buildPageView() {
-    return Stack(
-        children:[
-          Positioned(
-              left:-((0.8125*MediaQuery.of(context).size.height) -MediaQuery.of(context).size.width)/2,
-              top: -0.1
-                  *MediaQuery.of(context).size.height,
-              child:Container(
-                  width: 0.8125
-                      *MediaQuery.of(context).size.height,
-                  height: 0.8125
-                      *MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color:_chooseColor(),
-                  ))),
+    var _items = <Widget>[
+      _add_image(context, Center(
+          child: Column(children:<Widget>[
 
-     Positioned(top:MediaQuery.of(context).size.height*0.4,child: Container(width:MediaQuery.of(context).size.width,height:MediaQuery.of(context).size.height/2,child:Center(child:PageView.builder(
-          scrollDirection: Axis.vertical,
-          onPageChanged: (int index) {
-            _currentPageNotifier.value = index;
-            setState(() {
+            Text(
+              "\n?איך היא גורמת לך להרגיש\n\n",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.assistant(
+                color: Color(0xff35258a),
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
 
-            });
-          },
-          itemCount: 4,
-          controller: _pageController,
-          itemBuilder: (BuildContext context, int index) {
-            if(index==3){
-              return /*Center(
-                  child: Column(
-                      children: <Widget>[
-                        Text('בהצלחה'),
-                        ElevatedButton(
-                            onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                builder: (BuildContext context) => Avatar(first:true)));},
-                            child: Text("יאללה בלגן"))
-                      ])
-              )*/Center(
-                  child: Column(children:<Widget>[
+            )
 
-                    Text(
-                      "\nבעזרת ליווי, כלים ותרגול \nנעבוד יחד עד שתלמדי להכיר ולנהל\nאת החרדה שלך בעצמך:\n\n",
-                      textDirection: TextDirection.rtl,
-                      textAlign: TextAlign.right,
-                      style: GoogleFonts.assistant(
-                        color: Color(0xff35258a),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),/*
+          ]
+          )
+      ), 'assets/images/shibi_pages/1.png'),
+      _add_image(context,Center(
+          child: Column(children:<Widget>[
+
+            Text(
+              "\n?מה משמר ומעצים אותה\n\n",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.assistant(
+                color: Color(0xff35258a),
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+
+              ),
+            )
+
+          ]
+          )
+      ),  'assets/images/shibi_pages/2.png'),
+      _add_image(context, Center(
+          child: Column(children:<Widget>[
+
+
+            Text(
+              "\n?איך ניתן להתגבר עליה\n\n",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.assistant(
+                color: Color(0xff35258a),
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+              ),
+
+            )
+
+          ]
+          )
+      ),  'assets/images/shibi_pages/3.png'),
+      _add_image(context, Center(
+          child: Column(children:<Widget>[
+
+            Text(
+              "\nבעזרת ליווי, כלים ותרגול \nנעבוד יחד עד שתלמדי להכיר ולנהל\nאת החרדה שלך בעצמך:\n\n",
+              textDirection: TextDirection.rtl,
+              textAlign: TextAlign.right,
+              style: GoogleFonts.assistant(
+                color: Color(0xff35258a),
+                fontSize: 18,
+                fontWeight: FontWeight.w800,
+              ),
+            ),/*
                       MaterialButton(
                         color: Color(0xff35258a),
                         shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
@@ -226,54 +189,90 @@ class HomePageState extends State<HomePage> {
 
 
 
-                        )*/Positioned(top:MediaQuery.of(context).size.height*0.6,right:MediaQuery.of(context).size.width/2-100,child: Stack(children:[
-                      Container(width:200,
-                          height: 39,
+                        )*/
+            Stack(children:[
+              Container(width:200,
+                  height: 39,
 
-                          child:MaterialButton(
-                              onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                  builder: (BuildContext context) => Privacy()));},
+                  child:MaterialButton(
+                      onPressed:  (){  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => Privacy()));},
 
-                              minWidth: 200,
-                              height: 39,
-                              shape:RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
-                              color: Color(0xff35258a),
-                              child: Stack(children:<Widget>[
+                      minWidth: 200,
+                      height: 39,
+                      shape:RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
+                      color: Color(0xff35258a),
+                      child: Stack(children:<Widget>[
 
-                                Positioned(
-                                  top:5,
-                                  right: 35,
-                                  child: Text(
-                                    "אני מוכנ/ה!",
-                                    textDirection: TextDirection.rtl,
-                                    textAlign: TextAlign.left,
-                                    style: GoogleFonts.assistant(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                )
-                              ]
-                              )
-                          )
-                      ),
-                      Positioned(
+                        Positioned(
                           top:5,
-                          right:165,
-                          child: Container(
-                              width: 28,
-                              height: 28,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(36),
-                                border: Border.all(color: Colors.white, width: 9 ),
-                              ))),]))
-
-
-                  ]
+                          right: 35,
+                          child: Text(
+                            "אני מוכנ/ה!",
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.assistant(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        )
+                      ]
+                      )
                   )
-              );
-            }
+              ),
+              Positioned(
+                  top:5,
+                  right:165,
+                  child: Container(
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(36),
+                        border: Border.all(color: Colors.white, width: 9 ),
+                      ))),])
+
+
+          ]
+          )
+      ),  'assets/images/shibi_pages/win.png'),
+
+
+
+    ];
+    return Stack(
+        children:[
+          Positioned(
+              left:-((0.8125*MediaQuery.of(context).size.height) -MediaQuery.of(context).size.width)/2,
+              top: -0.1
+                  *MediaQuery.of(context).size.height,
+              child:Container(
+                  width: 0.8125
+                      *MediaQuery.of(context).size.height,
+                  height: 0.8125
+                      *MediaQuery.of(context).size.height,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color:_chooseColor(),
+                  ))),
+
+     Positioned(
+         top:MediaQuery.of(context).size.height*0.4,
+         child: Container(width:MediaQuery.of(context).size.width,
+             height:MediaQuery.of(context).size.height/2,
+             child:Center(
+               child:PageView.builder(
+                 scrollDirection: Axis.vertical,
+          onPageChanged: (int index) {
+            _currentPageNotifier.value = index;
+            setState(() {
+
+            });
+          },
+          itemCount: 4,
+          controller: _pageController,
+          itemBuilder: (BuildContext context, int index) {
             return _items[index];
           },
           ),)
@@ -299,4 +298,22 @@ class HomePageState extends State<HomePage> {
   }
 
 
+}
+
+_add_image(BuildContext context,Widget w ,String s){
+  return Stack(
+    children: [
+      Align(
+        alignment: FractionalOffset.bottomCenter,
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.4,
+          child: FittedBox(
+            child: Image.asset(s),
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+      ),
+    w
+    ],
+  );
 }

@@ -78,6 +78,16 @@ flutter:
     - images/World_1.jpg
     - images/logo.png
     - images/sheba.png
+    - assets/images/shibi_pages/1.png
+    - assets/images/shibi_pages/2.png
+    - assets/images/shibi_pages/3.png
+    - assets/images/shibi_pages/angel.png
+    - assets/images/shibi_pages/clean.png
+    - assets/images/shibi_pages/dirty.png
+    - assets/images/shibi_pages/green.png
+    - assets/images/shibi_pages/lose.png
+    - assets/images/shibi_pages/win.png
+
     - music/meditation.mp3
   uses-material-design: true
 
