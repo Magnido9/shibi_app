@@ -6,8 +6,6 @@ import '../Avatar/avatar.dart';
 import '../home/home.dart';
 import 'package:page_view_indicators/circle_page_indicator.dart';
 
-import 'package:flutter/material.dart';
-import 'package:page_view_indicators/circle_page_indicator.dart';
 
 import 'privacy.dart';
 

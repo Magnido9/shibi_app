@@ -15,25 +15,20 @@ import 'screens/Avatar/avatar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   // await AuthRepository.instance().signOut();
-  runApp(Password(first:true));
+  runApp(Password(first: true));
   // runApp(Wrapper());
-  }
+}
 
-
-
-class Wrapper extends StatefulWidget{
+class Wrapper extends StatefulWidget {
   @override
   _StateWrap createState() => _StateWrap();
-
-
-
 }
-class _StateWrap extends State<Wrapper>{
-  bool isCare=false;
+
+class _StateWrap extends State<Wrapper> {
+  bool isCare = false;
   @override
   void initState() {
     super.initState();
@@ -45,28 +40,23 @@ class _StateWrap extends State<Wrapper>{
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isCare') ?? false;
   }
+
   @override
   Widget build(BuildContext context) {
-
-    return
-      (AuthRepository.instance().isAuthenticated)
-          ?
-      // (isCare? CareHome() :Password(first: false))
-      FutureBuilder<SharedPreferences>(
-        future: SharedPreferences.getInstance(),
-        builder: (BuildContext context, AsyncSnapshot<SharedPreferences> snapshot) {
-          // ...
-          if (snapshot.connectionState == ConnectionState.done) {
-
-            print(snapshot.data?.getBool('isCare'));
-            return (snapshot.data?.getBool('isCare') ?? true) ?  CareHome() :Password(first: false);
-          }
-          return Center(child:CircularProgressIndicator());
-        },
-      )
-          :
-      Login( )
-    ;
+    return (AuthRepository.instance().isAuthenticated)
+        ? FutureBuilder<SharedPreferences>(
+            future: SharedPreferences.getInstance(),
+            builder: (BuildContext context,
+                AsyncSnapshot<SharedPreferences> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                print(snapshot.data?.getBool('isCare'));
+                return (snapshot.data?.getBool('isCare') ?? true)
+                    ? CareHome()
+                    : Password(first: false);
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          )
+        : Login();
   }
 }
-

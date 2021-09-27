@@ -2,7 +2,6 @@ import 'dart:math';
 import '../home/home.dart';
 import 'package:flutter/material.dart';
 
-
 class MyQuestions extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -19,7 +18,6 @@ class _MyQuestionsState extends State<MyQuestions> {
         {'text': 'לפעמים', 'score': 1},
         {'text': 'כמעט אף פעם', 'score': 0},
       ],
-
     },
     {
       'questionText': 'אני מודאג מאנשים שלא יחבבו אותי',
@@ -58,8 +56,7 @@ class _MyQuestionsState extends State<MyQuestions> {
   }
 
   void _answerQuestion(int score) {
-    _totalScore += score
-        *(pow(10,_questionIndex).toInt());
+    _totalScore += score * (pow(10, _questionIndex).toInt());
 
     setState(() {
       _questionIndex = _questionIndex + 1;
@@ -79,12 +76,10 @@ class _MyQuestionsState extends State<MyQuestions> {
       home: Scaffold(
         backgroundColor: Colors.white,
 
-
         appBar: AppBar(
           backgroundColor: Colors.white,
           elevation: 0.0,
           centerTitle: true,
-
           title: Text(
             "שאלון חרדה יומי",
             textAlign: TextAlign.right,
@@ -95,30 +90,24 @@ class _MyQuestionsState extends State<MyQuestions> {
               fontWeight: FontWeight.w700,
             ),
           ),
-
-
-            iconTheme: IconThemeData(
-              color: Colors.black
-          ),
+          iconTheme: IconThemeData(color: Colors.black),
           leading: Builder(
             builder: (context) => GestureDetector(
-                onTap: ()=>{Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => Home()))},
-                child: Icon(Icons.arrow_back)
-            ),
-          ) ,
+                onTap: () => {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => Home()))
+                    },
+                child: Icon(Icons.arrow_back)),
+          ),
         ),
         body: Padding(
-
           padding: const EdgeInsets.all(30.0),
           child: _questionIndex < _questions.length
               ? Quiz(
-            answerQuestion: _answerQuestion,
-            questionIndex: _questionIndex,
-            questions: _questions,
-
-
-          ) //Quiz
+                  answerQuestion: _answerQuestion,
+                  questionIndex: _questionIndex,
+                  questions: _questions,
+                ) //Quiz
               : Result(_totalScore, _resetQuiz),
         ), //Paddingk
       ), //Scaffold
@@ -126,6 +115,7 @@ class _MyQuestionsState extends State<MyQuestions> {
     ); //MaterialApp
   }
 }
+
 class Quiz extends StatelessWidget {
   final List<Map<String, Object>> questions;
   final int questionIndex;
@@ -140,29 +130,37 @@ class Quiz extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width:  MediaQuery.of(context).size.width*0.95,
-        height:  MediaQuery.of(context).size.height*0.8,
+        width: MediaQuery.of(context).size.width * 0.95,
+        height: MediaQuery.of(context).size.height * 0.8,
         decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(24),
-    border: Border.all(color: Color(0xff8ec3aa), width: 9, ),
-    ),child:Column(
-      children: [
-        Text(' שאלה ${(questionIndex+1).toString()} מתוך ${questions.length.toString()}\n\n\n\n\n',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 12,
-            fontFamily: "Assistant",
-            fontWeight: FontWeight.w700,
-          ),),
-        Question(
-          questions[questionIndex]['questionText'].toString(),
-        ), //Question
-        ...(questions[questionIndex]['answers'] as List<Map<String, Object>>)
-            .map((answer) {
-          return Answer(() => answerQuestion(answer['score']), answer['text'].toString());
-        }).toList()
-      ],
-    )); //Column
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: Color(0xff8ec3aa),
+            width: 9,
+          ),
+        ),
+        child: Column(
+          children: [
+            Text(
+              ' שאלה ${(questionIndex + 1).toString()} מתוך ${questions.length.toString()}\n\n\n\n\n',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 12,
+                fontFamily: "Assistant",
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Question(
+              questions[questionIndex]['questionText'].toString(),
+            ), //Question
+            ...(questions[questionIndex]['answers']
+                    as List<Map<String, Object>>)
+                .map((answer) {
+              return Answer(() => answerQuestion(answer['score']),
+                  answer['text'].toString());
+            }).toList()
+          ],
+        )); //Column
   }
 }
 
@@ -174,12 +172,10 @@ class Question extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
-
       width: double.infinity,
       margin: EdgeInsets.all(10),
       child: Text(
-        questionText+"\n\n",
+        questionText + "\n\n",
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,
@@ -191,6 +187,7 @@ class Question extends StatelessWidget {
     ); //Container
   }
 }
+
 class Answer extends StatelessWidget {
   final Function selectHandler;
   final String answerText;
@@ -204,16 +201,21 @@ class Answer extends StatelessWidget {
       child: MaterialButton(
         minWidth: 189,
         height: 37,
-        shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(25) ,side: BorderSide(color:Color(0xff8ec3aa), width: 2) ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+            side: BorderSide(color: Color(0xff8ec3aa), width: 2)),
         color: Colors.white,
         splashColor: Colors.yellow[200],
         textColor: Colors.black,
         child: Text(answerText),
-        onPressed: (){selectHandler();},
+        onPressed: () {
+          selectHandler();
+        },
       ), //RaisedButton
     ); //Container
   }
 }
+
 class Result extends StatelessWidget {
   final int resultScore;
   final Function resetHandler;
@@ -240,42 +242,13 @@ class Result extends StatelessWidget {
     return resultText;
   }
 
- /* @override
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            resultPhrase,
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ), //Text
-          Text(
-            'Score ' '$resultScore',
-            style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ), //Text
-          FlatButton(
-            child: Text(
-              'Restart Quiz!',
-            ), //Text
-            textColor: Colors.blue,
-            onPressed: (){resetHandler();},
-          ), //FlatButton
-        ], //<Widget>[]
-      ), //Column
-    ); //Center
-  }*/
-
-
- @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-           //Text
+          //Text
           Text(
             'תודה ששיתפת',
             style: TextStyle(
@@ -296,12 +269,13 @@ class Result extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ), //Text
-            onPressed: ()=>{Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => Home()))},
+            onPressed: () => {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (BuildContext context) => Home()))
+            },
           ), //FlatButton
         ], //<Widget>[]
       ), //Column
     ); //Center
   }
-
 }
