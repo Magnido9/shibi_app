@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services/auth_services.dart';
@@ -9,7 +10,9 @@ class AvatarData {
   AvatarData({required this.body, this.glasses});
   String body;
   String? glasses;
-
+  Color color2=Color(0xfff6f5ed);
+  Color color1=Color(0xffb9b8b8);
+  Map<String,Color> colors=new Map();
   static String body_default = "images/poo.png";
   static Future<AvatarData> load() async {
     String? pid = AuthRepository.instance().user?.uid;
@@ -28,15 +31,6 @@ class Avatar extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: (first)
@@ -80,17 +74,31 @@ class _AvatarPageState extends State<AvatarPage> {
   }
 
   Widget _glasses(String image) {
+    widget.data.colors[image]=Color(0xffb9b8b8);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         setState(() {
           widget.data.glasses = image;
+          print( this.widget.data.colors[image]);
+          widget.data.colors[image]=Color(0xff35258a);
+          print( this.widget.data.colors[image]);
+          widget.data.color2=Color(0xffebdac7);
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          widget.data.colors[image]=Color(0xffb9b8b8);
+          widget.data.color2=Color(0xfff6f5ed);
         });
       },
       child: Container(
-        height: 50,
+        height: 100,
         width: 100,
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(19),
+            border: Border.all(color:  widget.data.colors[image]!, width: 2, ),
+            color: widget.data.color2,
             image:
                 DecorationImage(image: AssetImage(image), fit: BoxFit.contain)),
       ),
@@ -103,13 +111,48 @@ class _AvatarPageState extends State<AvatarPage> {
     double _height = MediaQuery.of(context).size.height;
     double _min = min(_width, _height);
     return Scaffold(
-        body: Center(
+        body: Stack(children: [
+
+        Positioned(
+            left: -0.8*MediaQuery.of(context).size.width ,
+            top: -1.25* MediaQuery.of(context).size.height,
+            child: Container(
+                width: 0.8125 * MediaQuery.of(context).size.height*2,
+                height: 0.8125 * MediaQuery.of(context).size.height*1.8,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(
+                      0xffecdbc7,
+                    )))),
+    Positioned(
+    right: 25,
+    top: 75,
+    child: Align(
+    alignment: Alignment.topRight,
+    child: Column(
+    mainAxisSize: MainAxisSize.min,
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: <Widget>[
+    Text(
+    "עיצוב השיבי שלך",
+    textDirection: TextDirection.rtl,
+    textAlign: TextAlign.right,
+    style: GoogleFonts.assistant(
+    color: Colors.black,
+    fontSize: 30,
+    fontWeight: FontWeight.w900,
+    ),
+
+    //,"לכן, האפליקציה לא מאפשרת מענה חירום. n\את מה שאת מעלה בזמן אמת - n\אבל, המטפל/ת שלך לא תמיד רואה n\n\n\n\n\המועלה לאפליקציה. n\רק למטפל/ת שלך יש גישה למידע "
+    ),
+
+    ]))),
+    Center(
           child: Column(
             children: <Widget>[
-              Container(margin: EdgeInsets.only(top: _min / 8)),
-              Text(
-                "תעזור לי לבחור בגדים",
-              ),
+              Container(height:200),
+
               Container(
                   width: _min / 2,
                   height: _min / 2,
@@ -119,11 +162,18 @@ class _AvatarPageState extends State<AvatarPage> {
               SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(children: <Widget>[
+                    Container(width: 14),
+                    Container(width: 14),
                     _glasses('images/glasses1.png'),
+                    Container(width: 14),
                     _glasses('images/glasses2.png'),
+                    Container(width: 14),
                     _glasses('images/glasses3.png'),
+                    Container(width: 14),
                     _glasses('images/glasses4.png'),
+                    Container(width: 14),
                     _glasses('images/glasses5.png'),
+                    Container(width: 14),
                   ])),
               MaterialButton(
                 onPressed: () => {
@@ -135,7 +185,7 @@ class _AvatarPageState extends State<AvatarPage> {
                 child: Text("שמור"),
               ),],
           ),
-        ),
+        )]),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
