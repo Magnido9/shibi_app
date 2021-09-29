@@ -139,6 +139,7 @@ class _MyHomePageState extends State<PasswordPage> {
                             height: 39,
                             child: MaterialButton(
                                 onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
                                   if (widget.first) {
                                     _submit();
                                   } else {
