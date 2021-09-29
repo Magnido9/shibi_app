@@ -60,7 +60,7 @@ class _MyHomePageState extends State<PasswordPage> {
               height: MediaQuery.of(context).size.height * 0.2,
               padding: EdgeInsets.only(left: 20),
               child: FittedBox(
-                child: Image.asset('assets/images/shibi_pages/'+((codes.isEmpty)? 'clean' : 'dirty')+'.png'),
+                child: Image.asset('images/shibi_pages/'+((codes.isEmpty)? 'clean' : 'dirty')+'.png'),
                 fit: BoxFit.fitHeight,
               ),
             ),

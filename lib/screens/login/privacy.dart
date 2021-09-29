@@ -43,7 +43,7 @@ class _PrivacyState extends State<Privacy> {
                   child: Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     child: FittedBox(
-                      child: Image.asset('assets/images/shibi_pages/'+((!isChecked)? 'lose' : 'angel')+'.png'),
+                      child: Image.asset('images/shibi_pages/'+((!isChecked)? 'lose' : 'angel')+'.png'),
                       fit: BoxFit.fitHeight,
                     ),
                   ),

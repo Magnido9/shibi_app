@@ -120,7 +120,7 @@ class HomePageState extends State<HomePage> {
 
           ]
           )
-      ), 'assets/images/shibi_pages/1.png'),
+      ), 'images/shibi_pages/1.png'),
       _add_image(context,Center(
           child: Column(children:<Widget>[
 
@@ -137,7 +137,7 @@ class HomePageState extends State<HomePage> {
 
           ]
           )
-      ),  'assets/images/shibi_pages/2.png'),
+      ),  'images/shibi_pages/2.png'),
       _add_image(context, Center(
           child: Column(children:<Widget>[
 
@@ -155,7 +155,7 @@ class HomePageState extends State<HomePage> {
 
           ]
           )
-      ),  'assets/images/shibi_pages/3.png'),
+      ),  'images/shibi_pages/3.png'),
       _add_image(context, Center(
           child: Column(children:<Widget>[
 
@@ -236,7 +236,7 @@ class HomePageState extends State<HomePage> {
 
           ]
           )
-      ),  'assets/images/shibi_pages/win.png'),
+      ),  'images/shibi_pages/win.png'),
 
 
 

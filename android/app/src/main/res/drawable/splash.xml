@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Modify this file to customize your launch splash screen -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item android:drawable="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <item>
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:src="@drawable/back"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </item>
+
+
+    <item android:gravity="center"
+        android:bottom = "300dp">
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:src="@drawable/logo"
+
+            />
+    </item>
+    <item
+        android:top = "30dp">
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:src="@drawable/sheba"
+            android:gravity="top|right"
+
+            />
+    </item>
+    <item>
+        <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+            android:src="@drawable/green"
+            android:gravity="bottom|right"
+            android:top = "20dp"
+            />
+    </item>
+    <!--<item><bitmap android:src="@drawable/logo"
+        android:tileMode="repeat"
+        android:gravity="center"/>
+    </item> -->
+    <!-- You can insert your own image assets here -->
+    <!-- <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@mipmap/launch_image" />
+    </item> -->
+</layer-list>
