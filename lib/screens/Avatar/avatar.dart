@@ -88,7 +88,9 @@ class _AvatarPageState extends State<AvatarPage> {
             border: Border.all(color:  widget.data.color==(1+num)?Color(0xff35258a):Color(0xffb9b8b8), width: 2, ),
             color:  widget.data.color==(1+num)?Color(0xffebdac7):Color(0xfff6f5ed),
             image:
-                DecorationImage(image: AssetImage(image), fit: BoxFit.contain)),
+                DecorationImage(image: AssetImage(image), fit: BoxFit.scaleDown
+
+                )),
       ),
     );
   }
@@ -142,11 +144,12 @@ class _AvatarPageState extends State<AvatarPage> {
               Container(height:200),
 
               Container(
-                  width: _min / 2,
-                  height: _min / 2,
+                  width: 128,
+                  height: 128,
                   child: AvatarStack(
                     data: widget.data,
                   )),
+              Container(height:10),
               SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(children: <Widget>[
@@ -160,7 +163,6 @@ class _AvatarPageState extends State<AvatarPage> {
                     Container(width: 14),
                     _glasses('images/glasses4.png',4),
                     Container(width: 14),
-                    _glasses('images/glasses5.png',5),
                     Container(width: 14),
                   ])),
               MaterialButton(
@@ -226,9 +228,9 @@ class AvatarStack extends StatelessWidget {
                       children: [
                         Container(
                           child: Image.asset(data.glasses ?? ''),
-                          height: constraints.maxHeight / 4,
+                          height: constraints.maxHeight / 8,
                           margin: EdgeInsets.only(
-                            top: constraints.maxHeight / 5,
+                            top: constraints.maxHeight /20,
                             // left: constraints.maxWidth/14
                           ),
                         )
