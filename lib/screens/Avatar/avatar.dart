@@ -10,9 +10,7 @@ class AvatarData {
   AvatarData({required this.body, this.glasses});
   String body;
   String? glasses;
-  Color color2=Color(0xfff6f5ed);
-  Color color1=Color(0xffb9b8b8);
-  Map<String,Color> colors=new Map();
+  int color=0;
   static String body_default = "images/poo.png";
   static Future<AvatarData> load() async {
     String? pid = AuthRepository.instance().user?.uid;
@@ -73,23 +71,13 @@ class _AvatarPageState extends State<AvatarPage> {
         .set({'body': widget.data.body, 'glasses': widget.data.glasses});
   }
 
-  Widget _glasses(String image) {
-    widget.data.colors[image]=Color(0xffb9b8b8);
+  Widget _glasses(String image,int num) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         setState(() {
+          widget.data.color=1+num;
           widget.data.glasses = image;
-          print( this.widget.data.colors[image]);
-          widget.data.colors[image]=Color(0xff35258a);
-          print( this.widget.data.colors[image]);
-          widget.data.color2=Color(0xffebdac7);
-        });
-      },
-      onTapCancel: () {
-        setState(() {
-          widget.data.colors[image]=Color(0xffb9b8b8);
-          widget.data.color2=Color(0xfff6f5ed);
         });
       },
       child: Container(
@@ -97,8 +85,8 @@ class _AvatarPageState extends State<AvatarPage> {
         width: 100,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(19),
-            border: Border.all(color:  widget.data.colors[image]!, width: 2, ),
-            color: widget.data.color2,
+            border: Border.all(color:  widget.data.color==(1+num)?Color(0xff35258a):Color(0xffb9b8b8), width: 2, ),
+            color:  widget.data.color==(1+num)?Color(0xffebdac7):Color(0xfff6f5ed),
             image:
                 DecorationImage(image: AssetImage(image), fit: BoxFit.contain)),
       ),
@@ -164,15 +152,15 @@ class _AvatarPageState extends State<AvatarPage> {
                   child: Row(children: <Widget>[
                     Container(width: 14),
                     Container(width: 14),
-                    _glasses('images/glasses1.png'),
+                    _glasses('images/glasses1.png',1),
                     Container(width: 14),
-                    _glasses('images/glasses2.png'),
+                    _glasses('images/glasses2.png',2),
                     Container(width: 14),
-                    _glasses('images/glasses3.png'),
+                    _glasses('images/glasses3.png',3),
                     Container(width: 14),
-                    _glasses('images/glasses4.png'),
+                    _glasses('images/glasses4.png',4),
                     Container(width: 14),
-                    _glasses('images/glasses5.png'),
+                    _glasses('images/glasses5.png',5),
                     Container(width: 14),
                   ])),
               MaterialButton(
@@ -181,7 +169,7 @@ class _AvatarPageState extends State<AvatarPage> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) => Home()))
                 },
-                color: Colors.yellow,
+                color: Colors.grey,
                 child: Text("שמור"),
               ),],
           ),
