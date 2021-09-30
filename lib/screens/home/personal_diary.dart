@@ -96,7 +96,7 @@ class _DiaryState extends State<Diary> {
                                           ConnectionState.done) {
                                         var data = snapshot.data ??
                                             AvatarData(
-                                                body: AvatarData.body_default);
+                                                body: AvatarData.body_default , prices:AvatarData.prices_default);
                                         return AvatarStack(data: data);
                                       }
                                       return CircularProgressIndicator();
@@ -159,7 +159,7 @@ class _DiaryState extends State<Diary> {
                                   return AvatarStack(
                                       data: (snapshot.data ??
                                           AvatarData(
-                                              body: AvatarData.body_default)));
+                                              body: AvatarData.body_default , prices:AvatarData.prices_default)));
                                 }
                                 return CircularProgressIndicator();
                               },
