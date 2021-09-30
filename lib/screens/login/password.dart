@@ -89,7 +89,7 @@ class _MyHomePageState extends State<PasswordPage> {
                       ),
                       Container(height: 10),
                       Text(
-                        ",בכדי שנוכל לשמור על פרטיותך \n    צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
+                        ",בכדי שנוכל לשמור על פרטיותך \n    .צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
                           color: Colors.black,
@@ -99,7 +99,7 @@ class _MyHomePageState extends State<PasswordPage> {
                       ),
                       Container(height: 10),
                       Text(
-                        "הסיסמא היא אישית לך \nואינה ניתנת לגורמים אחרים",
+                        "הסיסמא היא אישית לך ואינה \n.ניתנת לגורמים אחרים",
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
                           color: Color(0xff6f6ca7),

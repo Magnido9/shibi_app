@@ -146,17 +146,10 @@ class _PrivacyState extends State<Privacy> {
                 Positioned(
                     top: MediaQuery.of(context).size.height * 0.5,
                     right: MediaQuery.of(context).size.width / 2 - 100,
+
+
+
                     child: Row(children: <Widget>[
-                      Checkbox(
-                        checkColor: Color(0xff6f6ca7),
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: isChecked,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isChecked = value!;
-                          });
-                        },
-                      ),
                       Text(
                         "אני מאשרת שקראתי",
                         textAlign: TextAlign.right,
@@ -166,6 +159,27 @@ class _PrivacyState extends State<Privacy> {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: isChecked == true ? Colors.black: Colors.black,
+                              width: 2.3),
+                        ),
+                        width: 20,
+                        height: 20,
+
+                      child: Checkbox(
+                        checkColor: Colors.black,
+                        //fillColor: MaterialStateProperty.resolveWith(getColor),
+                        activeColor:Color(0xCFC781),
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                      ),),
+
                     ])),
                 Positioned(
                     top: MediaQuery.of(context).size.height * 0.6,
