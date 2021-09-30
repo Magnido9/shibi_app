@@ -160,7 +160,7 @@ class HomePageState extends State<HomePage> {
           child: Column(children:<Widget>[
 
             Text(
-              "\nבעזרת ליווי, כלים ותרגול \nנעבוד יחד עד שתלמדי להכיר ולנהל\nאת החרדה שלך בעצמך:\n\n",
+              "\nבעזרת ליווי, כלים ותרגול \nנעבוד יחד עד שתלמדי להכיר ולנהל\nאת החרדה שלך בעצמך.\n\n",
               textDirection: TextDirection.rtl,
               textAlign: TextAlign.right,
               style: GoogleFonts.assistant(

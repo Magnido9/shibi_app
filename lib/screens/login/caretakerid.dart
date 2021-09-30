@@ -16,6 +16,7 @@ import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
+import 'dart:ui' as ui;
 
 class _Connection extends ChangeNotifier {
   List<QueryDocumentSnapshot> list = [];
@@ -375,7 +376,58 @@ class _CareTakerIdState extends State<CareTakerId> {
                         ),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1),
-                        MaterialButton(
+                        Positioned(
+                            top: MediaQuery.of(context).size.height * 0.6,
+                            right: MediaQuery.of(context).size.width / 2 - 100,
+                            child: Stack(children: [
+                              Container(
+                                  width:200,
+                                  height: 39,
+                                  child: MaterialButton(
+                                      onPressed: () {
+                                        print(code.toString());
+                                        int c = 0;
+                                        for (int i = 0; i < code.length; i++)
+                                          c = c * 10 + code[i];
+                                        print(c);
+                                        _Connection()
+                                            ._getCare(c, name.text.trim(), context);
+                                      },
+                                      minWidth: 200,
+                                      height: 39,
+                                      shape:RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
+                                      color: Color(0xff35258a),
+                                      child: Stack(children:<Widget>[
+
+                                        Positioned(
+                                          top:5,
+                                          right: 60,
+                                          child: Text(
+                                            "שלח",
+                                            textDirection: ui.TextDirection.rtl,
+                                            textAlign: TextAlign.left,
+                                            style: GoogleFonts.assistant(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
+                                        )
+                                      ]
+                                      )
+                                  )),
+                              Positioned(
+                                  top: 5,
+                                  right: 166,
+                                  child: Container(
+                                      width: 28,
+                                      height: 28,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(36),
+                                        border: Border.all(color: Colors.white, width: 9),
+                                      ))),
+                            ])),
+                        /*MaterialButton(
                           color: Color(0xFF1A237E),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(36)),
@@ -388,7 +440,8 @@ class _CareTakerIdState extends State<CareTakerId> {
                             _Connection()
                                 ._getCare(c, name.text.trim(), context);
                           },
-                          child: Padding(
+                          child:
+                          Padding(
                             padding: const EdgeInsets.all(10),
                             child: Text(
                               '               שלח               ',
@@ -400,7 +453,7 @@ class _CareTakerIdState extends State<CareTakerId> {
                               ),
                             ),
                           ),
-                        )
+                        )*/
                       ],
                     ),
                   ),
