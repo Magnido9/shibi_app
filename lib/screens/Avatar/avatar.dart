@@ -11,6 +11,7 @@ class AvatarData {
   String body;
   String? glasses;
   int color=0;
+  int mode=0;
   static String body_default = "images/poo.png";
   static Future<AvatarData> load() async {
     String? pid = AuthRepository.instance().user?.uid;
@@ -165,6 +166,60 @@ class _AvatarPageState extends State<AvatarPage> {
                     Container(width: 14),
                     Container(width: 14),
                   ])),
+              SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(children: <Widget>[
+                    Container(
+                      width: 30,
+                      height: 65,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xffb9b8b8), width: 2, ),
+                        color: Colors.white,
+                        image:DecorationImage(image: AssetImage('images/left_arrow.png'), fit: BoxFit.scaleDown
+
+                        )
+                      ),
+                    ),
+                     Container(
+                        width: 88,
+                        height: 65,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0),
+                          border: Border.all(color: Color(0xffb9b8b8), width: 2, ),
+                          color:
+                          widget.data.mode%3==0 ? Color(0xfffefad8):
+                          widget.data.mode%3==1 ? Color(0xffddfed8):
+                          widget.data.mode%3==2 ? Color(0xffddfed8): Color(0xffddfed8),
+                          image: DecorationImage(image:
+                          widget.data.mode%3==0 ? AssetImage('images/face.png'):
+                          widget.data.mode%3==1 ? AssetImage('images/color.png'):
+                          widget.data.mode%3==2 ? AssetImage('images/color.png'):
+                          AssetImage('images/color.png')
+                              , fit: BoxFit.scaleDown
+
+                        )
+                        ),
+                      ),
+                    Container(
+                      width: 30,
+                      height: 65,
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Color(0xffb9b8b8), width: 2, ),
+                          color: Colors.white,
+                          image:DecorationImage(image: AssetImage('images/right_arrow.png'),fit: BoxFit.scaleDown
+                          )
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            widget.data.mode+=1;
+                          });
+                        },
+                      ),
+                    ),
+
+                  ])),
+
               MaterialButton(
                 onPressed: () => {
                   _save(),
