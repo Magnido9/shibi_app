@@ -87,6 +87,10 @@ flutter:
     - images/color(ffa6d6c3).png
     - images/color(ffdabfa0).png
     - images/color(ffefb3e2).png
+    - images/body.png
+    - images/brows.png
+    - images/mouth.png
+    - images/eyes.png
     - images/right_arrow.png
     - images/left_arrow.png
     - images/sheba.png
