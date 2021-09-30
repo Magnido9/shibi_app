@@ -10,7 +10,10 @@ class AvatarData {
   AvatarData({required this.body, this.glasses});
   String body;
   String? glasses;
+  String? hands="images/hands1.png";
   int color=0;
+  Color body_color=Color(0xffdabfa0);
+  int bar2=0;
   int mode=0;
   static String body_default = "images/poo.png";
   static Future<AvatarData> load() async {
@@ -72,13 +75,21 @@ class _AvatarPageState extends State<AvatarPage> {
         .set({'body': widget.data.body, 'glasses': widget.data.glasses});
   }
 
-  Widget _glasses(String image,int num) {
+  Widget _pick_box(String image,int num) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         setState(() {
+          if(widget.data.mode%4==0 && widget.data.bar2==0 ){
+            widget.data.glasses = image;
+          }
+          if(widget.data.mode%4==1 && widget.data.bar2==0 ){
+            String valueString = image.split('color(')[1].split(')')[0];
+            int value = int.parse(valueString, radix: 16);
+            widget.data.body_color = Color(value);
+          }
+
           widget.data.color=1+num;
-          widget.data.glasses = image;
         });
       },
       child: Container(
@@ -153,19 +164,52 @@ class _AvatarPageState extends State<AvatarPage> {
               Container(height:10),
               SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(children: <Widget>[
+                  child:  (widget.data.mode%4==0 &&
+                      widget.data.bar2==0 )?Row(children: <Widget>[
+                        Container(width: 14),
+                        Container(width: 14),
+                        _pick_box('images/glasses1.png',1),
+                        Container(width: 14),
+                        _pick_box('images/glasses2.png',2),
+                        Container(width: 14),
+                        _pick_box('images/glasses3.png',3),
+                        Container(width: 14),
+                        _pick_box('images/glasses4.png',4),
+                        Container(width: 14),
+                        Container(width: 14),
+                  ]):
+                  (widget.data.mode%4==1 &&
+                      widget.data.bar2==0 )?Row(children: <Widget>[
                     Container(width: 14),
                     Container(width: 14),
-                    _glasses('images/glasses1.png',1),
+                    _pick_box('images/color(ff6f6ca7).png',1),
                     Container(width: 14),
-                    _glasses('images/glasses2.png',2),
+                    _pick_box('images/color(ffa6d6c3).png',2),
                     Container(width: 14),
-                    _glasses('images/glasses3.png',3),
+                    _pick_box('images/color(ffdabfa0).png',3),
                     Container(width: 14),
-                    _glasses('images/glasses4.png',4),
+                    _pick_box('images/color(ffefb3e2).png',4),
                     Container(width: 14),
                     Container(width: 14),
-                  ])),
+                  ]):
+
+
+
+
+                  Row(children: <Widget>[
+                    Container(width: 14),
+                    Container(width: 14),
+                    _pick_box('images/glasses1.png',1),
+                    Container(width: 14),
+                    _pick_box('images/glasses2.png',2),
+                    Container(width: 14),
+                    _pick_box('images/glasses3.png',3),
+                    Container(width: 14),
+                    _pick_box('images/glasses4.png',4),
+                    Container(width: 14),
+                    Container(width: 14),
+                  ])
+              ),
               SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(children: <Widget>[
@@ -218,6 +262,80 @@ class _AvatarPageState extends State<AvatarPage> {
                       ),
                     ),
 
+                    Container(
+                      width: 84,
+                      height: 65,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0),
+                          border: Border.all(color: widget.data.bar2==0?Color(0xff35258a) :Color(0xffb9b8b8), width:widget.data.bar2==0?4: 2, ),
+                          color: Color(0xfff6f5ed),
+                          image: DecorationImage(image:
+                          widget.data.mode%3==0 ? AssetImage('images/face1.png'):
+                          widget.data.mode%3==1 ? AssetImage('images/color1.png'):
+                          widget.data.mode%3==2 ? AssetImage('images/color1.png'):
+                          AssetImage('images/color1.png')
+                              , fit: BoxFit.scaleDown
+
+
+                          )
+                      ),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              widget.data.bar2=0;
+                            });
+                          },
+                        )
+                    ), Container(
+                        width: 84,
+                        height: 65,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(0),
+                            border: Border.all(color: widget.data.bar2==3?Color(0xff35258a) :Color(0xffb9b8b8), width:widget.data.bar2==0?4: 2, ),
+                            color: Color(0xfff6f5ed),
+                            image: DecorationImage(image:
+                            widget.data.mode%3==0 ? AssetImage('images/face2.png'):
+                            widget.data.mode%3==1 ? AssetImage('images/color2.png'):
+                            widget.data.mode%3==2 ? AssetImage('images/color2.png'):
+                            AssetImage('images/color2.png')
+                                , fit: BoxFit.scaleDown
+
+
+                            )
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              widget.data.bar2=1;
+                            });
+                          },
+                        )
+                    ), Container(
+                        width: 84,
+                        height: 65,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(0),
+                            border: Border.all(color: widget.data.bar2==2?Color(0xff35258a) :Color(0xffb9b8b8), width:widget.data.bar2==0?4: 2, ),
+                            color: Color(0xfff6f5ed),
+                            image: DecorationImage(image:
+                            widget.data.mode%3==0 ? AssetImage('images/face3.png'):
+                            widget.data.mode%3==1 ? AssetImage('images/color3.png'):
+                            widget.data.mode%3==2 ? AssetImage('images/color3.png'):
+                            AssetImage('images/color3.png')
+                                , fit: BoxFit.scaleDown
+
+
+                            )
+                        ),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              widget.data.bar2=2;
+                            });
+                          },
+                        )
+                    ),
+
                   ])),
 
               MaterialButton(
@@ -265,7 +383,27 @@ class AvatarStack extends StatelessWidget {
               builder: (BuildContext context, BoxConstraints constraints) {
                 return Container(
                   child: FittedBox(
-                    child: Image.asset(data.body),
+                    child:// Image.asset(data.body)
+Stack(children:<Widget>[
+Container(height: 200,child:ColorFiltered(
+      colorFilter: ColorFilter.mode(data.body_color, BlendMode.srcATop),
+        child:
+           Image.asset(data.hands ?? ''  ,
+             width:227,
+             height: 173, ))),
+                          //),
+                    Positioned(
+                        left:48,
+                        bottom:63,
+                        child:Container(
+                      width: 128,
+                      height: 128,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        border: Border.all(color: data.body_color, width: 45, ),
+                      ),
+                    ))]),
+
                     fit: BoxFit.fill,
                   ),
                   height: constraints.maxHeight,
@@ -273,7 +411,6 @@ class AvatarStack extends StatelessWidget {
                 );
               },
             ),
-
             //glasses
             if (data.glasses != null)
               LayoutBuilder(
@@ -288,7 +425,8 @@ class AvatarStack extends StatelessWidget {
                             top: constraints.maxHeight /20,
                             // left: constraints.maxWidth/14
                           ),
-                        )
+                        ),
+
                       ]);
                 },
               )

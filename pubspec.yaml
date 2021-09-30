@@ -82,6 +82,11 @@ flutter:
     - images/logo.png
     - images/face.png
     - images/color.png
+    - images/hands1.png
+    - images/color(ff6f6ca7).png
+    - images/color(ffa6d6c3).png
+    - images/color(ffdabfa0).png
+    - images/color(ffefb3e2).png
     - images/right_arrow.png
     - images/left_arrow.png
     - images/sheba.png
