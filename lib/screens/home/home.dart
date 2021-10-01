@@ -3,6 +3,7 @@ library home;
 import 'dart:async';
 import 'dart:math';
 
+import 'package:application/screens/Avatar/give_money.dart';
 import 'package:application/screens/home/personal_diary.dart';
 import 'package:application/screens/home/psycho.dart';
 import 'package:application/screens/map/map.dart';
@@ -578,7 +579,7 @@ Widget psychoBody(){
                         }
 
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) => MapPage()));
+                            builder: (BuildContext context) => Money(to_give: 10,first: false)));
                       },
                     ),
                     ListTile(

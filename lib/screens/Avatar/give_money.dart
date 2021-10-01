@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class Money extends StatelessWidget {
-  Money({required this.to_give});
+  Money({required this.to_give, required this.first});
+  bool first;
   int to_give=0;
   Future<void> _add() async {
 
@@ -50,33 +51,41 @@ class Money extends StatelessWidget {
         home: Builder(
           builder: (context){
             return Scaffold(
-                body: Stack(children: [
-                  Align(
-                    alignment: FractionalOffset.bottomCenter,
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      child: FittedBox(
-                        child: Image.asset('images/shibi_pages/'+((!isChecked)? 'lose' : 'angel')+'.png'),
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                  ),
+                body:  Stack(children: [
                   Positioned(
-                      left: -((0.8125 * MediaQuery.of(context).size.height) -
-                          MediaQuery.of(context).size.width) /
-                          2,
-                      top: -0.1 * MediaQuery.of(context).size.height,
+                  left: 20,
+                  bottom: 30,
+                  child:  TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color(0xff35258a),
+                      shape: CircleBorder(),
+                    ),
+                    child: Icon(
+                      Icons.arrow_back ,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      _add();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              Avatar(first:this.first)));
+                    },
+                  ),
+                ),
+                  Positioned(
+                      left: -0.8*MediaQuery.of(context).size.width ,
+                      top: -1.25* MediaQuery.of(context).size.height,
                       child: Container(
-                          width: 0.8125 * MediaQuery.of(context).size.height,
-                          height: 0.8125 * MediaQuery.of(context).size.height,
+                          width: 0.8125 * MediaQuery.of(context).size.height*2,
+                          height: 0.8125 * MediaQuery.of(context).size.height*1.8,
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Color(
-                                0x42cfc780,
+                                0x2beb7a99,
                               )))),
                   Positioned(
-                      right: 32,
-                      top: 97,
+                      right: 25,
+                      top: 75,
                       child: Align(
                           alignment: Alignment.topRight,
                           child: Column(
@@ -85,7 +94,7 @@ class Money extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 Text(
-                                  "קיבלת כספים",
+                                  "קיבלת מטבעות!",
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.right,
                                   style: GoogleFonts.assistant(
@@ -96,141 +105,70 @@ class Money extends StatelessWidget {
 
                                   //,"לכן, האפליקציה לא מאפשרת מענה חירום. n\את מה שאת מעלה בזמן אמת - n\אבל, המטפל/ת שלך לא תמיד רואה n\n\n\n\n\המועלה לאפליקציה. n\רק למטפל/ת שלך יש גישה למידע "
                                 ),
-                                Container(
-                                  height: 20,
-                                ),
-                                Text(
-                                  this.to_give.toString() +" שקלים",
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.start,
-                                  style: GoogleFonts.assistant(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Container(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "כולל יומן מחשבות ורגשות, ",
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.right,
-                                  style: GoogleFonts.assistant(
-                                    color: Color(0xff6f6ca7),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                Text(
-                                  "דפי עבודה וניתור תגובותיך לכל תרגיל.",
-                                  textAlign: TextAlign.start,
-                                  textDirection: TextDirection.rtl,
-                                  style: GoogleFonts.assistant(
-                                    color: Color(0xff6f6ca7),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-                                ),
-                                Container(
-                                  width: 313,
-                                  height: 2,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Color(0x2d34248a),
-                                      width: 1,
-                                    ),
-                                  ),
-                                ),
-                                Container(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "אבל המטפל\\ת שלך לא תמיד רואה\nאת מה שאת מעלה בזמן אמת -\nלכן, האפליקציה לא מאפשרת מענה חירום.",
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.right,
-                                  style: GoogleFonts.assistant(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
+
                               ]))),
+
                   Positioned(
-                      top: MediaQuery.of(context).size.height * 0.5,
-                      right: MediaQuery.of(context).size.width / 2 - 100,
-
-
-
-                      child: Row(children: <Widget>[
-                        Text(
-                          "אני מאשרת שקראתי",
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.assistant(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Container(
+                  top: 0.25* MediaQuery.of(context).size.height,
+                      bottom:0.1* MediaQuery.of(context).size.height,
+                      right: 0.1* MediaQuery.of(context).size.width,
+                      left:  0.1* MediaQuery.of(context).size.width,
+                      child:Container(
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                color: isChecked == true ? Colors.black: Colors.black,
-                                width: 2.3),
-                          ),
-                          width: 20,
-                          height: 20,
-
+                            borderRadius: BorderRadius.circular(25),
+                            border: Border.all(color: Color(0xff35258a), width: 2, ),
+                            color: Color(0xfff4f4f4),
                           ),
 
-                      ])),
-                  Positioned(
-                      top: MediaQuery.of(context).size.height * 0.6,
-                      right: MediaQuery.of(context).size.width / 2 - 100,
-                      child: Stack(children: [
-                        Container(
-                            width: 200,
-                            height: 39,
-                            child: MaterialButton(
-                                onPressed: () {
-                                   _add();
-                                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                       builder: (BuildContext context) =>
-                                           Avatar(first: true)));
-                                },
-                                minWidth: 200,
-                                height: 39,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(36)),
-                                color: Color(0xff35258a),
-                                child: Stack(children: <Widget>[
-                                  Positioned(
-                                    top: 5,
-                                    right: 50,
-                                    child: Text(
-                                      "מעולה!",
-                                      textDirection: TextDirection.rtl,
-                                      textAlign: TextAlign.left,
-                                      style: GoogleFonts.assistant(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  )
-                                ]))),
-                        Positioned(
-                            top: 5,
-                            right: 165,
-                            child: Container(
-                                width: 28,
-                                height: 28,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(36),
-                                  border: Border.all(color: Colors.white, width: 9),
-                                ))),
-                      ]))
-                ]));
+                    child:Stack(children: [
+                      Align(
+                      alignment: FractionalOffset.bottomRight,
+                      child: Container(
+                        child: FittedBox(
+                          child: Image.asset('images/shibi_pages/money.png'),
+                          fit: BoxFit.fitHeight,
+                        ),
+                      ),
+                    ), Positioned(
+                        bottom: 0.5*0.65* MediaQuery.of(context).size.height,
+                        left: 0,
+                        right:0,
+                        top:0,
+                        child:Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+                      children:[  Text(
+                        "יאייייי!",
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.assistant(
+                          color: Colors.black,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w900,
+                        ),),Text(
+                        " זכית ב"+this.to_give.toString()+" מטבעות",
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.assistant(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w900,
+                        ),),Text(
+                        "השתמשו בהם בחוכמה ;]",
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.right,
+                        style: GoogleFonts.assistant(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),)
+
+
+
+                ]))],)))
+            ])
+
+
+                );
           },
         )
     );
