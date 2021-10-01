@@ -27,6 +27,7 @@ class AvatarData {
     "images/glasses4.png":12,
 
   };
+  static Color color_default=Color(0xffdabfa0);
   static String body_default = "images/poo.png";
   static Future<AvatarData> load() async {
     String? pid = AuthRepository.instance().user?.uid;
@@ -34,7 +35,7 @@ class AvatarData {
         (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
     /*String valueString=v['body_color'];
     int value = int.parse(valueString, radix: 16);*/
-
+    print(v.data());
     Map<String,int> pricess={
       "images/glasses3.png":10,
       "images/glasses4.png":12,
@@ -64,7 +65,7 @@ class Avatar extends StatelessWidget {
       ),
       home: (first)
           ? AvatarPage(
-              title: "hey", data: AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default))
+              title: "hey", data: AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default,body_color: AvatarData.color_default))
           : FutureBuilder(
               future: AvatarData.load(),
               builder:
@@ -73,11 +74,11 @@ class Avatar extends StatelessWidget {
                   return AvatarPage(
                       title: "hey",
                       data: (snapshot.data ??
-                          AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default)));
+                          AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default,body_color: AvatarData.color_default)));
                 } else
                   return AvatarPage(
                       title: "hey",
-                      data: (AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default)));
+                      data: (AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default,body_color: AvatarData.color_default)));
               }),
     );
   }
@@ -96,26 +97,31 @@ class AvatarPage extends StatefulWidget {
 class _AvatarPageState extends State<AvatarPage> {
   void _save() async {
     String? pid = AuthRepository.instance().user?.uid;
+    print("saving");
     await FirebaseFirestore.instance
         .collection("avatars")
         .doc(pid)
-        .set({'body': widget.data.body, 'glasses': widget.data.glasses, 'body_color':widget.data.body_color.toString().split('(0x')[1].split(')')[0]});
+        .update({'body': widget.data.body, 'glasses': widget.data.glasses, 'body_color':widget.data.body_color.toString().split('(0x')[1].split(')')[0]});
   }
   Future<bool> _buy(int price,String image) async {
     if(!(widget.data.prices.containsKey(image))){
       return true;
     }
     String? pid = AuthRepository.instance().user?.uid;
-    print(price);
     var v =
     (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
+
+    print(v.data());
     int money=v['money'];
     print(money);
+
+    print(v);
+    print(widget.data.body_color);
     if(money>=price){
       await FirebaseFirestore.instance
           .collection("avatars")
           .doc(pid)
-          .set({'body': widget.data.body, 'glasses': widget.data.glasses, 'body_color':widget.data.body_color.toString().split('(0x')[1].split(')')[0] , 'money':money-price , image:'unlocked'});
+          .update({'body': widget.data.body, 'glasses': widget.data.glasses, 'body_color':widget.data.body_color.toString().split('(0x')[1].split(')')[0] , 'money':money-price , image:'unlocked'});
     widget.data.prices.remove(image);
       return true;
     }
@@ -352,6 +358,7 @@ class _AvatarPageState extends State<AvatarPage> {
                   ])
               ),
 
+              Container(height:10),
       SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(children: <Widget>[
