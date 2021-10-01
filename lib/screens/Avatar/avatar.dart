@@ -21,7 +21,7 @@ class AvatarData {
     "images/glasses4.png":12,
 
   };
-  int? money;
+  int? money=0;
   Color? body_color=Color(0xffdabfa0);
   int bar2=0;
   int mode=0;
@@ -68,7 +68,7 @@ class Avatar extends StatelessWidget {
       ),
       home: (first)
           ? AvatarPage(
-              title: "hey", data: AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default,body_color: AvatarData.color_default))
+              title: "hey", data: AvatarData(body: AvatarData.body_default , prices:AvatarData.prices_default,body_color: AvatarData.color_default, money:10))
           : FutureBuilder(
               future: AvatarData.load(),
               builder:
@@ -120,11 +120,14 @@ class _AvatarPageState extends State<AvatarPage> {
 
     print(v);
     print(widget.data.body_color);
+    Map<String,dynamic> m=v.data()!;
     if(money>=price){
+      m.remove("money");
+      m.addAll({image:'unlocked', "money":money-price});
       await FirebaseFirestore.instance
           .collection("avatars")
           .doc(pid)
-          .update({'body': widget.data.body, 'glasses': widget.data.glasses, 'body_color':widget.data.body_color.toString().split('(0x')[1].split(')')[0] , 'money':money-price , image:'unlocked'});
+          .set(m);
     widget.data.prices.remove(image);
       return true;
     }
