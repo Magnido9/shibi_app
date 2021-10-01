@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:application/screens/Avatar/bars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -6,36 +7,33 @@ import 'package:google_fonts/google_fonts.dart';
 import '../home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services/auth_services.dart';
+import 'package:tuple/tuple.dart';
+import 'dart:convert';
 
 class AvatarData {
   AvatarData(
-      {
-        required this.body,
-        this.glasses,
-        this.hands,
-        this.body_color,
-        this.money,
-        required this.prices}){
-    hands= hands?? AvatarData.hand_default;
-    glasses= glasses?? "images/glasses1.png";
+      {required this.body,
+      this.glasses,
+      this.hands,
+      this.body_color,
+      this.money,
+        this.acquired}) {
+    hands = hands ?? AvatarData.hand_default;
+    glasses = glasses ?? "images/glasses1.png";
+    acquired = acquired ?? AvatarShop.empty();
   }
+  AvatarShop? acquired;
   String body;
   String? glasses;
-  String? hands ;
+  String? hands;
   int color = 0;
-  Map<String, int> prices = {
-    "images/glasses3.png": 10,
-    "images/glasses4.png": 12,
-  };
-
   int? money = 0;
   Color? body_color = Color(0xffdabfa0);
+
+
   int bar2 = 0;
   int mode = 0;
-  static Map<String, int> prices_default = {
-    "images/glasses3.png": 10,
-    "images/glasses4.png": 12,
-  };
+
   static Color color_default = Color(0xffdabfa0);
 
   static String body_default = "images/poo.png";
@@ -48,24 +46,26 @@ class AvatarData {
     /*String valueString=v['body_color'];
     int value = int.parse(valueString, radix: 16);*/
     print(v.data());
-    Map<String, int> pricess = {
-      "images/glasses3.png": 10,
-      "images/glasses4.png": 12,
-    };
-    String image;
-    for (int i = 0; i < pricess.keys.length; i++) {
-      image = pricess.keys.elementAt(i);
-      if ((v).data()!.containsKey(image)) {
-        pricess.remove(pricess.keys.elementAt(i));
-      }
-    }
-    return AvatarData(
+    // Map<String, int> pricess = {
+    //   "images/glasses3.png": 10,
+    //   "images/glasses4.png": 12,
+    // };
+    // String image;
+    // for (int i = 0; i < pricess.keys.length; i++) {
+    //   image = pricess.keys.elementAt(i);
+    //   if ((v).data()!.containsKey(image)) {
+    //     pricess.remove(pricess.keys.elementAt(i));
+    //   }
+    // }
+    var a = AvatarData(
         body: v['body'],
         glasses: v['glasses'],
-        hands: v['hands'],
+        // hands: v['hands'],
         body_color: Color(int.parse(v['body_color'], radix: 16)),
         money: v['money'],
-        prices: pricess);
+    );
+    // print('load  '+a.toString()+' cat');
+    return a;
   }
 }
 
@@ -86,7 +86,6 @@ class Avatar extends StatelessWidget {
               data: AvatarData(
                   body: AvatarData.body_default,
                   hands: AvatarData.hand_default,
-                  prices: AvatarData.prices_default,
                   body_color: AvatarData.color_default,
                   money: 10))
           : FutureBuilder(
@@ -99,16 +98,14 @@ class Avatar extends StatelessWidget {
                       data: (snapshot.data ??
                           AvatarData(
                               body: AvatarData.body_default,
-                              hands:AvatarData.hand_default,
-                              prices: AvatarData.prices_default,
+                              hands: AvatarData.hand_default,
                               body_color: AvatarData.color_default)));
                 } else
                   return AvatarPage(
                       title: "hey",
                       data: (AvatarData(
                           body: AvatarData.body_default,
-                          hands:AvatarData.hand_default,
-                          prices: AvatarData.prices_default,
+                          hands: AvatarData.hand_default,
                           body_color: AvatarData.color_default)));
               }),
     );
@@ -132,11 +129,11 @@ class _AvatarPageState extends State<AvatarPage> {
     await FirebaseFirestore.instance.collection("avatars").doc(pid).update({
       'body': widget.data.body,
       'glasses': widget.data.glasses,
-      'body_color':
-          widget.data.body_color.toString().split('(0x')[1].split(')')[0]
+      'body_color': widget.data.body_color.toString().split('(0x')[1].split(')')[0],
+      'purchased' : widget.data.acquired?.acquired_items.toString()
     });
   }
-
+/*
   Future<bool> _buy(int price, String image) async {
     if (!(widget.data.prices.containsKey(image))) {
       return true;
@@ -161,73 +158,32 @@ class _AvatarPageState extends State<AvatarPage> {
     }
     return false;
   }
-
-  Widget _pick_box(String image, int num) {
-    return GestureDetector(
-      behavior: HitTestBehavior.translucent,
-      onDoubleTap: () {
-        print("buy");
-        if ((widget.data.prices.containsKey(image))) {
-          print(widget.data.prices[image]);
-          _buy(widget.data.prices[image] ?? 0, image);
-        }
-      },
-      onTap: () {
-        setState(() {
-          if (widget.data.mode % 4 == 0 && widget.data.bar2 == 0) {
-            if (!(widget.data.prices.containsKey(image))) {
-              widget.data.glasses = image;
-            }
-          }
-          if (widget.data.mode % 4 == 1 && widget.data.bar2 == 0) {
-            String valueString = image.split('color(')[1].split(')')[0];
-            int value = int.parse(valueString, radix: 16);
-            widget.data.body_color = Color(value);
-          }
-          if (widget.data.mode % 4 == 1 && widget.data.bar2 == 1) {
-            String valueString = image.split('color(')[1].split(')')[0];
-            int value = int.parse(valueString, radix: 16);
-            widget.data.body_color = Color(value);
-          }
-
-          widget.data.color = 1 + num;
-        });
-      },
-      child: Container(
-          height: 100,
-          width: 100,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(19),
-              border: Border.all(
-                color: widget.data.color == (1 + num)
-                    ? Color(0xff35258a)
-                    : Color(0xffb9b8b8),
-                width: 2,
-              ),
-              color: widget.data.color == (1 + num)
-                  ? Color(0xffebdac7)
-                  : Color(0xfff6f5ed),
-              image: DecorationImage(
-                  image: AssetImage(image), fit: BoxFit.scaleDown)),
-          child: Container(
-            width: 25,
-            height: 26,
-            padding: const EdgeInsets.only(
-              left: 4,
-            ),
-            child: widget.data.prices.containsKey(image)
-                ? Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      build_money(AvatarData.prices_default[image].toString())
-                    ],
-                  )
-                : Container(),
-          )),
-    );
+*/
+  buy(int i, int j, int n){
+    int money = widget.data.money ?? 0;
+    if((widget.data.acquired?.acquired_items[i][j][n]?? false) || money>= AvatarShop.merch[i][j][n].item2){
+     setState(() {
+       widget.data.money =money - AvatarShop.merch[i][j][n].item2;
+       widget.data.acquired?.acquired_items[i][j][n] = true;
+     });
+    }
   }
+
+  choose(int i, int j, int n){
+    if(widget.data.acquired?.acquired_items[i][j][n]?? false){
+      switch (i){
+        case 0:{
+          if(j==0) setState(() {
+            widget.data.glasses = AvatarShop.merch[i][j][n].item1;
+          });
+        }break;
+        case 1:{
+
+        }break;
+      }
+    }
+  }
+
 
   Widget build_money(String text) {
     return Stack(children: [
@@ -310,13 +266,15 @@ class _AvatarPageState extends State<AvatarPage> {
                             fontSize: 30,
                             fontWeight: FontWeight.w900,
                           ),
-
                         ),
                       ]))),
 
           // Figma Flutter Generator Group304Widget - GROUP
 
-          Positioned(left: 22, top: 131.32, child: build_money(widget.data.money.toString())),
+          Positioned(
+              left: 22,
+              top: 131.32,
+              child: build_money(widget.data.money.toString())),
           Positioned(
             left: 45,
             top: 120,
@@ -326,33 +284,33 @@ class _AvatarPageState extends State<AvatarPage> {
             ),
           ),
 
-          Positioned(
-            left: 20,
-            top: 510,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Color(0xff35258a),
-                shape: CircleBorder(),
-              ),
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.white,
-              ),
-              onPressed: () {},
-            ),
-          ),
-
           Center(
             child: Column(
               children: <Widget>[
                 Container(height: 200),
                 Container(
-                    width: 128,
-                    height: 128,
+                    width: 200,
+                    height: 200,
                     child: AvatarStack(
                       data: widget.data,
                     )),
                 Container(height: 10),
+                Row(
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color(0xff35258a),
+                        shape: CircleBorder(),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+                /*
                 SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: (widget.data.mode % 4 == 0 && widget.data.bar2 == 0)
@@ -399,202 +357,200 @@ class _AvatarPageState extends State<AvatarPage> {
                 Container(height: 10),
                 Row(
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 30,
-                          height: 65,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xffb9b8b8),
-                                width: 2,
-                              ),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  image: AssetImage('images/left_arrow.png'),
-                                  fit: BoxFit.scaleDown)),
-                        ),
-                        Container(
-                          width: 88,
-                          height: 65,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(0),
-                              border: Border.all(
-                                color: Color(0xffb9b8b8),
-                                width: 2,
-                              ),
-                              color: widget.data.mode % 3 == 0
-                                  ? Color(0xfffefad8)
-                                  : widget.data.mode % 3 == 1
+                    Container(
+                      width: 30,
+                      height: 65,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xffb9b8b8),
+                            width: 2,
+                          ),
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image: AssetImage('images/left_arrow.png'),
+                              fit: BoxFit.scaleDown)),
+                    ),
+                    Container(
+                      width: 88,
+                      height: 65,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(0),
+                          border: Border.all(
+                            color: Color(0xffb9b8b8),
+                            width: 2,
+                          ),
+                          color: widget.data.mode % 3 == 0
+                              ? Color(0xfffefad8)
+                              : widget.data.mode % 3 == 1
                                   ? Color(0xffddfed8)
                                   : widget.data.mode % 3 == 2
-                                  ? Color(0xffddfed8)
-                                  : Color(0xffddfed8),
-                              image: DecorationImage(
-                                  image: widget.data.mode % 3 == 0
-                                      ? AssetImage('images/face.png')
-                                      : widget.data.mode % 3 == 1
+                                      ? Color(0xffddfed8)
+                                      : Color(0xffddfed8),
+                          image: DecorationImage(
+                              image: widget.data.mode % 3 == 0
+                                  ? AssetImage('images/face.png')
+                                  : widget.data.mode % 3 == 1
                                       ? AssetImage('images/color.png')
                                       : widget.data.mode % 3 == 2
-                                      ? AssetImage('images/color.png')
-                                      : AssetImage('images/color.png'),
-                                  fit: BoxFit.scaleDown)),
-                        ),
-                        Container(
-                          width: 30,
-                          height: 65,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Color(0xffb9b8b8),
-                                width: 2,
-                              ),
-                              color: Colors.white,
-                              image: DecorationImage(
-                                  image: AssetImage('images/right_arrow.png'),
-                                  fit: BoxFit.scaleDown)),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                widget.data.mode += 1;
-                              });
-                            },
+                                          ? AssetImage('images/color.png')
+                                          : AssetImage('images/color.png'),
+                              fit: BoxFit.scaleDown)),
+                    ),
+                    Container(
+                      width: 30,
+                      height: 65,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Color(0xffb9b8b8),
+                            width: 2,
                           ),
-                        ),
-                        Container(
-                          width:MediaQuery.of(context).size.width-148,
-                          height: 65,
-                          child:ListView(
-                            scrollDirection:  Axis.horizontal,
-                            children: [
-
-                              Container(
-                                  width: 84,
-                                  height: 65,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(0),
-                                      border: Border.all(
-                                        color: widget.data.bar2 == 0
-                                            ? Color(0xff35258a)
-                                            : Color(0xffb9b8b8),
-                                        width: widget.data.bar2 == 0 ? 4 : 2,
-                                      ),
-                                      color: Color(0xfff6f5ed),
-                                      image: DecorationImage(
-                                          image: widget.data.mode % 4 == 0
-                                              ? AssetImage('images/eyes.png')
-                                              : widget.data.mode % 4 == 1
+                          color: Colors.white,
+                          image: DecorationImage(
+                              image: AssetImage('images/right_arrow.png'),
+                              fit: BoxFit.scaleDown)),
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            widget.data.mode += 1;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 148,
+                      height: 65,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Container(
+                              width: 84,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(0),
+                                  border: Border.all(
+                                    color: widget.data.bar2 == 0
+                                        ? Color(0xff35258a)
+                                        : Color(0xffb9b8b8),
+                                    width: widget.data.bar2 == 0 ? 4 : 2,
+                                  ),
+                                  color: Color(0xfff6f5ed),
+                                  image: DecorationImage(
+                                      image: widget.data.mode % 4 == 0
+                                          ? AssetImage('images/eyes.png')
+                                          : widget.data.mode % 4 == 1
                                               ? AssetImage('images/body.png')
                                               : widget.data.mode % 4 == 2
-                                              ? AssetImage(
-                                              'images/color1.png')
-                                              : AssetImage(
-                                              'images/color1.png'),
-                                          fit: BoxFit.scaleDown)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        widget.data.bar2 = 0;
-                                      });
-                                    },
-                                  )),
-                              Container(
-                                  width: 84,
-                                  height: 65,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(0),
-                                      border: Border.all(
-                                        color: widget.data.bar2 == 1
-                                            ? Color(0xff35258a)
-                                            : Color(0xffb9b8b8),
-                                        width: widget.data.bar2 == 1 ? 4 : 2,
-                                      ),
-                                      color: Color(0xfff6f5ed),
-                                      image: DecorationImage(
-                                          image: widget.data.mode % 4 == 0
-                                              ? AssetImage('images/brows.png')
-                                              : widget.data.mode % 4 == 1
+                                                  ? AssetImage(
+                                                      'images/color1.png')
+                                                  : AssetImage(
+                                                      'images/color1.png'),
+                                      fit: BoxFit.scaleDown)),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.data.bar2 = 0;
+                                  });
+                                },
+                              )),
+                          Container(
+                              width: 84,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(0),
+                                  border: Border.all(
+                                    color: widget.data.bar2 == 1
+                                        ? Color(0xff35258a)
+                                        : Color(0xffb9b8b8),
+                                    width: widget.data.bar2 == 1 ? 4 : 2,
+                                  ),
+                                  color: Color(0xfff6f5ed),
+                                  image: DecorationImage(
+                                      image: widget.data.mode % 4 == 0
+                                          ? AssetImage('images/brows.png')
+                                          : widget.data.mode % 4 == 1
                                               ? AssetImage('images/eyes.png')
                                               : widget.data.mode % 4 == 2
-                                              ? AssetImage(
-                                              'images/color2.png')
-                                              : AssetImage(
-                                              'images/color2.png'),
-                                          fit: BoxFit.scaleDown)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        widget.data.bar2 = 1;
-                                      });
-                                    },
-                                  )),
-                              Container(
-                                  width: 84,
-                                  height: 65,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(0),
-                                      border: Border.all(
-                                        color: widget.data.bar2 == 2
-                                            ? Color(0xff35258a)
-                                            : Color(0xffb9b8b8),
-                                        width: widget.data.bar2 == 2 ? 4 : 2,
-                                      ),
-                                      color: Color(0xfff6f5ed),
-                                      image: DecorationImage(
-                                          image: widget.data.mode % 4 == 0
-                                              ? AssetImage('images/mouth.png')
-                                              : widget.data.mode % 4 == 1
-                                              ? AssetImage('images/mouth.png')
-                                              : widget.data.mode % 4 == 2
-                                              ? AssetImage(
-                                              'images/color3.png')
-                                              : AssetImage(
-                                              'images/color3.png'),
-                                          fit: BoxFit.scaleDown)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        widget.data.bar2 = 2;
-                                      });
-                                    },
-                                  )),
-                              Container(
-                                  width: 84,
-                                  height: 65,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(0),
-                                      border: Border.all(
-                                        color: widget.data.bar2 == 3
-                                            ? Color(0xff35258a)
-                                            : Color(0xffb9b8b8),
-                                        width: widget.data.bar2 == 3 ? 4 : 2,
-                                      ),
-                                      color: Color(0xfff6f5ed),
-                                      image: DecorationImage(
-                                          image: widget.data.mode % 4 == 0
-                                              ? AssetImage('images/mouth.png')
-                                              : widget.data.mode % 4 == 1
+                                                  ? AssetImage(
+                                                      'images/color2.png')
+                                                  : AssetImage(
+                                                      'images/color2.png'),
+                                      fit: BoxFit.scaleDown)),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.data.bar2 = 1;
+                                  });
+                                },
+                              )),
+                          Container(
+                              width: 84,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(0),
+                                  border: Border.all(
+                                    color: widget.data.bar2 == 2
+                                        ? Color(0xff35258a)
+                                        : Color(0xffb9b8b8),
+                                    width: widget.data.bar2 == 2 ? 4 : 2,
+                                  ),
+                                  color: Color(0xfff6f5ed),
+                                  image: DecorationImage(
+                                      image: widget.data.mode % 4 == 0
+                                          ? AssetImage('images/mouth.png')
+                                          : widget.data.mode % 4 == 1
                                               ? AssetImage('images/mouth.png')
                                               : widget.data.mode % 4 == 2
-                                              ? AssetImage(
-                                              'images/color3.png')
-                                              : AssetImage(
-                                              'images/color3.png'),
-                                          fit: BoxFit.scaleDown)),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        widget.data.bar2 = 3;
-                                      });
-                                    },
-                                  ))
-                            ],
-                          ),
-                        )
-                      ],
+                                                  ? AssetImage(
+                                                      'images/color3.png')
+                                                  : AssetImage(
+                                                      'images/color3.png'),
+                                      fit: BoxFit.scaleDown)),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.data.bar2 = 2;
+                                  });
+                                },
+                              )),
+                          Container(
+                              width: 84,
+                              height: 65,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(0),
+                                  border: Border.all(
+                                    color: widget.data.bar2 == 3
+                                        ? Color(0xff35258a)
+                                        : Color(0xffb9b8b8),
+                                    width: widget.data.bar2 == 3 ? 4 : 2,
+                                  ),
+                                  color: Color(0xfff6f5ed),
+                                  image: DecorationImage(
+                                      image: widget.data.mode % 4 == 0
+                                          ? AssetImage('images/mouth.png')
+                                          : widget.data.mode % 4 == 1
+                                              ? AssetImage('images/mouth.png')
+                                              : widget.data.mode % 4 == 2
+                                                  ? AssetImage(
+                                                      'images/color3.png')
+                                                  : AssetImage(
+                                                      'images/color3.png'),
+                                      fit: BoxFit.scaleDown)),
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    widget.data.bar2 = 3;
+                                  });
+                                },
+                              ))
+                        ],
+                      ),
                     )
                   ],
-                ),
-
+                ),*/
+                AvatarBar(
+                    shop: widget.data.acquired ?? AvatarShop(AvatarShop.empty().toString()),
+                    tap: choose,
+                    dtap: buy),
                 MaterialButton(
                   onPressed: () => {
                     _save(),
@@ -645,11 +601,12 @@ class AvatarStack extends StatelessWidget {
                         // color: Colors.green,
                         child: FittedBox(
                           fit: BoxFit.fitHeight,
-                          child: Image.asset(data.hands ?? AvatarData.hand_default),
+                          child: Image.asset(
+                              data.hands ?? AvatarData.hand_default),
                         ),
-                        height: constraints.maxHeight*0.75 ,
+                        height: constraints.maxHeight * 0.75,
                         margin: EdgeInsets.only(
-                          top: constraints.maxHeight *0.2,
+                          top: constraints.maxHeight * 0.2,
                           // left: constraints.maxWidth/14
                         ),
                       ),
@@ -658,24 +615,23 @@ class AvatarStack extends StatelessWidget {
             ),
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
-                var r = constraints.maxWidth*0.5;
+                var r = constraints.maxWidth * 0.5;
                 return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        child: Container(
-                            width: r,
-                            height: r,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(r),
-                                border: Border.all(
-                                  color: data.body_color ?? Colors.grey,
-                                  width: r*45/128,
-                                ))),
-                        margin: EdgeInsets.only(
-                        top: constraints.maxHeight *0.15,
-                        )
-                      ),
+                          child: Container(
+                              width: r,
+                              height: r,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(r),
+                                  border: Border.all(
+                                    color: data.body_color ?? Colors.grey,
+                                    width: r * 45 / 128,
+                                  ))),
+                          margin: EdgeInsets.only(
+                            top: constraints.maxHeight * 0.15,
+                          )),
                     ]);
               },
             ),
@@ -689,9 +645,9 @@ class AvatarStack extends StatelessWidget {
                       children: [
                         Container(
                           child: Image.asset(data.glasses ?? ''),
-                          height: constraints.maxHeight *0.1,
+                          height: constraints.maxHeight * 0.1,
                           margin: EdgeInsets.only(
-                            top: constraints.maxHeight *0.15,
+                            top: constraints.maxHeight * 0.15,
                             // left: constraints.maxWidth/14
                           ),
                         ),
@@ -727,9 +683,8 @@ class _LoadAvatarState extends State<LoadAvatar> {
                 data: (snapshot.data ??
                     AvatarData(
                         body: AvatarData.body_default,
-                        hands:AvatarData.hand_default,
-
-                        prices: AvatarData.prices_default)));
+                        hands: AvatarData.hand_default,
+                      )));
           } else
             return CircularProgressIndicator(
               color: Colors.green,
@@ -737,3 +692,124 @@ class _LoadAvatarState extends State<LoadAvatar> {
         });
   }
 }
+
+class AvatarShop {
+  AvatarShop(String s): acquired_items=[]
+  {fromString(s);}
+
+  List<List<List<bool>>> acquired_items;
+  static List<String> groups=
+  [
+    'images/face.png',
+    'images/color.png',
+
+  ];
+
+  static List<List<String>> sub_groups=
+  [
+    [
+      'images/eyes.png',
+      'images/brows.png',
+      'images/mouth.png',
+    ],
+    [
+      'images/body.png',
+      'images/eyes.png',
+      'images/mouth.png',
+    ]
+  ];
+
+  static List<List<List<Tuple2<String,int>>>> merch=
+  [
+    [//face
+      [//eyes
+  Tuple2('images/glasses1.png',0),
+  Tuple2('images/glasses2.png',0),
+  Tuple2('images/glasses3.png',10),
+  Tuple2('images/glasses4.png',12),
+      ],
+      [],//brows
+      [],//lips
+    ],
+    [//color
+      [//body
+  Tuple2('images/color(ff6f6ca7).png',0),
+  Tuple2('images/color(ffa6d6c3).png',0),
+  Tuple2('images/color(ffdabfa0).png',0),
+  Tuple2('images/color(ffefb3e2).png',0),
+      ],
+      [//eyes
+  Tuple2('images/color(ff6f6ca7).png',0),
+  Tuple2('images/color(ffa6d6c3).png',0),
+  Tuple2('images/color(ffdabfa0).png',0),
+  Tuple2('images/color(ffefb3e2).png',0),
+      ],
+      [//lips
+  Tuple2('images/color(ff6f6ca7).png',0),
+  Tuple2('images/color(ffa6d6c3).png',0),
+  Tuple2('images/color(ffdabfa0).png',0),
+  Tuple2('images/color(ffefb3e2).png',0),
+      ]
+    ]
+  ];
+
+  static AvatarShop empty(){
+    var ret=[];
+    for( int i=0; i< groups.length; i++){
+      ret.add([]);
+      for( int j=0; j< sub_groups[i].length; j++){
+        ret[i].add([]);
+        for( int n=0; n< merch[i][j].length; n++){
+          ret[i][j].add(false);
+        }
+      }
+    }
+    var a=AvatarShop(ret.toString());
+    return  a;
+  }
+
+  @override
+  toString(){
+    var ret=[];
+    for( int i=0; i< groups.length; i++){
+      ret.add([]);
+      for( int j=0; j< sub_groups[i].length; j++){
+        ret[i].add([]);
+        for( int n=0; n< merch[i][j].length; n++){
+          ret[i].add(acquired_items[i][j][n]? 1: 0);
+
+        }
+      }
+    }
+    return acquired_items.toString();
+  }
+
+  fromString(String s){
+    var lists = json.decode(s);
+    acquired_items=[];
+    for( int i=0; i< groups.length; i++){
+      acquired_items.add([]);
+      for( int j=0; j< sub_groups[i].length; j++){
+        acquired_items[i].add([]);
+        for( int n=0; n< merch[i][j].length; n++){
+
+          acquired_items[i][j].add((lists[i][j][n]==1)? true: false);
+
+        }
+      }
+    }
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+

@@ -96,7 +96,7 @@ class _PsychoState extends State<Psycho> {
                                           ConnectionState.done) {
                                         var data = snapshot.data ??
                                             AvatarData(
-                                                body: AvatarData.body_default , prices:AvatarData.prices_default);
+                                                body: AvatarData.body_default );
                                         return AvatarStack(data: data);
                                       }
                                       return CircularProgressIndicator();
@@ -159,7 +159,7 @@ class _PsychoState extends State<Psycho> {
                                   return AvatarStack(
                                       data: (snapshot.data ??
                                           AvatarData(
-                                              body: AvatarData.body_default , prices:AvatarData.prices_default)));
+                                              body: AvatarData.body_default , )));
                                 }
                                 return CircularProgressIndicator();
                               },

@@ -49,7 +49,7 @@ dependencies:
   connectivity: ^3.0.2
   location: ^4.1.1
   google_maps_flutter: ^2.0.1
-
+  tuple: 2.0.0
   permission_handler: ^6.1.0
 # Provides server & web apps with the ability to load, manipulate and save images with various image file formats PNG, JPEG, GIF, BMP, WebP, TIFF, TGA, PSD, PVR, and OpenEXR.
 

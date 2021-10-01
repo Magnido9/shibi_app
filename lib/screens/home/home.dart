@@ -298,7 +298,7 @@ class _HomeState extends State<Home> {
                         AsyncSnapshot<AvatarData> snapshot) {
                       if (snapshot.connectionState == ConnectionState.done) {
                         var data = snapshot.data ??
-                            AvatarData(body: AvatarData.body_default,prices: AvatarData.prices_default);
+                            AvatarData(body: AvatarData.body_default);
                         return AvatarStack(data: data);
                       }
                       return CircularProgressIndicator();
@@ -555,7 +555,7 @@ Widget psychoBody(){
                                       data: (snapshot.data ??
                                           AvatarData(
                                               body: AvatarData.body_default
-                                          , prices:AvatarData.prices_default)));
+                                          )));
                                 }
                                 return CircularProgressIndicator();
                               },
