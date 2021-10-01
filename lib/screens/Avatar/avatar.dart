@@ -7,6 +7,9 @@ import '../home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services/auth_services.dart';
 
+
+
+
 class AvatarData {
   AvatarData({required this.body, this.glasses, this.body_color,this.money,required this.prices});
   String body;
@@ -250,6 +253,7 @@ class _AvatarPageState extends State<AvatarPage> {
       ),
     ]);
  }
+
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -293,13 +297,47 @@ class _AvatarPageState extends State<AvatarPage> {
     ),
 
     ]))),
+
+          // Figma Flutter Generator Group304Widget - GROUP
+
           Positioned(
               left: 22,
-              top: 134,
+              top: 131.32,
+
               child: build_money()),
+    Positioned(
+      left: 45,
+      top: 120,
+      child: IconButton(
+        icon: const Icon(Icons.settings_outlined),
+        onPressed: () {
+
+        },
+      ),
+    ),
+
+          Positioned(
+            left: 20,
+            top: 510,
+            child:  TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Color(0xff35258a),
+                shape: CircleBorder(),
+              ),
+              child: Icon(
+                Icons.arrow_back ,
+                color: Colors.white,
+              ),
+              onPressed: () {},
+            ),
+          ),
+
+
     Center(
+
           child: Column(
             children: <Widget>[
+
               Container(height:200),
 
               Container(
