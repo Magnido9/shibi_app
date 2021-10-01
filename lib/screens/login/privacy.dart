@@ -146,9 +146,6 @@ class _PrivacyState extends State<Privacy> {
                 Positioned(
                     top: MediaQuery.of(context).size.height * 0.5,
                     right: MediaQuery.of(context).size.width / 2 - 100,
-
-
-
                     child: Row(children: <Widget>[
                       Text(
                         "אני מאשרת שקראתי",
@@ -181,7 +178,7 @@ class _PrivacyState extends State<Privacy> {
                       ),),
 
                     ])),
-                Positioned(
+                isChecked?Positioned(
                     top: MediaQuery.of(context).size.height * 0.6,
                     right: MediaQuery.of(context).size.width / 2 - 100,
                     child: Stack(children: [
@@ -233,7 +230,7 @@ class _PrivacyState extends State<Privacy> {
                                 borderRadius: BorderRadius.circular(36),
                                 border: Border.all(color: Colors.white, width: 9),
                               ))),
-                    ]))
+                    ])):Container()
               ]));
         },
       )
