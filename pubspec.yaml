@@ -106,6 +106,7 @@ flutter:
     - images/shibi_pages/lose.png
     - images/shibi_pages/win.png
     - images/shibi_pages/gangster.png
+    - images/shibi_pages/money.png
 
     - music/meditation.mp3
   uses-material-design: true

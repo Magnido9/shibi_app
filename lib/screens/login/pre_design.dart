@@ -141,7 +141,7 @@ class _PreDesignState extends State<PreDesign> {
                                     onPressed: () {
                                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                Money(to_give: 10)));
+                                                Money(to_give: 10,first:true)));
                                     },
                                     minWidth: 200,
                                     height: 39,
