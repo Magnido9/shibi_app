@@ -2,6 +2,7 @@ library authentication;
 
 import 'package:application/screens/Avatar/avatar.dart';
 import 'package:application/screens/Avatar/give_money.dart';
+import 'package:application/screens/login/pre_design.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -216,7 +217,7 @@ class _MyHomePageState extends State<PasswordPage> {
         .doc(pid)
         .set({'password': codes.join(' ')}, SetOptions(merge: true));
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Money(to_give: 10)));
+        context, MaterialPageRoute(builder: (context) => PreDesign()));
   }
 
   _continue() async {
