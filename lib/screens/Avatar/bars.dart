@@ -38,8 +38,8 @@ class _AvatarBarState extends State<AvatarBar> {
         Container(
           height: 100,
           width: MediaQuery.of(context).size.height,
-          child: ListView.separated(
-            separatorBuilder: (_, __) => Divider(),
+          child: ListView.builder(
+            // separatorBuilder: (_, __) => Divider(),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return GestureDetector(
