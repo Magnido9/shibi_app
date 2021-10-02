@@ -3,6 +3,7 @@ import 'package:application/screens/Avatar/bars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../home/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -286,14 +287,18 @@ class _AvatarPageState extends State<AvatarPage> {
 
           Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Container(height: 200),
-                Container(
-                    width: 200,
-                    height: 200,
-                    child: AvatarStack(
-                      data: widget.data,
-                    )),
+                Flexible(
+                  flex:1,
+                  child: Container(
+                      width: 200,
+                      height: 200,
+                      child: AvatarStack(
+                        data: widget.data,
+                      )),
+                ),
                 Container(height: 10),
                 Row(
                   children: [
