@@ -699,18 +699,19 @@ class _LoadAvatarState extends State<LoadAvatar> {
 }
 
 class AvatarShop {
-  AvatarShop(String s): acquired_items=[]
-  {fromString(s);}
+  AvatarShop(String s) : acquired_items=[] {
+    fromString(s);
+  }
 
   List<List<List<bool>>> acquired_items;
-  static List<String> groups=
+  static List<String> groups =
   [
     'images/face.png',
     'images/color.png',
 
   ];
 
-  static List<List<String>> sub_groups=
+  static List<List<String>> sub_groups =
   [
     [
       'images/eyes.png',
@@ -724,82 +725,104 @@ class AvatarShop {
     ]
   ];
 
-  static List<List<List<Tuple2<String,int>>>> merch=
+  static List<List<List<Tuple2<String, int>>>> merch =
   [
-    [//face
-      [//eyes
-  Tuple2('images/glasses1.png',0),
-  Tuple2('images/glasses2.png',0),
-  Tuple2('images/glasses3.png',10),
-  Tuple2('images/glasses4.png',12),
+    [ //face
+      [ //eyes
+        Tuple2('images/glasses1.png', 0),
+        Tuple2('images/glasses2.png', 0),
+        Tuple2('images/glasses3.png', 10),
+        Tuple2('images/glasses4.png', 12),
       ],
-      [],//brows
-      [],//lips
+      [], //brows
+      [], //lips
     ],
-    [//color
-      [//body
-  Tuple2('images/color(ff6f6ca7).png',0),
-  Tuple2('images/color(ffa6d6c3).png',0),
-  Tuple2('images/color(ffdabfa0).png',0),
-  Tuple2('images/color(ffefb3e2).png',0),
+    [ //color
+      [ //body
+        Tuple2('images/color(ff6f6ca7).png', 0),
+        Tuple2('images/color(ffa6d6c3).png', 0),
+        Tuple2('images/color(ffdabfa0).png', 0),
+        Tuple2('images/color(ffefb3e2).png', 0),
       ],
-      [//eyes
-  Tuple2('images/color(ff6f6ca7).png',0),
-  Tuple2('images/color(ffa6d6c3).png',0),
-  Tuple2('images/color(ffdabfa0).png',0),
-  Tuple2('images/color(ffefb3e2).png',0),
+      [ //eyes
+        Tuple2('images/color(ff6f6ca7).png', 0),
+        Tuple2('images/color(ffa6d6c3).png', 0),
+        Tuple2('images/color(ffdabfa0).png', 0),
+        Tuple2('images/color(ffefb3e2).png', 0),
       ],
-      [//lips
-  Tuple2('images/color(ff6f6ca7).png',0),
-  Tuple2('images/color(ffa6d6c3).png',0),
-  Tuple2('images/color(ffdabfa0).png',0),
-  Tuple2('images/color(ffefb3e2).png',0),
+      [ //lips
+        Tuple2('images/color(ff6f6ca7).png', 0),
+        Tuple2('images/color(ffa6d6c3).png', 0),
+        Tuple2('images/color(ffdabfa0).png', 0),
+        Tuple2('images/color(ffefb3e2).png', 0),
       ]
     ]
   ];
 
-  static AvatarShop empty(){
-    var ret=[];
-    for( int i=0; i< groups.length; i++){
+  static AvatarShop empty() {
+    var ret = [];
+    for (int i = 0; i < groups.length; i++) {
       ret.add([]);
-      for( int j=0; j< sub_groups[i].length; j++){
+      for (int j = 0; j < sub_groups[i].length; j++) {
         ret[i].add([]);
-        for( int n=0; n< merch[i][j].length; n++){
+        for (int n = 0; n < merch[i][j].length; n++) {
           ret[i][j].add(false);
         }
       }
     }
-    var a=AvatarShop(ret.toString());
-    return  a;
+    var a = AvatarShop(ret.toString());
+    return a;
   }
 
   @override
-  toString(){
-    var ret=[];
-    for( int i=0; i< groups.length; i++){
+  toString() {
+    var ret = [];
+    for (int i = 0; i < groups.length; i++) {
       ret.add([]);
-      for( int j=0; j< sub_groups[i].length; j++){
+      for (int j = 0; j < sub_groups[i].length; j++) {
         ret[i].add([]);
-        for( int n=0; n< merch[i][j].length; n++){
-          ret[i].add(acquired_items[i][j][n]? 1: 0);
-
+        for (int n = 0; n < merch[i][j].length; n++) {
+          ret[i].add(acquired_items[i][j][n] ? 1 : 0);
         }
       }
     }
     return acquired_items.toString();
   }
 
-  fromString(String s){
+  fromString(String s) {
     var lists = json.decode(s);
-    acquired_items=[];
-    for( int i=0; i< groups.length; i++){
+
+    if (lists.length != merch.length) {
+      acquired_items = AvatarShop
+          .empty()
+          .acquired_items;
+      return;
+    }
+    for (int i = 0; i < groups.length; i++) {
+      if (lists[i].length != merch[i].length) {
+        acquired_items = AvatarShop
+            .empty()
+            .acquired_items;
+        return;
+      }
+      for (int j = 0; j < sub_groups[i].length; j++) {
+        if (lists[i][j].length != merch[i][j].length) {
+          acquired_items = AvatarShop
+              .empty()
+              .acquired_items;
+          return;
+        }
+      }
+    }
+
+
+    acquired_items = [];
+    for (int i = 0; i < groups.length; i++) {
       acquired_items.add([]);
-      for( int j=0; j< sub_groups[i].length; j++){
+      for (int j = 0; j < sub_groups[i].length; j++) {
         acquired_items[i].add([]);
-        for( int n=0; n< merch[i][j].length; n++){
-
-          acquired_items[i][j].add((lists[i][j][n]==1)? true: false);
-
+        for (int n = 0; n < merch[i][j].length; n++) {
+          acquired_items[i][j].add((lists[i][j][n] == 1) ? true : false);
         }
       }
     }
@@ -807,14 +830,3 @@ class AvatarShop {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-

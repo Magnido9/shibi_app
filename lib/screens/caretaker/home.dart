@@ -97,7 +97,7 @@ class _HomeState extends State<CareHome> {
                         itemCount: data.length),
                   );
                 }
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator(),);
               },
             ),
             floatingActionButton: FloatingActionButton(
