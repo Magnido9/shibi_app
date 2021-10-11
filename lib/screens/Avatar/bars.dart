@@ -24,7 +24,7 @@ class AvatarBar extends StatefulWidget {
 class _AvatarBarState extends State<AvatarBar> {
   List<List<String>> lowerVals = AvatarShop.sub_groups;
   List<List<List<Tuple2<String, int>>>> upperVals = AvatarShop.merch;
-  int mode_first = 0, mode_second = 0;
+  int mode_first = 0, mode_second = 0, third_mode =-1;
   int first_max = 1, second_max = -1;
   bool open = true;
   @override
@@ -71,11 +71,17 @@ class _AvatarBarState extends State<AvatarBar> {
                                 return GestureDetector(
                                   onTap: () {
                                     widget.tap(mode_first, mode_second, index);
-                                    print('kjfd');
+                                    setState(() {
+                                      third_mode = index;
+                                    });
+                                    print('choose');
                                   },
                                   onDoubleTap: () {
                                     widget.dtap(mode_first, mode_second, index);
-                                  },
+                                    setState(() {
+                                        third_mode = index;
+                                      });
+                                    },
                                   child: Container(
                                     margin: EdgeInsets.only(right: 14),
                                     height: 100,
@@ -84,7 +90,7 @@ class _AvatarBarState extends State<AvatarBar> {
                                         color: Color(0xfff6f5ed),
                                         borderRadius: BorderRadius.circular(19),
                                         border: Border.all(
-                                          color: Color(0xffb9b8b8),
+                                          color: (third_mode==index)?Colors.blue: Color(0xffb9b8b8),
                                           width: 2,
                                         ),
                                         image: DecorationImage(
@@ -113,6 +119,7 @@ class _AvatarBarState extends State<AvatarBar> {
                                   setState(() {
                                     mode_first -= 1;
                                     mode_second = 0;
+                                    third_mode = -1;
                                     if (mode_first == -1) mode_first = first_max - 1;
                                   });
                                 },
@@ -151,6 +158,7 @@ class _AvatarBarState extends State<AvatarBar> {
                                   setState(() {
                                     mode_first += 1;
                                     mode_second = 0;
+                                    third_mode = -1;
                                     if (mode_first == first_max) mode_first = 0;
                                   });
                                 },
@@ -201,6 +209,7 @@ class _AvatarBarState extends State<AvatarBar> {
                                                 onTap: () {
                                                   setState(() {
                                                     mode_second = index;
+                                                    third_mode = -1;
                                                   });
                                                 },
                                               ));

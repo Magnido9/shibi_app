@@ -10,30 +10,33 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services/auth_services.dart';
 import 'package:tuple/tuple.dart';
 import 'dart:convert';
+import 'color_switch.dart';
 
 class AvatarData {
   AvatarData(
-      {required this.body,
+      {this.body,
       this.glasses,
       this.hands,
       this.body_color,
       this.money,
-        this.acquired}) {
+        this.acquired,
+      this.eye_color}) {
+    body = body ?? AvatarData.body_default;
     hands = hands ?? AvatarData.hand_default;
     glasses = glasses ?? "images/glasses1.png";
     acquired = acquired ?? AvatarShop.empty();
+    body_color = body_color ?? color_default;
+    eye_color = eye_color ?? Colors.black;
   }
+  Color? eye_color;
+
   AvatarShop? acquired;
-  String body;
+  String? body;
   String? glasses;
   String? hands;
-  int color = 0;
-  int? money = 0;
-  Color? body_color = Color(0xffdabfa0);
+  int? money;
+  Color? body_color;
 
-
-  int bar2 = 0;
-  int mode = 0;
 
   static Color color_default = Color(0xffdabfa0);
 
@@ -44,36 +47,25 @@ class AvatarData {
     String? pid = AuthRepository.instance().user?.uid;
     var v =
         (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
-    /*String valueString=v['body_color'];
-    int value = int.parse(valueString, radix: 16);*/
-    print(v.data());
-    // Map<String, int> pricess = {
-    //   "images/glasses3.png": 10,
-    //   "images/glasses4.png": 12,
-    // };
-    // String image;
-    // for (int i = 0; i < pricess.keys.length; i++) {
-    //   image = pricess.keys.elementAt(i);
-    //   if ((v).data()!.containsKey(image)) {
-    //     pricess.remove(pricess.keys.elementAt(i));
-    //   }
-    // }
+
+
+    print('load');
     var a = AvatarData(
+        money: v['money'],
         body: v['body'],
         glasses: v['glasses'],
-        // hands: v['hands'],
+        eye_color: Color(int.parse(v['eye_color'], radix: 16)),
         body_color: Color(int.parse(v['body_color'], radix: 16)),
-        money: v['money'],
     );
-    // print('load  '+a.toString()+' cat');
     return a;
   }
 }
 
 class Avatar extends StatelessWidget {
   // This widget is the root of your application.
-  Avatar({required this.first});
+  Avatar({required this.first,  this.data});
   final bool first;
+  final Future<AvatarData>? data;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -86,11 +78,9 @@ class Avatar extends StatelessWidget {
               title: "hey",
               data: AvatarData(
                   body: AvatarData.body_default,
-                  hands: AvatarData.hand_default,
-                  body_color: AvatarData.color_default,
                   money: 10))
           : FutureBuilder(
-              future: AvatarData.load(),
+              future: data,
               builder:
                   (BuildContext context, AsyncSnapshot<AvatarData> snapshot) {
                 if (snapshot.hasData) {
@@ -102,12 +92,7 @@ class Avatar extends StatelessWidget {
                               hands: AvatarData.hand_default,
                               body_color: AvatarData.color_default)));
                 } else
-                  return AvatarPage(
-                      title: "hey",
-                      data: (AvatarData(
-                          body: AvatarData.body_default,
-                          hands: AvatarData.hand_default,
-                          body_color: AvatarData.color_default)));
+                  return CircularProgressIndicator();
               }),
     );
   }
@@ -126,40 +111,16 @@ class AvatarPage extends StatefulWidget {
 class _AvatarPageState extends State<AvatarPage> {
   void _save() async {
     String? pid = AuthRepository.instance().user?.uid;
-    print("saving");
     await FirebaseFirestore.instance.collection("avatars").doc(pid).update({
       'body': widget.data.body,
       'glasses': widget.data.glasses,
       'body_color': widget.data.body_color.toString().split('(0x')[1].split(')')[0],
-      'purchased' : widget.data.acquired?.acquired_items.toString()
+      'purchased' : widget.data.acquired?.toString(),
+      'money' : widget.data.money,
+      'eye_color': widget.data.eye_color.toString().split('(0x')[1].split(')')[0],
     });
   }
-/*
-  Future<bool> _buy(int price, String image) async {
-    if (!(widget.data.prices.containsKey(image))) {
-      return true;
-    }
-    String? pid = AuthRepository.instance().user?.uid;
-    var v =
-        (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
 
-    print(v.data());
-    int money = v['money'];
-    print(money);
-
-    print(v);
-    print(widget.data.body_color);
-    Map<String, dynamic> m = v.data()!;
-    if (money >= price) {
-      m.remove("money");
-      m.addAll({image: 'unlocked', "money": money - price});
-      await FirebaseFirestore.instance.collection("avatars").doc(pid).set(m);
-      widget.data.prices.remove(image);
-      return true;
-    }
-    return false;
-  }
-*/
   buy(int i, int j, int n){
     int money = widget.data.money ?? 0;
     if((widget.data.acquired?.acquired_items[i][j][n]?? false) || money>= AvatarShop.merch[i][j][n].item2){
@@ -170,16 +131,29 @@ class _AvatarPageState extends State<AvatarPage> {
     }
   }
 
-  choose(int i, int j, int n){
-    if(widget.data.acquired?.acquired_items[i][j][n]?? false){
-      switch (i){
+  choose(int group, int sub_group, int object){
+    print('group: '+ group.toString()+' sub_group: '+ sub_group.toString()+ " object: "+object.toString());
+    print(widget.data.acquired?.acquired_items);
+    if(widget.data.acquired?.acquired_items[group][sub_group][object]?? false){
+      switch (group){
         case 0:{
-          if(j==0) setState(() {
-            widget.data.glasses = AvatarShop.merch[i][j][n].item1;
+          if(sub_group==0)       setState(() {
+            widget.data.glasses = AvatarShop.merch[group][sub_group][object].item1;
           });
         }break;
         case 1:{
-
+          if(sub_group==0) {
+            if(object ==0) setState(() {widget.data.body_color = Color(0xff6f6ca7);});
+            if(object ==1) setState(() {widget.data.body_color = Color(0xffa6d6c3);});
+            if(object ==2) setState(() {widget.data.body_color = Color(0xffdabfa0);});
+            if(object ==3) setState(() {widget.data.body_color = Color(0xffefb3e2);});
+          }
+          else if(sub_group ==1){
+            if(object ==0) setState(() {widget.data.eye_color = Color(0xff6f6ca7);});
+            if(object ==1) setState(() {widget.data.eye_color = Color(0xffa6d6c3);});
+            if(object ==2) setState(() {widget.data.eye_color = Color(0xffdabfa0);});
+            if(object ==3) setState(() {widget.data.eye_color = Color(0xffefb3e2);});
+          }
         }break;
       }
     }
@@ -245,9 +219,7 @@ class _AvatarPageState extends State<AvatarPage> {
                   height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Color(
-                        0xffecdbc7,
-                      )))),
+                      color: widget.data.body_color?.withOpacity(0.7)))),
           Positioned(
               right: 25,
               top: 75,
@@ -293,8 +265,9 @@ class _AvatarPageState extends State<AvatarPage> {
                 Flexible(
                   flex:1,
                   child: Container(
-                      width: 200,
-                      height: 200,
+                      width: MediaQuery.of(context).size.width,
+                      height:MediaQuery.of(context).size.height,
+                      padding: EdgeInsets.only(left:50, right: 50),
                       child: AvatarStack(
                         data: widget.data,
                       )),
@@ -311,276 +284,24 @@ class _AvatarPageState extends State<AvatarPage> {
                         Icons.arrow_back,
                         color: Colors.white,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        _save();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => Home()));
+                      },
                     ),
                   ],
                 ),
-                /*
-                SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: (widget.data.mode % 4 == 0 && widget.data.bar2 == 0)
-                        ? Row(children: <Widget>[
-                            Container(width: 14),
-                            Container(width: 14),
-                            _pick_box('images/glasses1.png', 1),
-                            Container(width: 14),
-                            _pick_box('images/glasses2.png', 2),
-                            Container(width: 14),
-                            _pick_box('images/glasses3.png', 3),
-                            Container(width: 14),
-                            _pick_box('images/glasses4.png', 4),
-                            Container(width: 14),
-                            Container(width: 14),
-                          ])
-                        : (widget.data.mode % 4 == 1 && widget.data.bar2 == 0)
-                            ? Row(children: <Widget>[
-                                Container(width: 14),
-                                Container(width: 14),
-                                _pick_box('images/color(ff6f6ca7).png', 1),
-                                Container(width: 14),
-                                _pick_box('images/color(ffa6d6c3).png', 2),
-                                Container(width: 14),
-                                _pick_box('images/color(ffdabfa0).png', 3),
-                                Container(width: 14),
-                                _pick_box('images/color(ffefb3e2).png', 4),
-                                Container(width: 14),
-                                Container(width: 14),
-                              ])
-                            : Row(children: <Widget>[
-                                Container(width: 14),
-                                Container(width: 14),
-                                _pick_box('images/glasses1.png', 1),
-                                Container(width: 14),
-                                _pick_box('images/glasses2.png', 2),
-                                Container(width: 14),
-                                _pick_box('images/glasses3.png', 3),
-                                Container(width: 14),
-                                _pick_box('images/glasses4.png', 4),
-                                Container(width: 14),
-                                Container(width: 14),
-                              ])),
-                Container(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      width: 30,
-                      height: 65,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xffb9b8b8),
-                            width: 2,
-                          ),
-                          color: Colors.white,
-                          image: DecorationImage(
-                              image: AssetImage('images/left_arrow.png'),
-                              fit: BoxFit.scaleDown)),
-                    ),
-                    Container(
-                      width: 88,
-                      height: 65,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(0),
-                          border: Border.all(
-                            color: Color(0xffb9b8b8),
-                            width: 2,
-                          ),
-                          color: widget.data.mode % 3 == 0
-                              ? Color(0xfffefad8)
-                              : widget.data.mode % 3 == 1
-                                  ? Color(0xffddfed8)
-                                  : widget.data.mode % 3 == 2
-                                      ? Color(0xffddfed8)
-                                      : Color(0xffddfed8),
-                          image: DecorationImage(
-                              image: widget.data.mode % 3 == 0
-                                  ? AssetImage('images/face.png')
-                                  : widget.data.mode % 3 == 1
-                                      ? AssetImage('images/color.png')
-                                      : widget.data.mode % 3 == 2
-                                          ? AssetImage('images/color.png')
-                                          : AssetImage('images/color.png'),
-                              fit: BoxFit.scaleDown)),
-                    ),
-                    Container(
-                      width: 30,
-                      height: 65,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xffb9b8b8),
-                            width: 2,
-                          ),
-                          color: Colors.white,
-                          image: DecorationImage(
-                              image: AssetImage('images/right_arrow.png'),
-                              fit: BoxFit.scaleDown)),
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            widget.data.mode += 1;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width - 148,
-                      height: 65,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Container(
-                              width: 84,
-                              height: 65,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(0),
-                                  border: Border.all(
-                                    color: widget.data.bar2 == 0
-                                        ? Color(0xff35258a)
-                                        : Color(0xffb9b8b8),
-                                    width: widget.data.bar2 == 0 ? 4 : 2,
-                                  ),
-                                  color: Color(0xfff6f5ed),
-                                  image: DecorationImage(
-                                      image: widget.data.mode % 4 == 0
-                                          ? AssetImage('images/eyes.png')
-                                          : widget.data.mode % 4 == 1
-                                              ? AssetImage('images/body.png')
-                                              : widget.data.mode % 4 == 2
-                                                  ? AssetImage(
-                                                      'images/color1.png')
-                                                  : AssetImage(
-                                                      'images/color1.png'),
-                                      fit: BoxFit.scaleDown)),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    widget.data.bar2 = 0;
-                                  });
-                                },
-                              )),
-                          Container(
-                              width: 84,
-                              height: 65,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(0),
-                                  border: Border.all(
-                                    color: widget.data.bar2 == 1
-                                        ? Color(0xff35258a)
-                                        : Color(0xffb9b8b8),
-                                    width: widget.data.bar2 == 1 ? 4 : 2,
-                                  ),
-                                  color: Color(0xfff6f5ed),
-                                  image: DecorationImage(
-                                      image: widget.data.mode % 4 == 0
-                                          ? AssetImage('images/brows.png')
-                                          : widget.data.mode % 4 == 1
-                                              ? AssetImage('images/eyes.png')
-                                              : widget.data.mode % 4 == 2
-                                                  ? AssetImage(
-                                                      'images/color2.png')
-                                                  : AssetImage(
-                                                      'images/color2.png'),
-                                      fit: BoxFit.scaleDown)),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    widget.data.bar2 = 1;
-                                  });
-                                },
-                              )),
-                          Container(
-                              width: 84,
-                              height: 65,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(0),
-                                  border: Border.all(
-                                    color: widget.data.bar2 == 2
-                                        ? Color(0xff35258a)
-                                        : Color(0xffb9b8b8),
-                                    width: widget.data.bar2 == 2 ? 4 : 2,
-                                  ),
-                                  color: Color(0xfff6f5ed),
-                                  image: DecorationImage(
-                                      image: widget.data.mode % 4 == 0
-                                          ? AssetImage('images/mouth.png')
-                                          : widget.data.mode % 4 == 1
-                                              ? AssetImage('images/mouth.png')
-                                              : widget.data.mode % 4 == 2
-                                                  ? AssetImage(
-                                                      'images/color3.png')
-                                                  : AssetImage(
-                                                      'images/color3.png'),
-                                      fit: BoxFit.scaleDown)),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    widget.data.bar2 = 2;
-                                  });
-                                },
-                              )),
-                          Container(
-                              width: 84,
-                              height: 65,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(0),
-                                  border: Border.all(
-                                    color: widget.data.bar2 == 3
-                                        ? Color(0xff35258a)
-                                        : Color(0xffb9b8b8),
-                                    width: widget.data.bar2 == 3 ? 4 : 2,
-                                  ),
-                                  color: Color(0xfff6f5ed),
-                                  image: DecorationImage(
-                                      image: widget.data.mode % 4 == 0
-                                          ? AssetImage('images/mouth.png')
-                                          : widget.data.mode % 4 == 1
-                                              ? AssetImage('images/mouth.png')
-                                              : widget.data.mode % 4 == 2
-                                                  ? AssetImage(
-                                                      'images/color3.png')
-                                                  : AssetImage(
-                                                      'images/color3.png'),
-                                      fit: BoxFit.scaleDown)),
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    widget.data.bar2 = 3;
-                                  });
-                                },
-                              ))
-                        ],
-                      ),
-                    )
-                  ],
-                ),*/
                 AvatarBar(
                     shop: widget.data.acquired ?? AvatarShop(AvatarShop.empty().toString()),
                     tap: choose,
                     dtap: buy),
-                MaterialButton(
-                  onPressed: () => {
-                    _save(),
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => Home()))
-                  },
-                  color: Colors.grey,
-                  child: Text("שמור"),
-                ),
+
               ],
             ),
           )
         ]),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FloatingActionButton.extended(
-              onPressed: () => {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => Home()))
-              },
-              label: Text("חזור"),
-            ),
-          ],
-        ));
+    );
   }
 }
 
@@ -606,10 +327,16 @@ class AvatarStack extends StatelessWidget {
                         // color: Colors.green,
                         child: FittedBox(
                           fit: BoxFit.fitHeight,
-                          child: Image.asset(
-                              data.hands ?? AvatarData.hand_default),
+                          child: ImageColorSwitcher(
+                              width: constraints.maxWidth,
+                              height: constraints.maxHeight*0.75,
+                              color: data.body_color!,
+                              imagePath: data.hands ?? AvatarData.hand_default,
+                              second:   Color(0xffAC957B),
+                              main:Color(0xffDABFA0),
+                          )
                         ),
-                        height: constraints.maxHeight * 0.75,
+                        height: constraints.maxHeight*0.75 ,
                         margin: EdgeInsets.only(
                           top: constraints.maxHeight * 0.2,
                           // left: constraints.maxWidth/14
@@ -649,7 +376,15 @@ class AvatarStack extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          child: Image.asset(data.glasses ?? ''),
+                          child: ImageColorSwitcher(
+                      color: data.eye_color!,
+                    height: constraints.maxHeight * 0.1,
+                    width: constraints.maxWidth,
+                    main: Color(0xff000000),
+                    second: Color(0xff000000),
+                    imagePath: data.glasses!,
+                    forgive: 100,
+                  ),
                           height: constraints.maxHeight * 0.1,
                           margin: EdgeInsets.only(
                             top: constraints.maxHeight * 0.15,
@@ -760,17 +495,18 @@ class AvatarShop {
   ];
 
   static AvatarShop empty() {
-    var ret = [];
+    List<List<List<bool>>> ret = [];
     for (int i = 0; i < groups.length; i++) {
       ret.add([]);
       for (int j = 0; j < sub_groups[i].length; j++) {
         ret[i].add([]);
         for (int n = 0; n < merch[i][j].length; n++) {
-          ret[i][j].add(false);
+          ret[i][j].add((merch[i][j][n].item2==0)? true : false);
         }
       }
     }
     var a = AvatarShop(ret.toString());
+    a.acquired_items=ret;
     return a;
   }
 
@@ -786,7 +522,7 @@ class AvatarShop {
         }
       }
     }
-    return acquired_items.toString();
+    return ret.toString();
   }
 
   fromString(String s) {

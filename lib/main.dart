@@ -12,15 +12,14 @@ import 'screens/Avatar/avatar.dart';
 import 'services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'data.dart';
+import 'screens/expo1/start.dart';
 import 'screens/Avatar/avatar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
-  runApp(Avatar(first:true));
+  runApp(Expo1());
   // runApp(Wrapper());
 }
 

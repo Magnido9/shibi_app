@@ -30,7 +30,7 @@ class Money extends StatelessWidget {
      await FirebaseFirestore.instance
           .collection("avatars")
           .doc(pid)
-          .set({'money':money});
+          .set({'money':money}, SetOptions(merge: true));
     }
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{

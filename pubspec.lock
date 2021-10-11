@@ -327,7 +327,7 @@ packages:
     source: hosted
     version: "2.0.3"
   flutter_svg:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_svg
       url: "https://pub.dartlang.org"
@@ -386,12 +386,12 @@ packages:
     source: hosted
     version: "4.0.0"
   image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.7"
+    version: "3.0.8"
   images_picker:
     dependency: "direct main"
     description:

@@ -568,7 +568,7 @@ Widget psychoBody(){
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                Avatar(first: false)));
+                                Avatar(first: false, data: _adata)));
                       },
                     ),
                     ListTile(
