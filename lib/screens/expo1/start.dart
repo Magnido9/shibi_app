@@ -46,6 +46,28 @@ class _Page1State extends State<_Page1> {
       body: Stack(
         children: [
           Positioned(
+              left: -0.8 * MediaQuery.of(context).size.width,
+              top: -1.25 * MediaQuery.of(context).size.height,
+              child: Container(
+                  width: 0.8125 * MediaQuery.of(context).size.height * 2,
+                  height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.blue))),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              child: FloatingActionButton(
+                backgroundColor: Colors.grey.shade400,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.arrow_forward),
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
+          Positioned(
               top: -height,
               left: -width * 0.5,
               child: Container(
@@ -356,17 +378,29 @@ class _Page2State extends State<_Page2> {
               Container(
                   margin:
                       EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
-                  child: Slider(
+                  child: SliderTheme(
+                      data: SliderTheme.of(context).copyWith(
+                        thumbColor: Colors.pinkAccent,
+                          //thumbColor: Color(0xf0c0cd),
+                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+                        inactiveTrackColor: Colors.grey,
+                        activeTrackColor: Colors.grey,
+                      ),
+
+                    child: Slider(
                     value: feeling,
-                    min: 0,
-                    max: 100,
-                    label: feeling.round().toString(),
                     onChanged: (double value) {
                       setState(() {
                         feeling = value;
                       });
                     },
-                  )),
+                    min: 0,
+                    max: 100,
+                    label: feeling.round().toString(),
+                    divisions: 100,
+                    /*inactiveColor: Colors.grey,
+                    activeColor: Colors.grey,*/
+                  )),),
               Row(
                 children: [
                   TextButton(
@@ -660,8 +694,8 @@ class _MainState extends State<_Main> {
   }
 
   String _text() {
-    if (choose == 0) return 'חשוב שנלמד לזהות כיצד הגוף משפיע על חרדתנו';
-    if (choose == 1) return 'לא פותח עדיין';
+    if (choose == 0) return 'חשוב שנלמד לזהות כיצד הגוף משפיע על החרדה שלנו.';
+    if (choose == 1) return 'הרגש הוא חלק מהותי מן החרדה שלנו......';
     if (choose == 2) return 'המחשבות הם מחל מהמחשבה, וחשוב שנאתרן...';
     return '';
   }
