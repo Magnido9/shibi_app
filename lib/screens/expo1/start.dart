@@ -7,6 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 import 'thoughts.dart';
 
@@ -396,13 +398,42 @@ class _Page2State extends State<_Page2> {
                 flex: 1,
                 child: AvatarStack(data: AvatarData()),
               ),
-
               Container(
 
                   margin:
-                      EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
+                      EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 0),
+                child: SfSliderTheme(
 
-                  child: SliderTheme(
+                  data: SfSliderThemeData(
+                    //trackHeight: 20.0,
+                      activeTrackHeight: 20,
+                    inactiveTrackHeight: 20,
+                    thumbColor: Color(0xffefb3e2),
+                    //thumbColor: Color(0xf0c0cd),
+                    //thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                    inactiveTrackColor: Color(0xffececec),
+                    activeTrackColor: Color(0xffececec),
+
+                  ),
+                  child: SfSlider(
+                    value: feeling,
+                    min: 0,
+                    max: 100,
+                    showLabels:true,
+
+                    //interval: 1,
+
+                    onChanged: (dynamic value) {
+                      setState(() {
+                        feeling = value;
+                      });
+                    },
+
+
+
+                  ),
+
+                  /*child: SliderTheme(
 
                       data: SliderTheme.of(context).copyWith(
                         trackHeight: 20.0,
@@ -426,8 +457,22 @@ class _Page2State extends State<_Page2> {
                     divisions: 100,
                     /*inactiveColor: Colors.grey,
                     activeColor: Colors.grey,*/
-                  )),
-              ),
+                  )),*/
+              ),),
+              /*Container(
+                child: Text
+                  (
+                  "0                                                   100",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: "Assistant",
+                    //fontWeight: FontWeight.w700,
+                  ),
+                ),
+
+              ),*/
               Row(
                 children: [
                   TextButton(
@@ -447,7 +492,8 @@ class _Page2State extends State<_Page2> {
               ),
               Container(
                 height: 20,
-              )
+              ),
+
             ],
           )
         ],
