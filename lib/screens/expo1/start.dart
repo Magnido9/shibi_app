@@ -43,6 +43,7 @@ class _Page1State extends State<_Page1> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+
       body: Stack(
         children: [
           Positioned(
@@ -53,20 +54,40 @@ class _Page1State extends State<_Page1> {
                   height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.blue))),
+
+                      color: Color(0xffdee8f3)))),
           Align(
             alignment: Alignment.topRight,
             child: Container(
               child: FloatingActionButton(
                 backgroundColor: Colors.grey.shade400,
                 onPressed: () {
-                  Navigator.pop(context);
                 },
                 child: Icon(Icons.arrow_forward),
               ),
               margin: EdgeInsets.all(30),
             ),
           ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child:  FlatButton(
+                color: Colors.transparent,
+                onPressed: () {
+
+                },
+
+                child: new IconTheme(
+                  data: new IconThemeData(
+                    size:35,
+                      color: Color(0xff6f6ca7)),
+                  child: new Icon(Icons.menu),
+    ),
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
+
           Positioned(
               top: -height,
               left: -width * 0.5,
@@ -375,16 +396,21 @@ class _Page2State extends State<_Page2> {
                 flex: 1,
                 child: AvatarStack(data: AvatarData()),
               ),
+
               Container(
+
                   margin:
                       EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
+
                   child: SliderTheme(
+
                       data: SliderTheme.of(context).copyWith(
-                        thumbColor: Colors.pinkAccent,
+                        trackHeight: 20.0,
+                        thumbColor: Color(0xffefb3e2),
                           //thumbColor: Color(0xf0c0cd),
-                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                        inactiveTrackColor: Colors.grey,
-                        activeTrackColor: Colors.grey,
+                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        inactiveTrackColor: Color(0xffececec),
+                        activeTrackColor: Color(0xffececec),
                       ),
 
                     child: Slider(
@@ -400,7 +426,8 @@ class _Page2State extends State<_Page2> {
                     divisions: 100,
                     /*inactiveColor: Colors.grey,
                     activeColor: Colors.grey,*/
-                  )),),
+                  )),
+              ),
               Row(
                 children: [
                   TextButton(
