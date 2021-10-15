@@ -19,7 +19,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(Expo1());
+  runApp(Expo1(thoughts: [
+    'אני תמיד אגיד או אעשה משהו',
+    'הכי נורא שיכול לקרות זה',
+    'תמיד כשאני עושה דברים כאלו',
+    'אף אחד אף פעם לא אוהב ש',
+    'אני מרגישה לא בנוח ולכן',
+    'אני לא אדע איך'
+  ] ,adata: AvatarData(),));
   // runApp(Wrapper());
 }
 

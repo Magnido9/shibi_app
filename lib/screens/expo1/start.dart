@@ -5,29 +5,37 @@ import 'package:application/screens/login/homescreen.dart';
 import 'package:application/screens/login/password.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
-
+import 'feelings.dart';
 import 'thoughts.dart';
 
 class Expo1 extends StatelessWidget {
+  Expo1({required this.adata, required this.thoughts});
+  AvatarData adata;
+  List<String> thoughts;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'חשיפה 1',
-      // Start the app with the "/" named route. In this case, the app starts
-      // on the FirstScreen widget.
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => _Page1(),
-        // When navigating to the "/second" route, build the SecondScreen widget.
-        '/second': (context) => _Page2(),
-        '/main': (context) => _Main(),
-        '/thoughts/1': (context) => thought1_1(),
-        // 'feelings/1' : (context) => ,
-        // '/body/1' : (context) => ,
-      },
+    print('thoughts:'+ thoughts.toString());
+    return Provider(create: (context)=>ExpoData(thoughts: thoughts, adata: adata),
+      child: MaterialApp(
+        title: 'חשיפה 1',
+        // Start the app with the "/" named route. In this case, the app starts
+        // on the FirstScreen widget.
+        initialRoute: '/',
+        routes: {
+          // When navigating to the "/" route, build the FirstScreen widget.
+          '/': (context) => _Page1(),
+          // When navigating to the "/second" route, build the SecondScreen widget.
+          '/second': (context) => _Page2(),
+          '/main': (context) => _Main(),
+          '/thoughts/1': (context) => thought1_1(),
+          '/thoughts/2': (context) => thought2_1(),
+           '/feelings/1' : (context) => feeling1_1(),
+          // '/body/1' : (context) => ,
+        },
+      ),
     );
   }
 }
@@ -661,7 +669,7 @@ class _MainState extends State<_Main> {
 
   String _text() {
     if (choose == 0) return 'חשוב שנלמד לזהות כיצד הגוף משפיע על חרדתנו';
-    if (choose == 1) return 'לא פותח עדיין';
+    if (choose == 1) return 'רגש הוא חלק חשוב מהחרדה שלנו....';
     if (choose == 2) return 'המחשבות הם מחל מהמחשבה, וחשוב שנאתרן...';
     return '';
   }
@@ -704,4 +712,26 @@ class _MyButton extends StatelessWidget {
       onTap: func,)
     );
   }
+}
+
+class ExpoData {
+  ExpoData({required this.thoughts, required this.adata}){
+    while (feelings.length % 8 != 0) {
+      feelings.add('');
+    }
+
+  }
+  int stress=50;
+  List<String> thoughts;
+  List<String> replies=[];
+  List<String> feelings = [
+   'סיבוך', 'פגיעות', 'עצב', 'בדידות', 'ריקנות', 'אבודה', 'נידוי', 'אכזבה', 'בחילה',
+    'תיעוב', 'גועל', 'חוסר נוחות', 'היסוס', 'אדישות',
+    'חרטה', 'מוצף', 'מפוחד', 'מופתע', 'נואשות', '', 'לחץ','מבועט',
+    'ספקנות', 'פאניקה', 'ביטחון עצמי', 'השראה', 'ריגוש', 'תקווה', '', 'גאווה',
+    'שמחה', 'הקלה', 'מרמור', 'השפלה', '', 'מופתע', 'נואשות', 'כעס', 'עצבנות', 'תסכול', 'רוגז', 'קימום'
+  ];
+  List<int> felt=[];
+
+  AvatarData adata;
 }
