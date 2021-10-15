@@ -8,6 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
+
 import 'feelings.dart';
 import 'thoughts.dart';
 
@@ -51,8 +54,51 @@ class _Page1State extends State<_Page1> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+
       body: Stack(
         children: [
+          Positioned(
+              left: -0.8 * MediaQuery.of(context).size.width,
+              top: -1.25 * MediaQuery.of(context).size.height,
+              child: Container(
+                  width: 0.8125 * MediaQuery.of(context).size.height * 2,
+                  height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+
+                      color: Color(0xffdee8f3)))),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              child: FloatingActionButton(
+                backgroundColor: Colors.grey.shade400,
+                onPressed: () {
+                },
+                child: Icon(Icons.arrow_forward),
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child:  FlatButton(
+                color: Colors.transparent,
+                onPressed: () {
+
+                },
+
+                child: new IconTheme(
+                  data: new IconThemeData(
+                    size:35,
+                      color: Color(0xff6f6ca7)),
+                  child: new Icon(Icons.menu),
+    ),
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
+
           Positioned(
               top: -height,
               left: -width * 0.5,
@@ -362,19 +408,80 @@ class _Page2State extends State<_Page2> {
                 child: AvatarStack(data: AvatarData()),
               ),
               Container(
+
                   margin:
-                      EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 20),
-                  child: Slider(
+                      EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 0),
+                child: SfSliderTheme(
+
+                  data: SfSliderThemeData(
+                    //trackHeight: 20.0,
+                      activeTrackHeight: 20,
+                    inactiveTrackHeight: 20,
+                    thumbColor: Color(0xffefb3e2),
+                    //thumbColor: Color(0xf0c0cd),
+                    //thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                    inactiveTrackColor: Color(0xffececec),
+                    activeTrackColor: Color(0xffececec),
+
+                  ),
+                  child: SfSlider(
                     value: feeling,
                     min: 0,
                     max: 100,
-                    label: feeling.round().toString(),
+                    showLabels:true,
+
+                    //interval: 1,
+
+                    onChanged: (dynamic value) {
+                      setState(() {
+                        feeling = value;
+                      });
+                    },
+
+
+
+                  ),
+
+                  /*child: SliderTheme(
+
+                      data: SliderTheme.of(context).copyWith(
+                        trackHeight: 20.0,
+                        thumbColor: Color(0xffefb3e2),
+                          //thumbColor: Color(0xf0c0cd),
+                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        inactiveTrackColor: Color(0xffececec),
+                        activeTrackColor: Color(0xffececec),
+                      ),
+
+                    child: Slider(
+                    value: feeling,
                     onChanged: (double value) {
                       setState(() {
                         feeling = value;
                       });
                     },
-                  )),
+                    min: 0,
+                    max: 100,
+                    label: feeling.round().toString(),
+                    divisions: 100,
+                    /*inactiveColor: Colors.grey,
+                    activeColor: Colors.grey,*/
+                  )),*/
+              ),),
+              /*Container(
+                child: Text
+                  (
+                  "0                                                   100",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontFamily: "Assistant",
+                    //fontWeight: FontWeight.w700,
+                  ),
+                ),
+
+              ),*/
               Row(
                 children: [
                   TextButton(
@@ -394,7 +501,8 @@ class _Page2State extends State<_Page2> {
               ),
               Container(
                 height: 20,
-              )
+              ),
+
             ],
           )
         ],
@@ -668,8 +776,8 @@ class _MainState extends State<_Main> {
   }
 
   String _text() {
-    if (choose == 0) return 'חשוב שנלמד לזהות כיצד הגוף משפיע על חרדתנו';
-    if (choose == 1) return 'רגש הוא חלק חשוב מהחרדה שלנו....';
+    if (choose == 0) return 'חשוב שנלמד לזהות כיצד הגוף משפיע על החרדה שלנו.';
+    if (choose == 1) return 'הרגש הוא חלק מהותי מן החרדה שלנו......';
     if (choose == 2) return 'המחשבות הם מחל מהמחשבה, וחשוב שנאתרן...';
     return '';
   }
