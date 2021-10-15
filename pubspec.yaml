@@ -77,6 +77,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   assets:
+    - images/handsclosed.png
+    - images/handsopen.png
+    - images/legs.png
     - images/expo/baloon.png
     - images/expo/brain.png
     - images/expo/smile.png

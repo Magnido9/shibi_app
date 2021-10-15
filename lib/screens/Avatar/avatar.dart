@@ -21,6 +21,7 @@ class AvatarData {
       this.money,
         this.acquired,
       this.eye_color}) {
+    legs = legs ?? 'images/legs.png';
     body = body ?? AvatarData.body_default;
     hands = hands ?? AvatarData.hand_default;
     glasses = glasses ?? "images/glasses1.png";
@@ -34,6 +35,7 @@ class AvatarData {
   String? body;
   String? glasses;
   String? hands;
+  String? legs;
   int? money;
   Color? body_color;
 
@@ -41,7 +43,7 @@ class AvatarData {
   static Color color_default = Color(0xffdabfa0);
 
   static String body_default = "images/poo.png";
-  static String hand_default = "images/hands1.png";
+  static String hand_default = "images/handsopen.png";
 
   static Future<AvatarData> load() async {
     String? pid = AuthRepository.instance().user?.uid;
@@ -307,7 +309,11 @@ class _AvatarPageState extends State<AvatarPage> {
 
 class AvatarStack extends StatelessWidget {
   AvatarStack({required this.data, Key? key}) : super(key: key);
-
+  Map<String,Tuple5<double,double,double,Color,Color>> dits=
+  {// image :            top offset , left offset, height, main color, secondary color
+    'images/handsclosed.png': Tuple5(0.3,0,0.25,Color(0xffDABFA0),Color(0xffDABFA0)),
+    'images/handsopen.png':   Tuple5(0.2,0,0.3,Color(0xffDABFA0),Color(0xffAC957B))
+  };
   final AvatarData data;
   @override
   Widget build(BuildContext context) {
@@ -318,6 +324,7 @@ class AvatarStack extends StatelessWidget {
           width: min(cons.maxWidth, cons.maxHeight),
           height: min(cons.maxWidth, cons.maxHeight),
           child: Stack(children: <Widget>[
+            //legs
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 return Row(
@@ -326,25 +333,26 @@ class AvatarStack extends StatelessWidget {
                       Container(
                         // color: Colors.green,
                         child: FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: ImageColorSwitcher(
+                            fit: BoxFit.fitHeight,
+                            child: ImageColorSwitcher(
                               width: constraints.maxWidth,
-                              height: constraints.maxHeight*0.75,
+                              height: constraints.maxHeight*0.35,
                               color: data.body_color!,
-                              imagePath: data.hands ?? AvatarData.hand_default,
+                              imagePath: data.legs!,
                               second:   Color(0xffAC957B),
                               main:Color(0xffDABFA0),
-                          )
+                            )
                         ),
-                        height: constraints.maxHeight*0.75 ,
+                        height: constraints.maxHeight*0.35 ,
                         margin: EdgeInsets.only(
-                          top: constraints.maxHeight * 0.2,
+                          top: constraints.maxHeight * 0.6,
                           // left: constraints.maxWidth/14
                         ),
                       ),
                     ]);
               },
             ),
+            //body
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 var r = constraints.maxWidth * 0.5;
@@ -367,7 +375,37 @@ class AvatarStack extends StatelessWidget {
                     ]);
               },
             ),
-
+            //hands
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                if (dits[data.hands!] == null) return Container();
+                Tuple5<double,double,double,Color,Color> dit = dits[data.hands!]!;
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        // color: Colors.green,
+                        child: FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: ImageColorSwitcher(
+                              width: constraints.maxWidth,
+                              height: constraints.maxHeight*dit.item3,
+                              color: data.body_color!,
+                              imagePath: data.hands!,
+                              second:  dit.item5,
+                              main:    dit.item4,
+                            )
+                        ),
+                        height: constraints.maxHeight*dit.item3 ,
+                        margin: EdgeInsets.only(
+                          top: constraints.maxHeight * dit.item1,
+                          left: constraints.maxWidth * dit.item2,
+                          // left: constraints.maxWidth/14
+                        ),
+                      ),
+                    ]);
+              },
+            ),
             //glasses
             if (data.glasses != null)
               LayoutBuilder(
@@ -378,16 +416,16 @@ class AvatarStack extends StatelessWidget {
                         Container(
                           child: ImageColorSwitcher(
                       color: data.eye_color!,
-                    height: constraints.maxHeight * 0.1,
+                    height: constraints.maxHeight * 0.08,
                     width: constraints.maxWidth,
                     main: Color(0xff000000),
                     second: Color(0xff000000),
                     imagePath: data.glasses!,
                     forgive: 100,
                   ),
-                          height: constraints.maxHeight * 0.1,
+                          height: constraints.maxHeight * 0.08,
                           margin: EdgeInsets.only(
-                            top: constraints.maxHeight * 0.15,
+                            top: constraints.maxHeight * 0.18,
                             // left: constraints.maxWidth/14
                           ),
                         ),

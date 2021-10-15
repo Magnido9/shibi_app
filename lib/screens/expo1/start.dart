@@ -15,12 +15,12 @@ import 'feelings.dart';
 import 'thoughts.dart';
 
 class Expo1 extends StatelessWidget {
-  Expo1({required this.adata, required this.thoughts});
+  Expo1({required this.adata});
   AvatarData adata;
-  List<String> thoughts;
+
   @override
   Widget build(BuildContext context) {
-    return Provider(create: (context)=>ExpoData(thoughts: thoughts, adata: adata),
+    return Provider(create: (context)=>ExpoData(adata: adata),
       child: MaterialApp(
         title: 'חשיפה 1',
         // Start the app with the "/" named route. In this case, the app starts
@@ -402,9 +402,22 @@ class _Page2State extends State<_Page2> {
                   ),
                 ],
               ),
-              Flexible(
-                flex: 1,
-                child: AvatarStack(data: AvatarData()),
+              Consumer<ExpoData>(
+                builder: (context, data, x){
+                  AvatarData x = data.adata;
+                  if(feeling<50 ) x.hands= 'images/handsclosed.png';
+                  else x.hands= 'images/handsopen.png';
+                    print(x.hands);
+                  print('efew');
+                  print(data.adata.hands);
+                  print('wef');
+                  // x.hands= 'images/handsclosed.png';
+                  return Flexible(
+                    flex: 1,
+                    child: AvatarStack(data: x),
+                    // child: AvatarStack(data: AvatarData()),
+                  );
+                },
               ),
               Container(
 
@@ -651,7 +664,7 @@ class _MainState extends State<_Main> {
           ),
 
         TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 0.8, end: (choose==-1)? 0.8:0.5),
+            tween: Tween<double>(begin: (choose==-1)? 0.5:0.8, end: (choose==-1)? 0.8:0.5),
             duration: Duration(milliseconds: 500),
             builder: (BuildContext context, double percent,
                 Widget? child) {
@@ -768,6 +781,7 @@ class _MainState extends State<_Main> {
                  await Navigator.pushNamed(context, '/feelings/1');
                }
                setState(() {
+                 choose=-1;
                });
              },
            )],
@@ -854,7 +868,7 @@ class _MyButton extends StatelessWidget {
 }
 
 class ExpoData {
-  ExpoData({required this.thoughts, required this.adata}){
+  ExpoData({required this.adata}){
     while (feelings.length % 8 != 0) {
       feelings.add('');
     }
@@ -862,7 +876,14 @@ class ExpoData {
   }
   List<bool> done =[false,false, false];
   int stress=50;
-  List<String> thoughts;
+  List<String> thoughts= [
+  'אני תמיד אגיד או אעשה משהו',
+  'הכי נורא שיכול לקרות זה',
+  'תמיד כשאני עושה דברים כאלו',
+  'אף אחד אף פעם לא אוהב ש',
+  'אני מרגישה לא בנוח ולכן',
+  'אני לא אדע איך'
+  ];
   List<String> replies=['','','','','',''];
   List<String> feelings = [
    'סיבוך', 'פגיעות', 'עצב', 'בדידות', 'ריקנות', 'אבודה', 'נידוי', 'אכזבה', 'בחילה',
