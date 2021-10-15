@@ -394,6 +394,7 @@ class _feeling1_state extends State<feeling1_1> {
                           color: Colors.white,
                         ),
                         onPressed: () {
+                          Provider.of<ExpoData>(context, listen: false).done[1]=true;
                           Navigator.popUntil(
                               context, ModalRoute.withName('/main'));
                         },

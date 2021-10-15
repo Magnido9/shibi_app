@@ -117,7 +117,6 @@ class _ImageColorSwitcherState extends State<ImageColorSwitcher> {
         : FutureBuilder(
             future: imageBytes,
             builder: (_, AsyncSnapshot<ImageProvider<Object>> snapshot) {
-              print(snapshot.hasData);
               return snapshot.hasData
                   ? Container(
                       height: widget.height,

@@ -20,7 +20,6 @@ class Expo1 extends StatelessWidget {
   List<String> thoughts;
   @override
   Widget build(BuildContext context) {
-    print('thoughts:'+ thoughts.toString());
     return Provider(create: (context)=>ExpoData(thoughts: thoughts, adata: adata),
       child: MaterialApp(
         title: 'חשיפה 1',
@@ -518,9 +517,9 @@ class _Main extends StatefulWidget {
 
 class _MainState extends State<_Main> {
   int choose = -1;
-
   @override
   Widget build(BuildContext context) {
+    print('main');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -658,35 +657,43 @@ class _MainState extends State<_Main> {
                 Widget? child) {
               return Container(
                 width: (choose==-1)?width: width*percent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _MyButton(
-                        isSelected: (choose==0),
-                        name: 'גוף',
-                        func: (){setState(() {
-                          choose=0;
-                        });},
-                        image: 'images/expo/meditate.png'
-                    ),
-                    _MyButton(
-                        isSelected: (choose==1),
-                        name: 'רגשות',
-                        func: (){setState(() {
-                          choose=1;
-                        });},
-                        image: 'images/expo/smile.png'
-                    ),
-                    _MyButton(
-                        isSelected: (choose==2),
-                        name: 'מחשבות',
-                        func: (){setState(() {
-                          choose=2;
-                        });},
-                        image: 'images/expo/brain.png'
-                    ),
+                child: Consumer<ExpoData>(
+                  builder: (context, data, w){
+                    print(data.done);
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _MyButton(
+                            isDone: data.done[0],
+                            isSelected: (choose==0),
+                            name: 'גוף',
+                            func: (){setState(() {
+                              choose=0;
+                            });},
+                            image: 'images/expo/meditate.png'
+                        ),
+                        _MyButton(
+                            isDone: data.done[1],
+                            isSelected: (choose==1),
+                            name: 'רגשות',
+                            func: (){setState(() {
+                              choose=1;
+                            });},
+                            image: 'images/expo/smile.png'
+                        ),
+                        _MyButton(
+                            isDone: data.done[2],
+                            isSelected: (choose==2),
+                            name: 'מחשבות',
+                            func: (){setState(() {
+                              choose=2;
+                            });},
+                            image: 'images/expo/brain.png'
+                        ),
 
-                  ],
+                      ],
+                    );
+                  },
                 ),
               )
               ;}),
@@ -751,14 +758,17 @@ class _MainState extends State<_Main> {
                Icons.arrow_back,
                color: Colors.white,
              ),
-             onPressed: () {
+             onPressed: () async{
                if(choose==2) {
-                 Navigator.pushNamed(context, '/thoughts/1');
+                 await Navigator.pushNamed(context, '/thoughts/1');
+
                }else if(choose==0){
-                 Navigator.pushNamed(context, '/body/1');
+                 await Navigator.pushNamed(context, '/body/1');
                } else if(choose==1){
-                 Navigator.pushNamed(context, '/feelings/1');
+                 await Navigator.pushNamed(context, '/feelings/1');
                }
+               setState(() {
+               });
              },
            )],
          )
@@ -784,8 +794,8 @@ class _MainState extends State<_Main> {
 }
 
 class _MyButton extends StatelessWidget {
-  _MyButton({required this.isSelected, required this.name, required this.func, required this.image});
-  final bool isSelected;
+  _MyButton({required this.isSelected, required this.name, required this.func, required this.image, this.isDone = false});
+  final bool isSelected,isDone;
   final String name, image;
   final func;
 
@@ -795,17 +805,38 @@ class _MyButton extends StatelessWidget {
       child: Column(
         children: [
           LayoutBuilder(builder: (context, constraints){
-            return Container(
-              padding: EdgeInsets.all(constraints.maxWidth*0.15),
-              child: FittedBox(
-                  fit: BoxFit.fitHeight,
-                  child: Image.asset(image, color: (isSelected)? Color(0xffB3E8EF): Color(0xff35258A),)),
-              margin: EdgeInsets.all(constraints.maxWidth*0.08),
-              width: constraints.maxWidth,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: (isSelected)? Color(0xff35258A):Color(0xffdee8f3),
-              ),
+            return Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(constraints.maxWidth*0.15),
+                  child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Image.asset(image, color:(isDone)? Color(0xffEDEBEB):(isSelected)? Color(0xffB3E8EF): Color(0xff35258A),)),
+                  margin: EdgeInsets.all(constraints.maxWidth*0.08),
+                  width: constraints.maxWidth,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: (isDone)? Color(0xffABAAAA):(isSelected)? Color(0xff35258A):Color(0xffdee8f3),
+                  ),
+                ),
+                if(isDone)
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Container(
+                      child: FittedBox(
+                      fit: BoxFit.fitHeight,
+            child:Icon(Icons.check,color: Colors.white,),),
+                      padding: EdgeInsets.all(constraints.maxWidth*0.05),
+
+                      margin: EdgeInsets.only(top:constraints.maxWidth*0.04 ,right:constraints.maxWidth*0.08),
+                      width: constraints.maxWidth*0.25,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xff808080),
+                      ),
+                    ),
+                  )
+              ],
             );
           }),
           Text(
@@ -829,9 +860,10 @@ class ExpoData {
     }
 
   }
+  List<bool> done =[false,false, false];
   int stress=50;
   List<String> thoughts;
-  List<String> replies=[];
+  List<String> replies=['','','','','',''];
   List<String> feelings = [
    'סיבוך', 'פגיעות', 'עצב', 'בדידות', 'ריקנות', 'אבודה', 'נידוי', 'אכזבה', 'בחילה',
     'תיעוב', 'גועל', 'חוסר נוחות', 'היסוס', 'אדישות',

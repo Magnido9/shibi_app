@@ -231,8 +231,6 @@ class _thought1_state extends State<thought1_1> {
                                     );
                                     setState(() {
                                       data.replies[i] = x;
-                                      if (chosen.length == 3)
-                                        chosen.removeAt(0);
                                       chosen.insert(chosen.length, i);
                                     });
                                     print(chosen);
@@ -288,7 +286,6 @@ class _thought1_state extends State<thought1_1> {
                                             color: Colors.white,
                                           ),
                                           onPressed: () {
-                                            ///TODO
                                             // Provider.of<ExpoData>(context,
                                             //         listen: false)
                                             //     .replies = replies;
@@ -340,6 +337,7 @@ class _thought2_state extends State<thought2_1> {
               tween: Tween(begin: height, end: - width*1.7),
               duration: Duration(seconds: 10),
               builder: (context,double h,w){
+                Provider.of<ExpoData>(context, listen: false).done[2]=true;
                 Future.delayed(const Duration(seconds: 10), (){ Navigator.popUntil(context,ModalRoute.withName('/main'));});
                 return Positioned(
                     child: Builder(
