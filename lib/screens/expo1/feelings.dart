@@ -220,7 +220,7 @@ class _feeling1_state extends State<feeling1_1> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "בואי נזהה יחד א ת הרגשות המוצפים.",
+                            "בואי נזהה יחד את הרגשות המוצפים.",
                             textDirection: TextDirection.rtl,
                             textAlign: TextAlign.right,
                             style: TextStyle(
@@ -359,10 +359,20 @@ class _feeling1_state extends State<feeling1_1> {
                       )),
                 ),
                 Container(
+                  width: 30340304,
                     margin: EdgeInsets.only(left: 40, right: 40, bottom: 20),
-                    child: Slider(
+                    child: SliderTheme(
+                        data: SliderThemeData(
+                          //thumbColor: Color(0xffFFFFFF).withOpacity(0.8),
+                          //thumbColor: Colors.black,
+
+
+                        ),
+
+
+                        child: Slider(
                       activeColor: _getColor(),
-                      thumbColor: Colors.grey,
+                      //thumbColor: Colors.grey,
                       value: pointer,
                       min: 0,
                       max: 100,
@@ -374,7 +384,7 @@ class _feeling1_state extends State<feeling1_1> {
                           _controller.jumpTo(value / 100 * width * 4.5);
                         });
                       },
-                    )),
+                    )),),
               ],
             ),
             if (Provider.of<ExpoData>(context, listen: false).felt.length >= 3)

@@ -430,20 +430,18 @@ class _Page2State extends State<_Page2> {
                       activeTrackHeight: 20,
                     inactiveTrackHeight: 20,
                     thumbColor: Color(0xffefb3e2),
-                    //thumbColor: Color(0xf0c0cd),
                     //thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
                     inactiveTrackColor: Color(0xffececec),
                     activeTrackColor: Color(0xffececec),
 
                   ),
                   child: SfSlider(
-                    value: feeling,
+                    value: feeling.round(),
                     min: 0,
                     max: 100,
                     showLabels:true,
-
                     //interval: 1,
-
+                    enableTooltip: true,
                     onChanged: (dynamic value) {
                       setState(() {
                         feeling = value;
