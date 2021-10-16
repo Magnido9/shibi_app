@@ -1,4 +1,5 @@
 library expo;
+import 'package:tuple/tuple.dart';
 
 import 'package:application/screens/Avatar/avatar.dart';
 import 'package:application/screens/login/homescreen.dart';
@@ -10,17 +11,18 @@ import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
-
+import 'body.dart';
 import 'feelings.dart';
 import 'thoughts.dart';
 
 class Expo1 extends StatelessWidget {
-  Expo1({required this.adata});
-  AvatarData adata;
-
+  Expo1({required this.adata, required this.theCase});
+  final AvatarData adata;
+  final String theCase;
   @override
   Widget build(BuildContext context) {
-    return Provider(create: (context)=>ExpoData(adata: adata),
+    return Provider(
+      create: (context) => ExpoData(adata: adata, theCase: theCase, body_task: 0, feelings_task: 0, thoughts_task: 0),
       child: MaterialApp(
         title: 'חשיפה 1',
         // Start the app with the "/" named route. In this case, the app starts
@@ -34,8 +36,8 @@ class Expo1 extends StatelessWidget {
           '/main': (context) => _Main(),
           '/thoughts/1': (context) => thought1_1(),
           '/thoughts/2': (context) => thought2_1(),
-           '/feelings/1' : (context) => feeling1_1(),
-          // '/body/1' : (context) => ,
+          '/feelings/1': (context) => feeling1_1(),
+          '/body/1' : (context) => body1_1() ,
         },
       ),
     );
@@ -53,7 +55,6 @@ class _Page1State extends State<_Page1> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-
       body: Stack(
         children: [
           Positioned(
@@ -63,16 +64,13 @@ class _Page1State extends State<_Page1> {
                   width: 0.8125 * MediaQuery.of(context).size.height * 2,
                   height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-
-                      color: Color(0xffdee8f3)))),
+                      shape: BoxShape.circle, color: Color(0xffdee8f3)))),
           Align(
             alignment: Alignment.topRight,
             child: Container(
               child: FloatingActionButton(
                 backgroundColor: Colors.grey.shade400,
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: Icon(Icons.arrow_forward),
               ),
               margin: EdgeInsets.all(30),
@@ -81,23 +79,17 @@ class _Page1State extends State<_Page1> {
           Align(
             alignment: Alignment.topLeft,
             child: Container(
-              child:  FlatButton(
+              child: FlatButton(
                 color: Colors.transparent,
-                onPressed: () {
-
-                },
-
+                onPressed: () {},
                 child: new IconTheme(
-                  data: new IconThemeData(
-                    size:35,
-                      color: Color(0xff6f6ca7)),
+                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
                   child: new Icon(Icons.menu),
-    ),
+                ),
               ),
               margin: EdgeInsets.all(30),
             ),
           ),
-
           Positioned(
               top: -height,
               left: -width * 0.5,
@@ -135,7 +127,6 @@ class _Page1State extends State<_Page1> {
                       fontWeight: FontWeight.w700,
                     ),
                   ),
-
                 ],
               ),
               Container(
@@ -168,7 +159,7 @@ class _Page1State extends State<_Page1> {
                 ),
                 child: SingleChildScrollView(
                   child: Text(
-                    '\"להכנס לחנות בגדים ולבקש למדוד פריט מסוים. לבקש עוד פריט, לצאת ולומר תודה רבה מבלי לקנות דבר\"',
+                    Provider.of<ExpoData>(context, listen: false).theCase,
                     textAlign: TextAlign.right,
                     textDirection: TextDirection.rtl,
                     style: TextStyle(
@@ -279,7 +270,8 @@ class _Page2State extends State<_Page2> {
           ),
           Column(
             children: [
-              Container(                height: 40,
+              Container(
+                height: 40,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -403,15 +395,14 @@ class _Page2State extends State<_Page2> {
                 ],
               ),
               Consumer<ExpoData>(
-                builder: (context, data, x){
-                  AvatarData x = data.adata;
-                  if(feeling<50 ) x.hands= 'images/handsclosed.png';
-                  else x.hands= 'images/handsopen.png';
-                    print(x.hands);
-                  print('efew');
-                  print(data.adata.hands);
-                  print('wef');
-                  // x.hands= 'images/handsclosed.png';
+                builder: (context, data, x) {
+                  AvatarData x = data.adata.clone();
+                  if (feeling < 50)
+                    x.hands = 'images/handsclosed.png';
+                  else
+                    x.hands = 'images/handsopen.png';
+                  // if(feeling<50 ) x= x.clone()..hands='images/handsdown.png';
+
                   return Flexible(
                     flex: 1,
                     child: AvatarStack(data: x),
@@ -420,27 +411,24 @@ class _Page2State extends State<_Page2> {
                 },
               ),
               Container(
-
-                  margin:
-                      EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 0),
+                margin:
+                    EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 0),
                 child: SfSliderTheme(
-
                   data: SfSliderThemeData(
                     //trackHeight: 20.0,
-                      activeTrackHeight: 20,
+                    activeTrackHeight: 20,
                     inactiveTrackHeight: 20,
                     thumbColor: Color(0xffefb3e2),
                     //thumbColor: Color(0xf0c0cd),
                     //thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
                     inactiveTrackColor: Color(0xffececec),
                     activeTrackColor: Color(0xffececec),
-
                   ),
                   child: SfSlider(
                     value: feeling,
                     min: 0,
                     max: 100,
-                    showLabels:true,
+                    showLabels: true,
 
                     //interval: 1,
 
@@ -449,9 +437,6 @@ class _Page2State extends State<_Page2> {
                         feeling = value;
                       });
                     },
-
-
-
                   ),
 
                   /*child: SliderTheme(
@@ -479,7 +464,8 @@ class _Page2State extends State<_Page2> {
                     /*inactiveColor: Colors.grey,
                     activeColor: Colors.grey,*/
                   )),*/
-              ),),
+                ),
+              ),
               /*Container(
                 child: Text
                   (
@@ -514,7 +500,6 @@ class _Page2State extends State<_Page2> {
               Container(
                 height: 20,
               ),
-
             ],
           )
         ],
@@ -662,55 +647,56 @@ class _MainState extends State<_Main> {
           Container(
             height: MediaQuery.of(context).size.height * 0.01,
           ),
-
-        TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: (choose==-1)? 0.5:0.8, end: (choose==-1)? 0.8:0.5),
-            duration: Duration(milliseconds: 500),
-            builder: (BuildContext context, double percent,
-                Widget? child) {
-              return Container(
-                width: (choose==-1)?width: width*percent,
-                child: Consumer<ExpoData>(
-                  builder: (context, data, w){
-                    print(data.done);
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _MyButton(
-                            isDone: data.done[0],
-                            isSelected: (choose==0),
-                            name: 'גוף',
-                            func: (){setState(() {
-                              choose=0;
-                            });},
-                            image: 'images/expo/meditate.png'
-                        ),
-                        _MyButton(
-                            isDone: data.done[1],
-                            isSelected: (choose==1),
-                            name: 'רגשות',
-                            func: (){setState(() {
-                              choose=1;
-                            });},
-                            image: 'images/expo/smile.png'
-                        ),
-                        _MyButton(
-                            isDone: data.done[2],
-                            isSelected: (choose==2),
-                            name: 'מחשבות',
-                            func: (){setState(() {
-                              choose=2;
-                            });},
-                            image: 'images/expo/brain.png'
-                        ),
-
-                      ],
-                    );
-                  },
-                ),
-              )
-              ;}),
-
+          TweenAnimationBuilder<double>(
+              tween: Tween<double>(
+                  begin: (choose == -1) ? 0.5 : 0.8,
+                  end: (choose == -1) ? 0.8 : 0.5),
+              duration: Duration(milliseconds: 500),
+              builder: (BuildContext context, double percent, Widget? child) {
+                return Container(
+                  width: (choose == -1) ? width : width * percent,
+                  child: Consumer<ExpoData>(
+                    builder: (context, data, w) {
+                      print(data.done);
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _MyButton(
+                              isDone: data.done[0],
+                              isSelected: (choose == 0),
+                              name: 'גוף',
+                              func: () {
+                                setState(() {
+                                  choose = 0;
+                                });
+                              },
+                              image: 'images/expo/meditate.png'),
+                          _MyButton(
+                              isDone: data.done[1],
+                              isSelected: (choose == 1),
+                              name: 'רגשות',
+                              func: () {
+                                setState(() {
+                                  choose = 1;
+                                });
+                              },
+                              image: 'images/expo/smile.png'),
+                          _MyButton(
+                              isDone: data.done[2],
+                              isSelected: (choose == 2),
+                              name: 'מחשבות',
+                              func: () {
+                                setState(() {
+                                  choose = 2;
+                                });
+                              },
+                              image: 'images/expo/brain.png'),
+                        ],
+                      );
+                    },
+                  ),
+                );
+              }),
           if (choose != -1)
             Flexible(
               child: Container(
@@ -760,90 +746,115 @@ class _MainState extends State<_Main> {
                   )),
             ),
           if (choose != -1)
-         Row(
-           mainAxisAlignment: MainAxisAlignment.start,
-           children: [ TextButton(
-             style: TextButton.styleFrom(
-               backgroundColor: Color(0xff35258a),
-               shape: CircleBorder(),
-             ),
-             child: Icon(
-               Icons.arrow_back,
-               color: Colors.white,
-             ),
-             onPressed: () async{
-               if(choose==2) {
-                 await Navigator.pushNamed(context, '/thoughts/1');
-
-               }else if(choose==0){
-                 await Navigator.pushNamed(context, '/body/1');
-               } else if(choose==1){
-                 await Navigator.pushNamed(context, '/feelings/1');
-               }
-               setState(() {
-                 choose=-1;
-               });
-             },
-           )],
-         )
-
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(0xff35258a),
+                    shape: CircleBorder(),
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                  onPressed: () async {
+                    if (choose == 2) {
+                      await Navigator.pushNamed(context, '/thoughts/1');
+                    } else if (choose == 0) {
+                      await Navigator.pushNamed(context, '/body/1');
+                    } else if (choose == 1) {
+                      await Navigator.pushNamed(context, '/feelings/1');
+                    }
+                    setState(() {
+                      choose = -1;
+                    });
+                  },
+                )
+              ],
+            )
         ],
       ),
     ]));
   }
 
   String _title() {
-    if (choose == 0) return 'זיהוי גוף';
-    if (choose == 1) return 'זיהוי רגשות';
-    if (choose == 2) return 'זיהוי מחשבות';
+    var x = Provider.of<ExpoData>(context, listen: false).introductions;
+    if (choose == 0) return x[0].item1;
+    if (choose == 1) return x[1].item1;
+    if (choose == 2) return x[2].item1;
     return '';
   }
 
   String _text() {
-    if (choose == 0) return 'חשוב שנלמד לזהות כיצד הגוף משפיע על החרדה שלנו.';
-    if (choose == 1) return 'הרגש הוא חלק מהותי מן החרדה שלנו......';
-    if (choose == 2) return 'המחשבות הם מחל מהמחשבה, וחשוב שנאתרן...';
+    var x = Provider.of<ExpoData>(context, listen: false).introductions;
+    if (choose == 0) return  x[0].item2;
+    if (choose == 1) return x[1].item2;
+    if (choose == 2) return  x[2].item2;
     return '';
   }
 }
 
 class _MyButton extends StatelessWidget {
-  _MyButton({required this.isSelected, required this.name, required this.func, required this.image, this.isDone = false});
-  final bool isSelected,isDone;
+  _MyButton(
+      {required this.isSelected,
+      required this.name,
+      required this.func,
+      required this.image,
+      this.isDone = false});
+  final bool isSelected, isDone;
   final String name, image;
   final func;
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(child: GestureDetector(
+    return Flexible(
+        child: GestureDetector(
       child: Column(
         children: [
-          LayoutBuilder(builder: (context, constraints){
+          LayoutBuilder(builder: (context, constraints) {
             return Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.all(constraints.maxWidth*0.15),
+                  padding: EdgeInsets.all(constraints.maxWidth * 0.15),
                   child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Image.asset(image, color:(isDone)? Color(0xffEDEBEB):(isSelected)? Color(0xffB3E8EF): Color(0xff35258A),)),
-                  margin: EdgeInsets.all(constraints.maxWidth*0.08),
+                      fit: BoxFit.fitWidth,
+                      child: Image.asset(
+                        image,
+                        color: (isDone)
+                            ? Color(0xffEDEBEB)
+                            : (isSelected)
+                                ? Color(0xffB3E8EF)
+                                : Color(0xff35258A),
+                      )),
+                  margin: EdgeInsets.all(constraints.maxWidth * 0.08),
                   width: constraints.maxWidth,
+                  height: constraints.maxWidth,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: (isDone)? Color(0xffABAAAA):(isSelected)? Color(0xff35258A):Color(0xffdee8f3),
+                    color: (isDone)
+                        ? Color(0xffABAAAA)
+                        : (isSelected)
+                            ? Color(0xff35258A)
+                            : Color(0xffdee8f3),
                   ),
                 ),
-                if(isDone)
+                if (isDone)
                   Align(
                     alignment: Alignment.topRight,
                     child: Container(
                       child: FittedBox(
-                      fit: BoxFit.fitHeight,
-            child:Icon(Icons.check,color: Colors.white,),),
-                      padding: EdgeInsets.all(constraints.maxWidth*0.05),
-
-                      margin: EdgeInsets.only(top:constraints.maxWidth*0.04 ,right:constraints.maxWidth*0.08),
-                      width: constraints.maxWidth*0.25,
+                        fit: BoxFit.fitHeight,
+                        child: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                        ),
+                      ),
+                      padding: EdgeInsets.all(constraints.maxWidth * 0.05),
+                      margin: EdgeInsets.only(
+                          top: constraints.maxWidth * 0.04,
+                          right: constraints.maxWidth * 0.08),
+                      width: constraints.maxWidth * 0.25,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xff808080),
@@ -862,37 +873,85 @@ class _MyButton extends StatelessWidget {
           )
         ],
       ),
-      onTap: func,)
-    );
+      onTap: func,
+    ));
   }
 }
 
 class ExpoData {
-  ExpoData({required this.adata}){
+  ExpoData({required this.adata, required this.theCase,required this.body_task,required this.feelings_task,required this.thoughts_task}) {
+
     while (feelings.length % 8 != 0) {
       feelings.add('');
     }
 
+    introductions=[all_introductions[0][body_task],all_introductions[1][feelings_task], all_introductions[2][thoughts_task]];
   }
-  List<bool> done =[false,false, false];
-  int stress=50;
-  List<String> thoughts= [
-  'אני תמיד אגיד או אעשה משהו',
-  'הכי נורא שיכול לקרות זה',
-  'תמיד כשאני עושה דברים כאלו',
-  'אף אחד אף פעם לא אוהב ש',
-  'אני מרגישה לא בנוח ולכן',
-  'אני לא אדע איך'
-  ];
-  List<String> replies=['','','','','',''];
-  List<String> feelings = [
-   'סיבוך', 'פגיעות', 'עצב', 'בדידות', 'ריקנות', 'אבודה', 'נידוי', 'אכזבה', 'בחילה',
-    'תיעוב', 'גועל', 'חוסר נוחות', 'היסוס', 'אדישות',
-    'חרטה', 'מוצף', 'מפוחד', 'מופתע', 'נואשות', '', 'לחץ','מבועט',
-    'ספקנות', 'פאניקה', 'ביטחון עצמי', 'השראה', 'ריגוש', 'תקווה', '', 'גאווה',
-    'שמחה', 'הקלה', 'מרמור', 'השפלה', '', 'מופתע', 'נואשות', 'כעס', 'עצבנות', 'תסכול', 'רוגז', 'קימום'
-  ];
-  List<int> felt=[];
+  int body_task, feelings_task, thoughts_task;
+  String theCase;
+  List<List<Tuple2<String,String>>> all_introductions=[
+    [Tuple2('זיהוי גוף','חשוב שנלמד לזהות כיצד הגוף משפיע על החרדה שלנו.'  )],
+    [Tuple2('זיהוי רגשות',  'הרגש הוא חלק מהותי מן החרדה שלנו......')],
+    [Tuple2( 'זיהוי מחשבות',  'המחשבות הם מחל מהמחשבה, וחשוב שנאתרן...')]];
+  List<Tuple2<String,String>> introductions=[];
 
+  List<bool> done = [false, false, false];
+  int stress = 50;
+  List<String> thoughts = [
+    'אני תמיד אגיד או אעשה משהו',
+    'הכי נורא שיכול לקרות זה',
+    'תמיד כשאני עושה דברים כאלו',
+    'אף אחד אף פעם לא אוהב ש',
+    'אני מרגישה לא בנוח ולכן',
+    'אני לא אדע איך'
+  ];
+  List<String> replies = ['', '', '', '', '', ''];
+  List<String> feelings = [
+    'סיבוך',
+    'פגיעות',
+    'עצב',
+    'בדידות',
+    'ריקנות',
+    'אבודה',
+    'נידוי',
+    'אכזבה',
+    'בחילה',
+    'תיעוב',
+    'גועל',
+    'חוסר נוחות',
+    'היסוס',
+    'אדישות',
+    'חרטה',
+    'מוצף',
+    'מפוחד',
+    'מופתע',
+    'נואשות',
+    '',
+    'לחץ',
+    'מבועט',
+    'ספקנות',
+    'פאניקה',
+    'ביטחון עצמי',
+    'השראה',
+    'ריגוש',
+    'תקווה',
+    '',
+    'גאווה',
+    'שמחה',
+    'הקלה',
+    'מרמור',
+    'השפלה',
+    '',
+    'מופתע',
+    'נואשות',
+    'כעס',
+    'עצבנות',
+    'תסכול',
+    'רוגז',
+    'קימום'
+  ];
+  List<int> felt = [];
+
+  List<String> painSpots=[];
   AvatarData adata;
 }

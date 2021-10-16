@@ -19,7 +19,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(Expo1(adata: AvatarData(),));
+  // AuthRepository.instance().signOut();
+  runApp(Expo1(adata: AvatarData(), theCase: '\"להכנס לחנות בגדים ולבקש למדוד פריט מסוים. לבקש עוד פריט, לצאת ולומר תודה רבה מבלי לקנות דבר\"'));
   // runApp(Wrapper());
 }
 

@@ -77,7 +77,10 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   assets:
+    - images/platform.png
     - images/handsclosed.png
+    - images/handsbaloon.png
+    - images/handsdown.png
     - images/handsopen.png
     - images/legs.png
     - images/expo/baloon.png

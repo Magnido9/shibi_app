@@ -45,6 +45,18 @@ class AvatarData {
   static String body_default = "images/poo.png";
   static String hand_default = "images/handsopen.png";
 
+  AvatarData clone(){
+    return AvatarData(
+      body: this.body,
+        glasses: this.glasses,
+        hands: this.hands,
+        body_color: this.body_color,
+        money: this.money,
+        acquired: this.acquired,
+        eye_color: this.eye_color
+    );
+  }
+
   static Future<AvatarData> load() async {
     String? pid = AuthRepository.instance().user?.uid;
     var v =
@@ -309,10 +321,14 @@ class _AvatarPageState extends State<AvatarPage> {
 
 class AvatarStack extends StatelessWidget {
   AvatarStack({required this.data, Key? key}) : super(key: key);
-  Map<String,Tuple5<double,double,double,Color,Color>> dits=
-  {// image :            top offset , left offset, height, main color, secondary color
-    'images/handsclosed.png': Tuple5(0.3,0,0.25,Color(0xffDABFA0),Color(0xffDABFA0)),
-    'images/handsopen.png':   Tuple5(0.2,0,0.3,Color(0xffDABFA0),Color(0xffAC957B))
+  Map<String,Tuple3<double,double,double>> dits=
+  {// image :            top offset , left offset, height
+    'images/handsclosed.png': Tuple3(0.3,0,0.25,),
+    'images/handsopen.png':   Tuple3(0.2,0,0.3,),
+    'images/handsdown.png':   Tuple3(0.4,0.02,0.3,),
+    'images/handsbaloon.png':   Tuple3(0,0,0.9,)
+
+
   };
   final AvatarData data;
   @override
@@ -379,7 +395,7 @@ class AvatarStack extends StatelessWidget {
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 if (dits[data.hands!] == null) return Container();
-                Tuple5<double,double,double,Color,Color> dit = dits[data.hands!]!;
+                Tuple3<double,double,double> dit = dits[data.hands!]!;
                 return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -388,12 +404,12 @@ class AvatarStack extends StatelessWidget {
                         child: FittedBox(
                             fit: BoxFit.fitHeight,
                             child: ImageColorSwitcher(
-                              width: constraints.maxWidth,
+                              width: constraints.maxWidth*(1-dit.item2),
                               height: constraints.maxHeight*dit.item3,
                               color: data.body_color!,
                               imagePath: data.hands!,
-                              second:  dit.item5,
-                              main:    dit.item4,
+                              second:  Color(0xffAC957B),
+                              main:    Color(0xffDABFA0),
                             )
                         ),
                         height: constraints.maxHeight*dit.item3 ,

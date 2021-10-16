@@ -347,6 +347,8 @@ class _thought2_state extends State<thought2_1> {
                           width: width,
                           height: height,
                           child: Consumer<ExpoData>(builder: (context, data, child) {
+                            AvatarData x= data.adata.clone();
+                            x.hands = 'images/handsbaloon.png';
                             return Stack(
                               children: [
                                 Positioned(
@@ -384,15 +386,18 @@ class _thought2_state extends State<thought2_1> {
                                   left: width*0.46,),
                                 Align(
                                   alignment: Alignment.bottomLeft,
-                                  child: Transform.rotate(
-                                      angle: -0.5,
-                                      child: Container(
-                                          height: width * 0.6,
-                                          width: width * 0.6,
-                                          child: AvatarStack(
-                                            data: data.adata,
-                                          )
-                                      )),
+                                  child: Container(
+                                    child: Transform.rotate(
+                                        angle: -0.2 ,
+                                        child: Container(
+                                            height: width * 0.58,
+                                            width: width * 0.6,
+                                            child: AvatarStack(
+                                              data: x,
+                                            )
+                                        )),
+                                    margin: EdgeInsets.only(left: width*0.08),
+                                  ),
                                 ),
                                 Positioned(
                                   child: Baloon(color:chosen[0], diameter: width*0.316, angle: -0.3, text: data.thoughts[chosen[0]],secondery: data.replies[chosen[0]],),
