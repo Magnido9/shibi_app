@@ -352,38 +352,18 @@ class _thought2_state extends State<thought2_1> {
                             return Stack(
                               children: [
                                 Positioned(
-                                  child: Transform.rotate(
-                                      angle: -0.8,
-                                      child: Container(
-                                        height: width * 0.2,
-                                        width: 2,
-                                        color: Colors.grey,
+                                  top: height*0.2,
+                                  left: width*0.21,
+                                  child: Container(
+                                    width: width*0.5,
+                                    height: height*0.5,
+                                    child: FittedBox(
+                                      fit: BoxFit.fitHeight,
+                                      child: Image.asset('images/strings.png'),
+                                    ),
+                                  )
+                                ),
 
-                                      )),
-                                  top: height*0.565,
-                                  left: width*0.37,),
-                                Positioned(
-                                  child: Transform.rotate(
-                                      angle: 0.9,
-                                      child: Container(
-                                        height: width * 0.25,
-                                        width: 2,
-                                        color: Colors.grey,
-
-                                      )),
-                                  top: height*0.55,
-                                  right: width*0.406,),
-                                Positioned(
-                                  child: Transform.rotate(
-                                      angle: 0,
-                                      child: Container(
-                                        height: width * 0.27,
-                                        width: 2,
-                                        color: Colors.grey,
-
-                                      )),
-                                  top: height*0.5,
-                                  left: width*0.46,),
                                 Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Container(
@@ -401,15 +381,15 @@ class _thought2_state extends State<thought2_1> {
                                 ),
                                 Positioned(
                                   child: Baloon(color:chosen[0], diameter: width*0.316, angle: -0.3, text: data.thoughts[chosen[0]],secondery: data.replies[chosen[0]],),
-                                  top: height*0.4,
-                                  left: width*0.1,),
+                                  top: height*0.23,
+                                  left: width*0.11,),
                                 Positioned(
                                   child: Baloon(color:chosen[1], diameter: width*0.316, angle: 0.3, text: data.thoughts[chosen[1]],secondery: data.replies[chosen[1]],),
-                                  top: height*0.4,
-                                  right: width*0.1,),
+                                  top: height*0.17,
+                                  right: width*0.19,),
                                 Positioned(
                                   child: Baloon(color:chosen[2], diameter: width*0.34, angle: 0, text: data.thoughts[chosen[2]],secondery: data.replies[chosen[2]],),
-                                  top: height*0.3,
+                                  top: height*0,
                                   left: width*0.3,),
                               ],
                             );
