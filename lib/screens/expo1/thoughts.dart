@@ -817,7 +817,7 @@ class _LoadBar extends CustomPainter {
       ..color = Colors.grey
       ..style = PaintingStyle.fill
       ..strokeWidth = 2;
-    Offset off2 = center +
+    Offset off2 = center +//
         Offset(sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
     painter
       ..color = Colors.grey
