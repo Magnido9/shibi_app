@@ -397,7 +397,7 @@ class _Page2State extends State<_Page2> {
               Consumer<ExpoData>(
                 builder: (context, data, x) {
                   AvatarData x = data.adata.clone();
-                  if (feeling < 50)
+                  if (feeling > 50)
                     x.hands = 'images/handsclosed.png';
                   else
                     x.hands = 'images/handsopen.png';

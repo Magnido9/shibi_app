@@ -159,7 +159,7 @@ class _body1_state extends State<body1_1> {
                           height: 5,
                         ),
                         Text(
-                          "סובבי את השיבי וסמני את המקומות בהם את מרגישה כאב.",
+                          "סובבי את שיבי וסמני את המקומות בהם את מרגישה כאב.",
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.right,
                           style: TextStyle(
@@ -186,7 +186,24 @@ class _body1_state extends State<body1_1> {
                         double dx = min(w,h), radius = dx*0.02;
                         var f = (str)=> _circle(isSelected: (data.painSpots.contains(str)),width: radius*2,onTap: (){ setState(() {data.painSpots.add(str);}); }, );
                         List<Widget> widgets = [
-                          Positioned( top:dx*0.4 , left: dx*0.5-radius, child: f('מצח'))
+                          Positioned( top:dx*0.4 , left: dx*0.5-radius, child: f('בטן')),
+                          Positioned( top:dx*0.24 , left: dx*0.5-radius, child: f('סנטר')),
+                          Positioned( top:dx*0.1 , left: dx*0.5-radius, child: f('ראש')),
+                          Positioned( top:dx*0.29 , left: dx*0.38-radius, child: f('חזה')),
+                          Positioned( top:dx*0.29 , left: dx*0.62-radius, child: f('לב')),
+                          Positioned( top:dx*0.31 , left: dx*0.7-radius, child: f('כתף')),
+                          Positioned( top:dx*0.31 , left: dx*0.3-radius, child: f('כתף')),
+                          Positioned( top:dx*0.38 , left: dx*0.28-radius, child: f('יד')),
+                          Positioned( top:dx*0.38 , left: dx*0.72-radius, child: f('יד')),
+                          Positioned( top:dx*0.6 , left: dx*0.43-radius, child: f('רגל')),
+                          Positioned( top:dx*0.6 , left: dx*0.57-radius, child: f('רגל')),
+
+
+
+
+
+
+
                         ];
                         return Container(
                           width: dx,

@@ -46,6 +46,7 @@ class _thought1_state extends State<thought1_1> {
                   ],
                   shape: BoxShape.circle,
                   color: Color(0xffF3F1DE),
+                  //color: Colors.yellow,
                 ),
               )),
           Align(
