@@ -77,20 +77,7 @@ class _Page1State extends State<_Page1> {
               margin: EdgeInsets.all(30),
             ),
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              child: FlatButton(
-                color: Colors.transparent,
-                onPressed: () {},
-                child: new IconTheme(
-                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                  child: new Icon(Icons.menu),
-                ),
-              ),
-              margin: EdgeInsets.all(30),
-            ),
-          ),
+
           Positioned(
               top: -height,
               left: -width * 0.5,
@@ -116,18 +103,29 @@ class _Page1State extends State<_Page1> {
                 height: 40,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "חשיפה ראשונה",
-                    textAlign: TextAlign.center,
+                  FlatButton(
+                    color: Colors.transparent,
+                    onPressed: () {},
+                    child: new IconTheme(
+                      data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                      child: new Icon(Icons.menu),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                  child: Text(
+                    "    חשיפה ראשונה",
+                    //textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 24,
                       fontFamily: "Assistant",
                       fontWeight: FontWeight.w700,
                     ),
-                  ),
+                  ),),
+
                 ],
               ),
               Container(
@@ -269,38 +267,35 @@ class _Page2State extends State<_Page2> {
               margin: EdgeInsets.all(30),
             ),
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              child: FlatButton(
-                color: Colors.transparent,
-                onPressed: () {},
-                child: new IconTheme(
-                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                  child: new Icon(Icons.menu),
-                ),
-              ),
-              margin: EdgeInsets.all(30),
-            ),
-          ),
+
           Column(
             children: [
               Container(
                 height: 40,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "דיווח ראשון",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontFamily: "Assistant",
-                      fontWeight: FontWeight.w700,
+                  FlatButton(
+                    color: Colors.transparent,
+                    onPressed: () {},
+                    child: new IconTheme(
+                      data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                      child: new Icon(Icons.menu),
                     ),
                   ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "       דיווח ראשון",
+                      //textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontFamily: "Assistant",
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),),
+
                 ],
               ),
               Container(
@@ -557,11 +552,15 @@ class _MainState extends State<_Main> {
           margin: EdgeInsets.all(30),
         ),
       ),
-          Align(
 
-            alignment: Alignment.topLeft,
-            child: Container(
-              child: FlatButton(
+      Column(
+        children: [
+          Container(
+            height: 40,
+          ),
+          Row(
+            children: [
+              FlatButton(
                 color: Colors.transparent,
                 onPressed: () {},
                 child: new IconTheme(
@@ -569,27 +568,19 @@ class _MainState extends State<_Main> {
                   child: new Icon(Icons.menu),
                 ),
               ),
-              margin: EdgeInsets.all(30),
-            ),
-          ),
-      Column(
-        children: [
-          Container(
-            height: 40,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "זיהוי",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontFamily: "Assistant",
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "             זיהוי",
+                  //textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontFamily: "Assistant",
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),),
+
             ],
           ),
           Container(
