@@ -1,5 +1,6 @@
 library expo;
 
+
 import 'package:application/screens/Avatar/avatar.dart';
 import 'package:application/screens/expo1/start.dart';
 import 'package:application/screens/login/homescreen.dart';
@@ -11,7 +12,11 @@ import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
 import '../Avatar/color_switch.dart';
 import 'dart:math';
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as UI;
 
+import 'package:flutter/services.dart';
 class thought1_1 extends StatefulWidget {
   thought1_1();
 
@@ -20,10 +25,29 @@ class thought1_1 extends StatefulWidget {
 }
 
 class _thought1_state extends State<thought1_1> {
+  UI.Image? image;
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadImage('images/expo/brain.jpg');
+  }
+
+  Future loadImage(String path) async {
+    final data = await rootBundle.load(path);
+    final bytes = data.buffer.asUint8List();
+    final image = await decodeImageFromList(bytes);
+
+    setState(() => this.image = image);
+  }
+
   double feeling = 50;
   List<int> chosen = [];
+
   @override
   Widget build(BuildContext context) {
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -49,6 +73,36 @@ class _thought1_state extends State<thought1_1> {
                   //color: Colors.yellow,
                 ),
               )),
+          Positioned(top:-150,child:
+          Container(
+            child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: 0.7),
+                duration: Duration(seconds: 1),
+                builder:
+                    (BuildContext context, double percent, Widget? child) {
+                  return CustomPaint(
+                      painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size,image:image!),
+                      size: MediaQuery.of(context).size);
+                }),
+            // color:Colors.green
+          )),
+          Positioned(child:Container(
+
+            padding: EdgeInsets.all(5),
+            child: FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Image.asset('images/expo/brain.png',
+                  color: Color(0xffB3E8EF)),
+            ),
+            width: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xff35258A),
+            ),
+          ),
+          top:height*0.15,
+          right:width*0.04
+          ),
           Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -65,19 +119,7 @@ class _thought1_state extends State<thought1_1> {
                   Container(
                     height: 10,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Image.asset('images/expo/brain.png',
-                          color: Color(0xffB3E8EF)),
-                    ),
-                    width: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xff35258A),
-                    ),
-                  )
+
                 ],
               ),
               margin: EdgeInsets.all(30),
@@ -733,5 +775,110 @@ class Baloon extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+
+class _LoadBar extends CustomPainter {
+  final double percent;
+  final Size size;
+  final UI.Image image;
+
+  _LoadBar({
+    required this.percent,
+    required this.size,
+    required this.image,
+  });
+  @override
+  void paint(Canvas canvas, Size size) {
+    var painter = Paint()
+      ..color = Colors.grey
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8;
+    Offset center = Offset(size.width / 2, -size.width * 0.3);
+    canvas.drawCircle(center, size.width*1.1,painter..color = Color(0xfff3f1de)
+      ..style = PaintingStyle.fill );
+    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.1), 0, pi,
+        false, painter..color = Color(0xffc4c4c4)..style = PaintingStyle.stroke);
+    double pad = 0.1;
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: size.width*1.1),
+        0,
+        pi / 2 - pi / 6 + pad,
+        false,
+        painter..color = Color(0xff35258A)..style = PaintingStyle.stroke);
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: size.width*1.1),
+        pi / 2 - pi / 6 + pad,
+        (2 * pi / 6 - 2 * pad) * percent,
+        false,
+        painter..color = Color(0xff35258A));
+
+    Offset off1 = center +
+        Offset(-sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
+    painter
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 2;
+    Offset off2 = center +
+        Offset(sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
+    painter
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 2;
+  }
+
+  @override
+  bool shouldRepaint(_LoadBar oldDelegate) {
+    return percent != oldDelegate.percent;
+  }
+}
+class _PaintTask extends CustomPainter {
+  final int slices, complete;
+
+  _PaintTask({required this.slices, required this.complete});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double sw = 7;
+    var painter = Paint()
+      ..color = Color(0xFFC4C4C4)
+    // ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = sw;
+    Offset c = Offset(size.height / 2, size.width / 2);
+    double radius = size.height / 2;
+    canvas.drawCircle(c, radius, painter);
+    canvas.drawArc(Rect.fromCircle(center: c, radius: radius), -pi / 2,
+        2 * pi * complete / slices, false, painter..color = Colors.green);
+
+    if (slices > 1 && slices < 21) {
+      for (int i = 0; i < slices; i++) {
+        var painter2 = Paint()
+          ..color = Colors.black
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2;
+
+        double phea = 2 * pi * i / slices - pi / 2;
+        Offset start = c +
+            Offset(
+                (radius - sw / 2) * cos(phea), (radius - sw / 2) * sin(phea));
+        Offset end = c +
+            Offset(
+                (radius + sw / 2) * cos(phea), (radius + sw / 2) * sin(phea));
+        canvas.drawLine(start, end, painter2);
+      }
+    }
+    canvas.drawCircle(
+        Offset(size.height / 2, size.width / 2),
+        radius * 0.85,
+        painter
+          ..style = PaintingStyle.fill
+          ..color = Color(0xFFEBE9D6));
+  }
+
+  @override
+  bool shouldRepaint(_PaintTask oldDelegate) {
+    return (slices != oldDelegate.slices) || (complete != oldDelegate.complete);
   }
 }

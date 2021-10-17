@@ -121,6 +121,11 @@ flutter:
     - images/shibi_pages/win.png
     - images/shibi_pages/gangster.png
     - images/shibi_pages/money.png
+    - images/World_1.jpg
+    - images/expo/brain.jpg
+    - images/expo/smile.jpg
+    - images/expo/meditate.jpg
+    - images/expo/baloon.jpg
 
     - music/meditation.mp3
   uses-material-design: true
