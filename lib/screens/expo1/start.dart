@@ -521,8 +521,10 @@ class _MainState extends State<_Main> {
     print('main');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-        body: Stack(children: [
+        body: Stack(  children: [
+
       Positioned(
           top: -height,
           left: -width * 0.5,
@@ -556,6 +558,7 @@ class _MainState extends State<_Main> {
         ),
       ),
           Align(
+
             alignment: Alignment.topLeft,
             child: Container(
               child: FlatButton(
