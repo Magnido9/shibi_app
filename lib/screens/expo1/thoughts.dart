@@ -83,6 +83,20 @@ class _thought1_state extends State<thought1_1> {
               margin: EdgeInsets.all(30),
             ),
           ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: FlatButton(
+                color: Colors.transparent,
+                onPressed: () {},
+                child: new IconTheme(
+                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                  child: new Icon(Icons.menu),
+                ),
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
           Column(
             children: [
               Container(
@@ -452,6 +466,20 @@ class _thought2_state extends State<thought2_1> {
                     ),
                   )
                 ],
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: FlatButton(
+                color: Colors.transparent,
+                onPressed: () {},
+                child: new IconTheme(
+                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                  child: new Icon(Icons.menu),
+                ),
               ),
               margin: EdgeInsets.all(30),
             ),

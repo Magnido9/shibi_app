@@ -155,6 +155,20 @@ class _feeling1_state extends State<feeling1_1> {
                 margin: EdgeInsets.all(30),
               ),
             ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                child: FlatButton(
+                  color: Colors.transparent,
+                  onPressed: () {},
+                  child: new IconTheme(
+                    data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                    child: new Icon(Icons.menu),
+                  ),
+                ),
+                margin: EdgeInsets.all(30),
+              ),
+            ),
             Column(
               children: [
                 Container(

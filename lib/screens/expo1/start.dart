@@ -14,6 +14,7 @@ import 'package:syncfusion_flutter_core/theme.dart';
 import 'body.dart';
 import 'feelings.dart';
 import 'thoughts.dart';
+import 'dart:ui';
 
 class Expo1 extends StatelessWidget {
   Expo1({required this.adata, required this.theCase});
@@ -57,14 +58,14 @@ class _Page1State extends State<_Page1> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
+          /*Positioned(
               left: -0.8 * MediaQuery.of(context).size.width,
               top: -1.25 * MediaQuery.of(context).size.height,
               child: Container(
                   width: 0.8125 * MediaQuery.of(context).size.height * 2,
                   height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xffdee8f3)))),
+                      shape: BoxShape.circle, color: Color(0xffdee8f3)))),*/
           Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -268,6 +269,20 @@ class _Page2State extends State<_Page2> {
               margin: EdgeInsets.all(30),
             ),
           ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: FlatButton(
+                color: Colors.transparent,
+                onPressed: () {},
+                child: new IconTheme(
+                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                  child: new Icon(Icons.menu),
+                ),
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
           Column(
             children: [
               Container(
@@ -310,9 +325,14 @@ class _Page2State extends State<_Page2> {
                         color: Color(0xffc4c4c4),
                       ),
                     ),
-                    onTap: () => showDialog<String>(
+                    onTap: () =>
+                        showDialog<String>(
                       context: context,
-                      builder: (BuildContext context) => AlertDialog(
+                      builder: (BuildContext context) =>
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                            child:
+                          AlertDialog(
                         content: RichText(
                           textDirection: TextDirection.rtl,
                           text: TextSpan(
@@ -359,7 +379,7 @@ class _Page2State extends State<_Page2> {
                             ),
                           ),
                         ],
-                      ),
+                      ),),
                     ),
                   ),
                   Container(
@@ -415,22 +435,28 @@ class _Page2State extends State<_Page2> {
                     EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 0),
                 child: SfSliderTheme(
                   data: SfSliderThemeData(
-                    //trackHeight: 20.0,
                     activeTrackHeight: 20,
                     inactiveTrackHeight: 20,
                     thumbColor: Color(0xffefb3e2),
-                    //thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
                     inactiveTrackColor: Color(0xffececec),
                     activeTrackColor: Color(0xffececec),
+                      thumbRadius: 11,
                   ),
                   child: SfSlider(
+                    thumbIcon: Text(
+                        '${feeling.round()}',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: 'Assistant',
+                        fontSize: 16,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     value: feeling.round(),
                     min: 0,
                     max: 100,
                     showLabels: true,
-
-                    //interval: 1,
-                    enableTooltip: true,
                     onChanged: (dynamic value) {
                       setState(() {
                         feeling = value;
@@ -438,31 +464,7 @@ class _Page2State extends State<_Page2> {
                     },
                   ),
 
-                  /*child: SliderTheme(
 
-                      data: SliderTheme.of(context).copyWith(
-                        trackHeight: 20.0,
-                        thumbColor: Color(0xffefb3e2),
-                          //thumbColor: Color(0xf0c0cd),
-                        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15.0),
-                        inactiveTrackColor: Color(0xffececec),
-                        activeTrackColor: Color(0xffececec),
-                      ),
-
-                    child: Slider(
-                    value: feeling,
-                    onChanged: (double value) {
-                      setState(() {
-                        feeling = value;
-                      });
-                    },
-                    min: 0,
-                    max: 100,
-                    label: feeling.round().toString(),
-                    divisions: 100,
-                    /*inactiveColor: Colors.grey,
-                    activeColor: Colors.grey,*/
-                  )),*/
                 ),
               ),
               /*Container(
@@ -553,6 +555,20 @@ class _MainState extends State<_Main> {
           margin: EdgeInsets.all(30),
         ),
       ),
+          Align(
+            alignment: Alignment.topLeft,
+            child: Container(
+              child: FlatButton(
+                color: Colors.transparent,
+                onPressed: () {},
+                child: new IconTheme(
+                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                  child: new Icon(Icons.menu),
+                ),
+              ),
+              margin: EdgeInsets.all(30),
+            ),
+          ),
       Column(
         children: [
           Container(
@@ -597,7 +613,9 @@ class _MainState extends State<_Main> {
                 ),
                 onTap: () => showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) => AlertDialog(
+                  builder: (BuildContext context) => BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                    child:AlertDialog(
                     content: Text('יאללה תלחץ על משהו'),
                     actions: <Widget>[
                       TextButton(
@@ -608,7 +626,7 @@ class _MainState extends State<_Main> {
                         ),
                       ),
                     ],
-                  ),
+                  ),),
                 ),
               ),
               Container(
@@ -897,12 +915,12 @@ class ExpoData {
   List<bool> done = [false, false, false];
   int stress = 50;
   List<String> thoughts = [
-    'אני תמיד אגיד או אעשה משהו',
-    'הכי נורא שיכול לקרות זה',
-    'תמיד כשאני עושה דברים כאלו',
-    'אף אחד אף פעם לא אוהב ש',
-    'אני מרגישה לא בנוח ולכן',
-    'אני לא אדע איך'
+    'אני תמיד אגיד או אעשה משהו...',
+    'הכי נורא שיכול לקרות זה...',
+    'תמיד כשאני עושה דברים כאלו...',
+    'אף אחד אף פעם לא אוהב ש...',
+    'אני מרגישה לא בנוח ולכן...',
+    'אני לא אדע איך...'
   ];
   List<String> replies = ['', '', '', '', '', ''];
   List<String> feelings = [
