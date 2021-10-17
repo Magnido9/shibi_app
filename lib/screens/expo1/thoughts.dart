@@ -81,7 +81,7 @@ class _thought1_state extends State<thought1_1> {
                 builder:
                     (BuildContext context, double percent, Widget? child) {
                   return CustomPaint(
-                      painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size,image:image!),
+                      painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
                       size: MediaQuery.of(context).size);
                 }),
             // color:Colors.green
@@ -100,8 +100,8 @@ class _thought1_state extends State<thought1_1> {
               color: Color(0xff35258A),
             ),
           ),
-          top:height*0.15,
-          right:width*0.04
+          top:height*0.132,
+          right:width*0.08
           ),
           Align(
             alignment: Alignment.topRight,
@@ -111,6 +111,8 @@ class _thought1_state extends State<thought1_1> {
                 children: [
                   FloatingActionButton(
                     backgroundColor: Colors.grey.shade400,
+                    disabledElevation: 0,
+                    elevation:0,
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -141,18 +143,16 @@ class _thought1_state extends State<thought1_1> {
                       child: new Icon(Icons.menu),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "    זיהוי מחשבות",
+
+                  Text(
+                      "         זיהוי מחשבות",
                       //textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.assistant(
                         color: Colors.black,
                         fontSize: 24,
-                        fontFamily: "Assistant",
                         fontWeight: FontWeight.w700,
                       ),
-                    ),),
+                    ),
 
                 ],
               ),
@@ -387,7 +387,19 @@ class _thought2_state extends State<thought2_1> {
     return Scaffold(
       body: Stack(
         children: [
-          TweenAnimationBuilder(
+          Positioned(top:-150,child:
+      Container(
+        child: TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: 0.7),
+            duration: Duration(seconds: 1),
+            builder:
+                (BuildContext context, double percent, Widget? child) {
+              return CustomPaint(
+                  painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
+                  size: MediaQuery.of(context).size);
+            }),
+        // color:Colors.green
+      )), TweenAnimationBuilder(
               tween: Tween(begin: height, end: - width*1.7),
               duration: Duration(seconds: 10),
               builder: (context,double h,w){
@@ -445,6 +457,7 @@ class _thought2_state extends State<thought2_1> {
                                   child: Baloon(color:chosen[2], diameter: width*0.34, angle: 0, text: data.thoughts[chosen[2]],secondery: data.replies[chosen[2]],),
                                   top: height*0,
                                   left: width*0.3,),
+
                               ],
                             );
                           }),
@@ -454,6 +467,22 @@ class _thought2_state extends State<thought2_1> {
                     top: h
                 );
               }
+          ),  Positioned(child:Container(
+
+            padding: EdgeInsets.all(5),
+            child: FittedBox(
+              fit: BoxFit.fitHeight,
+              child: Image.asset('images/expo/brain.png',
+                  color: Color(0xffB3E8EF)),
+            ),
+            width: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xff35258A),
+            ),
+          ),
+              top:height*0.132,
+              right:width*0.08
           ),
 
           Positioned(
@@ -482,6 +511,8 @@ class _thought2_state extends State<thought2_1> {
               child: Column(
                 children: [
                   FloatingActionButton(
+                    elevation: 0,
+                    disabledElevation: 0,
                     backgroundColor: Colors.grey.shade400,
                     onPressed: () {
                       Navigator.pop(context);
@@ -491,27 +522,14 @@ class _thought2_state extends State<thought2_1> {
                   Container(
                     height: 10,
                   ),
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Image.asset('images/expo/brain.png',
-                          color: Color(0xffB3E8EF)),
-                    ),
-                    width: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xff35258A),
-                    ),
-                  )
+
                 ],
               ),
               margin: EdgeInsets.all(30),
             ),
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
+          Positioned(left: -width*0.07,top:height*0.005,child:
+            Container(
               child: FlatButton(
                 color: Colors.transparent,
                 onPressed: () {},
@@ -521,8 +539,8 @@ class _thought2_state extends State<thought2_1> {
                 ),
               ),
               margin: EdgeInsets.all(30),
-            ),
-          ),
+
+          )),
           Column(
             children: [
               Container(
@@ -534,10 +552,9 @@ class _thought2_state extends State<thought2_1> {
                   Text(
                     "זיהוי מחשבות",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: GoogleFonts.assistant(
                       color: Colors.black,
                       fontSize: 24,
-                      fontFamily: "Assistant",
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -779,12 +796,10 @@ class Baloon extends StatelessWidget {
 class _LoadBar extends CustomPainter {
   final double percent;
   final Size size;
-  final UI.Image image;
 
   _LoadBar({
     required this.percent,
     required this.size,
-    required this.image,
   });
   @override
   void paint(Canvas canvas, Size size) {
@@ -793,19 +808,19 @@ class _LoadBar extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8;
     Offset center = Offset(size.width / 2, -size.width * 0.3);
-    canvas.drawCircle(center, size.width*1.1,painter..color = Color(0xfff3f1de)
+    canvas.drawCircle(center, size.width*1.05,painter..color = Color(0xfff3f1de)
       ..style = PaintingStyle.fill );
-    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.1), 0, pi,
+    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.05), 0, pi,
         false, painter..color = Color(0xffc4c4c4)..style = PaintingStyle.stroke);
-    double pad = 0.1;
+    double pad = 0.2;
     canvas.drawArc(
-        Rect.fromCircle(center: center, radius: size.width*1.1),
+        Rect.fromCircle(center: center, radius: size.width*1.05),
         0,
         pi / 2 - pi / 6 + pad,
         false,
         painter..color = Color(0xff35258A)..style = PaintingStyle.stroke);
     canvas.drawArc(
-        Rect.fromCircle(center: center, radius: size.width*1.1),
+        Rect.fromCircle(center: center, radius: size.width*1.05),
         pi / 2 - pi / 6 + pad,
         (2 * pi / 6 - 2 * pad) * percent,
         false,
