@@ -83,38 +83,35 @@ class _thought1_state extends State<thought1_1> {
               margin: EdgeInsets.all(30),
             ),
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Container(
-              child: FlatButton(
-                color: Colors.transparent,
-                onPressed: () {},
-                child: new IconTheme(
-                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                  child: new Icon(Icons.menu),
-                ),
-              ),
-              margin: EdgeInsets.all(30),
-            ),
-          ),
+
           Column(
             children: [
               Container(
                 height: 40,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "זיהוי מחשבות",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontFamily: "Assistant",
-                      fontWeight: FontWeight.w700,
+                  FlatButton(
+                    color: Colors.transparent,
+                    onPressed: () {},
+                    child: new IconTheme(
+                      data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                      child: new Icon(Icons.menu),
                     ),
                   ),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "    זיהוי מחשבות",
+                      //textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontFamily: "Assistant",
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),),
+
                 ],
               ),
               Container(

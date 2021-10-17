@@ -155,38 +155,35 @@ class _feeling1_state extends State<feeling1_1> {
                 margin: EdgeInsets.all(30),
               ),
             ),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                child: FlatButton(
-                  color: Colors.transparent,
-                  onPressed: () {},
-                  child: new IconTheme(
-                    data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                    child: new Icon(Icons.menu),
-                  ),
-                ),
-                margin: EdgeInsets.all(30),
-              ),
-            ),
+
             Column(
               children: [
                 Container(
                   height: 40,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "זיהוי רגש",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontFamily: "Assistant",
-                        fontWeight: FontWeight.w700,
+                    FlatButton(
+                      color: Colors.transparent,
+                      onPressed: () {},
+                      child: new IconTheme(
+                        data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                        child: new Icon(Icons.menu),
                       ),
                     ),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: Text(
+                        "           זיהוי רגש",
+                        //textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontFamily: "Assistant",
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),),
+
                   ],
                 ),
                 Container(
@@ -375,17 +372,19 @@ class _feeling1_state extends State<feeling1_1> {
                 Container(
                   width: 30340304,
                     margin: EdgeInsets.only(left: 40, right: 40, bottom: 20),
+
                     child: SliderTheme(
                         data: SliderThemeData(
-                          //thumbColor: Color(0xffFFFFFF).withOpacity(0.8),
+                          thumbColor: Color(0xffFFFFFF).withOpacity(0.8),
                           //thumbColor: Colors.black,
+                          activeTrackColor: _getColor(),
 
 
                         ),
 
 
                         child: Slider(
-                      activeColor: _getColor(),
+                      //activeColor: _getColor(),
                       //thumbColor: Colors.grey,
                       value: pointer,
                       min: 0,
