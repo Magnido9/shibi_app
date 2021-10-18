@@ -280,7 +280,7 @@ class _feeling1_state extends State<feeling1_1> {
                                     style: GoogleFonts.assistant(
                                       color: Colors.black,
                                       fontSize: 18,
-                                    ),
+                                    ),//2
                                     children: <TextSpan>[
                                       //
                                       TextSpan(

@@ -485,25 +485,7 @@ class _thought2_state extends State<thought2_1> {
               right:width*0.08
           ),
 
-          Positioned(
-              top: -height,
-              left: -width * 0.5,
-              child: Container(
-                width: width * 2,
-                height: width * 2,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.9),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    )
-                  ],
-                  shape: BoxShape.circle,
-                  color: Color(0xffF3F1DE),
-                ),
-              )),
+         
           Align(
             alignment: Alignment.topRight,
             child: Container(

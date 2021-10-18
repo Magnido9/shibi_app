@@ -20,7 +20,7 @@ class _LoadBar extends CustomPainter {
   _LoadBar({
     required this.percent,
     required this.size,
-  });
+  });//1
   @override
   void paint(Canvas canvas, Size size) {
     var painter = Paint()

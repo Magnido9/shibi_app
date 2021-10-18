@@ -595,7 +595,7 @@ class _MainState extends State<_Main> {
                   width: 26,
                   height: 26,
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
+                    shape: BoxShape.circle,//3
                     color: Color(0xffc4c4c4),
                   ),
                 ),
