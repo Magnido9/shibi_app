@@ -427,11 +427,14 @@ class _Page2State extends State<_Page2> {
                     x.hands = 'images/handsopen.png';
                   // if(feeling<50 ) x= x.clone()..hands='images/handsdown.png';
 
-                  return Flexible(
+                  return Container(
+                    height:308,
+                    width:210,child:Flexible(
                     flex: 1,
-                    child: AvatarStack(data: x),
+                    child:AvatarStack(data: x),
+          fit: FlexFit.tight,
                     // child: AvatarStack(data: AvatarData()),
-                  );
+                  ));
                 },
               ),
               Container(
@@ -445,6 +448,10 @@ class _Page2State extends State<_Page2> {
                     inactiveTrackColor: Color(0xffececec),
                     activeTrackColor: Color(0xffececec),
                       thumbRadius: 20,
+                    activeDividerRadius: 0,
+                    activeDividerStrokeWidth: 0,
+                    thumbStrokeWidth: 0,
+
                   ),
                   child: SfSlider(
 
