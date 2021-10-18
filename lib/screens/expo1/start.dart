@@ -17,6 +17,7 @@ import 'thoughts.dart';
 import 'dart:ui';
 import 'dart:math';
 import 'dart:async';
+import '../expo1/ToolsChoosing.dart';
 
 class Expo1 extends StatelessWidget {
   Expo1({required this.adata, required this.theCase});
@@ -94,6 +95,7 @@ class _Page1State extends State<_Page1> {
               margin: EdgeInsets.all(30),
             ),
           ),
+
 
 
           Column(
@@ -557,6 +559,31 @@ class _MainState extends State<_Main> {
           margin: EdgeInsets.all(30),
         ),
       ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color(0xff35258a),
+                      shape: CircleBorder(),
+                    ),
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) =>_ToolsPage()));
+                    },
+                  ),
+                  margin: EdgeInsets.all(8),
+                ),
+              ],
+            ),
+          ),
 
       Column(
         children: [
