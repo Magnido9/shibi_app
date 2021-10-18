@@ -485,7 +485,7 @@ class _thought2_state extends State<thought2_1> {
               right:width*0.08
           ),
 
-         
+
           Align(
             alignment: Alignment.topRight,
             child: Container(
