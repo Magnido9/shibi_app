@@ -28,20 +28,6 @@ class thought1_1 extends StatefulWidget {
 class _thought1_state extends State<thought1_1> {
   UI.Image? image;
 
-  @override
-  void initState() {
-    super.initState();
-
-    loadImage('images/expo/brain.jpg');
-  }
-
-  Future loadImage(String path) async {
-    final data = await rootBundle.load(path);
-    final bytes = data.buffer.asUint8List();
-    final image = await decodeImageFromList(bytes);
-
-    setState(() => this.image = image);
-  }
 
   double feeling = 50;
   List<int> chosen = [];

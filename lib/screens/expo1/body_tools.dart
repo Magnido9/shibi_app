@@ -17,16 +17,15 @@ import 'thoughts.dart';
 import 'dart:ui';
 import 'dart:math';
 import 'dart:async';
-import 'ToolsChoosing.dart';
 
-class Expo1 extends StatelessWidget {
-  Expo1({required this.adata, required this.theCase});
+class BodyTools extends StatelessWidget {
+  BodyTools({required this.adata, required this.theCase});
   final AvatarData adata;
   final String theCase;
   @override
   Widget build(BuildContext context) {
     return Provider(
-      create: (context,) => ExpoData(adata: adata, theCase: theCase, body_task: 0, feelings_task: 0, thoughts_task: 0),
+      create: (context) => ExpoData(adata: adata, theCase: theCase, body_task: 0, feelings_task: 0, thoughts_task: 0),
       child: MaterialApp(
         title: 'חשיפה 1',
         // Start the app with the "/" named route. In this case, the app starts
@@ -42,7 +41,6 @@ class Expo1 extends StatelessWidget {
           '/thoughts/2': (context) => thought2_1(),
           '/feelings/1': (context) => feeling1_1(),
           '/body/1' : (context) => body1_1() ,
-          '/tools' : (context) => tools() ,
         },
       ),
     );
@@ -75,146 +73,355 @@ class _Page1State extends State<_Page1> {
                 }),
             // color:Colors.green
           )),
-          /*Positioned(
-              left: -0.8 * MediaQuery.of(context).size.width,
-              top: -1.25 * MediaQuery.of(context).size.height,
-              child: Container(
-                  width: 0.8125 * MediaQuery.of(context).size.height * 2,
-                  height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xffdee8f3)))),*/
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              child: FloatingActionButton(
-                elevation: 0,
-                disabledElevation: 0,
-                backgroundColor: Colors.grey.shade400,
-                onPressed: () {},
-                child: Icon(Icons.arrow_forward),
-              ),
-              margin: EdgeInsets.all(30),
-            ),
+
+
+      Align(
+        alignment: Alignment.topRight,
+        child: Container(
+          child: FloatingActionButton(
+            elevation: 0,
+            disabledElevation: 0,
+            backgroundColor: Colors.grey.shade400,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Icon(Icons.arrow_forward),
           ),
+          margin: EdgeInsets.all(30),
+        ),
+      ),
 
-
-
-          Column(
-            children: [
-              Container(
-                height: 40,
-              ),
-              Row(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlatButton(
-                    color: Colors.transparent,
-                    onPressed: () {},
-                    child: new IconTheme(
-                      data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                      child: new Icon(Icons.menu),
-                    ),
+      Column(
+          children: [
+            Container(
+              height: 40,
+            ),
+            Row(
+              children: [
+                FlatButton(
+                  color: Colors.transparent,
+                  onPressed: () {},
+                  child: new IconTheme(
+                    data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                    child: new Icon(Icons.menu),
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
                   child: Text(
-                    "    חשיפה ראשונה",
+                    "           הרפיית גוף",
                     //textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: GoogleFonts.assistant(
                       color: Colors.black,
                       fontSize: 24,
-                      fontFamily: "Assistant",
                       fontWeight: FontWeight.w700,
                     ),
                   ),),
 
-                ],
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                      margin: EdgeInsets.all(20),
-                      child: Text(
-                        "?מה עליי לבצע",
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ))
-                ],
-              ),
-              Container(
-                padding: EdgeInsets.all(30),
-                width: width * 0.9,
-                height: height * 0.3,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Color(0xccebebeb),
+              ],
+            )
+    ]),
+      Positioned(
+          right:10,
+          left:10,
+          top:height*0.25,child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      '?',
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                  ),
+                  width: 26,
+                  height: 26,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,//3
+                    color: Color(0xffc4c4c4),
+                  ),
                 ),
-                child: SingleChildScrollView(
+                onTap: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                        child:
+                        AlertDialog(
+                          backgroundColor: Color(0xffECECEC),
+                          content: RichText(
+                            textDirection: TextDirection.rtl,
+                            text: TextSpan(
+                              style: GoogleFonts.assistant(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                              children: <TextSpan>[
+                                //
+                                TextSpan(
+                                    text:
+                                    'עוד לא הוכנס מלל.\n'),
+
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text(
+                                'x',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          ],
+                        ),),
+                ),
+              ),
+              Container(
+                  width:40
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 20, left: 20, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "בחרו בהרפיה אותה תרצו לבצע",
+                      textDirection: TextDirection.rtl,
+                      textAlign: TextAlign.right,
+                      style: GoogleFonts.assistant(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+
+                  ],
+                ),
+              ),
+              Container(
+                  width:20
+              ),
+            ],
+          )),
+          Positioned(
+      right:20,
+          left:20,
+          top:height*0.35,
+            child:Container(
+          width: 362,
+          height: 258,
+          child: Stack(
+            children:[Positioned.fill(
+              child: Align(
+                alignment: Alignment.topLeft,
+                child:
+                GestureDetector(
+                  onTap: (){
+                    Navigator.pushNamed(context, '/second');
+                  },
+                    child:Container(
+                  width: 173,
+                  height: 118,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Color(0xffe0cbdd),
+                  ),
+                  padding: const EdgeInsets.only(top: 37, bottom: 32, ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children:[
+                      SizedBox(
+                        width: 169,
+                        height: 23,
+                        child: Text(
+                          "הרפיית שרירים",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.assistant(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 7),
+                      SizedBox(
+                        width: 173,
+                        height: 19,
+                        child: Text(
+                          "3 דקות",
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.assistant(
+                          color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )),
+              ),
+            ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    width: 173,
+                    height: 118,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0xffdeeef3),
+                    ),
+                    padding: const EdgeInsets.only(top: 67, bottom: 32, ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children:[
+                        SizedBox(
+                          width: 173,
+                          height: 19,
+                          child: Text(
+                            "2 דקות",
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Container(
+                    width: 173,
+                    height: 118,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0x42cfc780),
+                    ),
+                    padding: const EdgeInsets.only(top: 39, bottom: 30, ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children:[
+                        SizedBox(
+                          width: 169,
+                          height: 23,
+                          child: Text(
+                            "דמיון מודרך",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.assistant(
+
+                            color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 7),
+                        SizedBox(
+                          width: 173,
+                          height: 19,
+                          child: Text(
+                            "7 דקות",
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned.fill(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    width: 173,
+                    height: 118,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0x428f52cc),
+                    ),
+                    padding: const EdgeInsets.only(top: 67, bottom: 32, ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children:[
+                        SizedBox(
+                          width: 173,
+                          height: 19,
+                          child: Text(
+                            "10 דקות",
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 188,
+                top: 37,
+                child: SizedBox(
+                  width: 174,
+                  height: 23,
                   child: Text(
-                    Provider.of<ExpoData>(context, listen: false).theCase,
-                    textAlign: TextAlign.right,
-                    textDirection: TextDirection.rtl,
+                    "תרגילי נשימה",
+                    textAlign: TextAlign.center,
                     style: GoogleFonts.assistant(
-                      color: Color(0xff6f6ca7),
+                      color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
               ),
-              Container(
-                  margin: EdgeInsets.all(40),
-                  child: Stack(children: [
-                    Container(
-                        width: 200,
-                        height: 39,
-                        child: MaterialButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/second');
-                            },
-                            minWidth: 200,
-                            height: 39,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(36)),
-                            color: Color(0xff35258a),
-                            child: Stack(children: <Widget>[
-                              Positioned(
-                                top: 5,
-                                right: 25,
-                                child: Text(
-                                  "בואו נתחיל!",
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.left,
-                                  style: GoogleFonts.assistant(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              )
-                            ]))),
-                    Positioned(
-                        top: 5,
-                        right: 165,
-                        child: Container(
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(36),
-                              border: Border.all(color: Colors.white, width: 9),
-                            ))),
-                  ]))
-            ],
-          )
-        ],
+              Positioned(
+                left: 188,
+                top: 177,
+                child: SizedBox(
+                  width: 174,
+                  height: 23,
+                  child: Text(
+                    "מדיטציה",
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.assistant(
+
+                    color: Colors.black,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),],
+          ),
+        ))
+            ]
       ),
     );
   }
@@ -560,30 +767,6 @@ class _MainState extends State<_Main> {
           margin: EdgeInsets.all(30),
         ),
       ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xff35258a),
-                      shape: CircleBorder(),
-                    ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed( context,'/tools');
-                    },
-                  ),
-                  margin: EdgeInsets.all(8),
-                ),
-              ],
-            ),
-          ),
 
       Column(
         children: [
@@ -1063,7 +1246,7 @@ class _LoadBar extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8;
     Offset center = Offset(size.width / 2, -size.width * 0.3);
-    canvas.drawCircle(center, size.width*1.05,painter..color = Color(0xffdee8f3)
+    canvas.drawCircle(center, size.width*1.05,painter..color = Color(0xffdef3df)
       ..style = PaintingStyle.fill );
     canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.05), 0, pi,
         false, painter..color = Color(0xffc4c4c4)..style = PaintingStyle.stroke);

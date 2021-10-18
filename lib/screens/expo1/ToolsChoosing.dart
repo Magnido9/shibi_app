@@ -2,32 +2,19 @@ library expo;
 import 'package:tuple/tuple.dart';
 
 import 'package:application/screens/Avatar/avatar.dart';
-import 'package:application/screens/login/homescreen.dart';
-import 'package:application/screens/login/password.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-import 'body.dart';
-import 'feelings.dart';
-import 'thoughts.dart';
 import 'dart:ui';
 import 'dart:math';
-import 'dart:async';
+class tools extends StatefulWidget {
+  tools();
 
-
-
-
-
-class _ToolsPage extends StatefulWidget {
   @override
-  _ToolsPageState createState() => _ToolsPageState();
+  _tools_state createState() => _tools_state();
 }
 
-class _ToolsPageState extends State<_ToolsPage> {
+class _tools_state extends State<tools> {
   int choose = -1;
   @override
   Widget build(BuildContext context) {
