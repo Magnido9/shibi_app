@@ -476,28 +476,38 @@ class _Page2State extends State<_Page2> {
                 ),
 
               ),*/
+              Container(
+                height: 20,
+              ),
+            ],
+          ),    Positioned(
+              top: height*0.92,
+              right: width*0.8,
+
+              child:
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0xff35258a),
                       shape: CircleBorder(),
+                      fixedSize: Size(
+                          55,
+                          55
+                      ),
                     ),
                     child: Icon(
                       Icons.arrow_back,
+                      size: 40,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/main');
-                    },
+                    onPressed:   ()   {Navigator.pushNamed(context, '/main');}
+                    ,
                   )
                 ],
-              ),
-              Container(
-                height: 20,
-              ),
-            ],
-          )
+              )
+          ),
         ],
       ),
     );
