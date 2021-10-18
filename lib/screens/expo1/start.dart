@@ -15,6 +15,8 @@ import 'body.dart';
 import 'feelings.dart';
 import 'thoughts.dart';
 import 'dart:ui';
+import 'dart:math';
+import 'dart:async';
 
 class Expo1 extends StatelessWidget {
   Expo1({required this.adata, required this.theCase});
@@ -58,6 +60,19 @@ class _Page1State extends State<_Page1> {
     return Scaffold(
       body: Stack(
         children: [
+          Positioned(top:-150,child:
+          Container(
+            child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: 0.7),
+                duration: Duration(seconds: 1),
+                builder:
+                    (BuildContext context, double percent, Widget? child) {
+                  return CustomPaint(
+                      painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
+                      size: MediaQuery.of(context).size);
+                }),
+            // color:Colors.green
+          )),
           /*Positioned(
               left: -0.8 * MediaQuery.of(context).size.width,
               top: -1.25 * MediaQuery.of(context).size.height,
@@ -70,6 +85,8 @@ class _Page1State extends State<_Page1> {
             alignment: Alignment.topRight,
             child: Container(
               child: FloatingActionButton(
+                elevation: 0,
+                disabledElevation: 0,
                 backgroundColor: Colors.grey.shade400,
                 onPressed: () {},
                 child: Icon(Icons.arrow_forward),
@@ -78,25 +95,7 @@ class _Page1State extends State<_Page1> {
             ),
           ),
 
-          Positioned(
-              top: -height,
-              left: -width * 0.5,
-              child: Container(
-                width: width * 2,
-                height: width * 2,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.9),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    )
-                  ],
-                  shape: BoxShape.circle,
-                  color: Color(0xffdee8f3),
-                ),
-              )),
+
           Column(
             children: [
               Container(
@@ -139,10 +138,9 @@ class _Page1State extends State<_Page1> {
                       child: Text(
                         "?מה עליי לבצע",
                         textAlign: TextAlign.right,
-                        style: TextStyle(
+                        style: GoogleFonts.assistant(
                           color: Colors.black,
                           fontSize: 20,
-                          fontFamily: "Assistant",
                           fontWeight: FontWeight.w700,
                         ),
                       ))
@@ -161,10 +159,9 @@ class _Page1State extends State<_Page1> {
                     Provider.of<ExpoData>(context, listen: false).theCase,
                     textAlign: TextAlign.right,
                     textDirection: TextDirection.rtl,
-                    style: TextStyle(
+                    style: GoogleFonts.assistant(
                       color: Color(0xff6f6ca7),
                       fontSize: 20,
-                      fontFamily: "Assistant",
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -234,7 +231,19 @@ class _Page2State extends State<_Page2> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
-        children: [
+        children: [  Positioned(top:-150,child:
+        Container(
+          child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0, end: 0.7),
+              duration: Duration(seconds: 1),
+              builder:
+                  (BuildContext context, double percent, Widget? child) {
+                return CustomPaint(
+                    painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
+                    size: MediaQuery.of(context).size);
+              }),
+          // color:Colors.green
+        )),
           Positioned(
               top: -height,
               left: -width * 0.5,
@@ -258,6 +267,8 @@ class _Page2State extends State<_Page2> {
             alignment: Alignment.topRight,
             child: Container(
               child: FloatingActionButton(
+                elevation: 0,
+                disabledElevation: 0,
                 backgroundColor: Colors.grey.shade400,
                 onPressed: () {
                   Navigator.pop(context);
@@ -286,12 +297,11 @@ class _Page2State extends State<_Page2> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "       דיווח ראשון",
+                      "           דיווח ראשון",
                       //textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.assistant(
                         color: Colors.black,
                         fontSize: 24,
-                        fontFamily: "Assistant",
                         fontWeight: FontWeight.w700,
                       ),
                     ),),
@@ -331,7 +341,7 @@ class _Page2State extends State<_Page2> {
                         content: RichText(
                           textDirection: TextDirection.rtl,
                           text: TextSpan(
-                            style: TextStyle(
+                            style: GoogleFonts.assistant(
                               color: Colors.black,
                               fontSize: 18,
                             ),
@@ -342,13 +352,13 @@ class _Page2State extends State<_Page2> {
                                       'עלייך לדרג מ-0 עד 100 יחידות מצוקה.\n'),
                               TextSpan(
                                   text: '0 - ',
-                                  style: TextStyle(
+                                  style: GoogleFonts.assistant(
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xff35258A))),
                               TextSpan(text: 'המצב לא מעורר חרדה.\n'),
                               TextSpan(
                                   text: '50 - ',
-                                  style: TextStyle(
+                                  style: GoogleFonts.assistant(
                                       fontWeight: FontWeight.bold,
                                       color: Color(0xff35258A))),
                               TextSpan(
@@ -386,10 +396,9 @@ class _Page2State extends State<_Page2> {
                           "עד כמה את מרגישה לחץ או חרדה?",
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: GoogleFonts.assistant(
                             color: Colors.black,
                             fontSize: 20,
-                            fontFamily: "Assistant",
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -399,7 +408,7 @@ class _Page2State extends State<_Page2> {
                         Text(
                           "דרגי את המשימה בהתאם",
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: GoogleFonts.assistant(
                             color: Colors.black,
                             fontSize: 18,
                           ),
@@ -438,11 +447,11 @@ class _Page2State extends State<_Page2> {
                       thumbRadius: 11,
                   ),
                   child: SfSlider(
+
                     thumbIcon: Text(
                         '${feeling.round()}',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontFamily: 'Assistant',
+                      style: GoogleFonts.assistant(
                         fontSize: 16,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -452,6 +461,7 @@ class _Page2State extends State<_Page2> {
                     min: 0,
                     max: 100,
                     showLabels: true,
+                    la
                     onChanged: (dynamic value) {
                       setState(() {
                         feeling = value;
@@ -518,31 +528,26 @@ class _MainState extends State<_Main> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        body: Stack(  children: [
+        body: Stack(  children: [  Positioned(top:-150,child:
+        Container(
+          child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(begin: 0, end: 0.7),
+              duration: Duration(seconds: 1),
+              builder:
+                  (BuildContext context, double percent, Widget? child) {
+                return CustomPaint(
+                    painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
+                    size: MediaQuery.of(context).size);
+              }),
+          // color:Colors.green
+        )),
 
-      Positioned(
-          top: -height,
-          left: -width * 0.5,
-          child: Container(
-            width: width * 2,
-            height: width * 2,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.9),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
-                )
-              ],
-              shape: BoxShape.circle,
-              color: Color(0xffdee8f3),
-            ),
-          )),
       Align(
         alignment: Alignment.topRight,
         child: Container(
           child: FloatingActionButton(
+            elevation: 0,
+            disabledElevation: 0,
             backgroundColor: Colors.grey.shade400,
             onPressed: () {
               Navigator.pop(context);
@@ -573,10 +578,9 @@ class _MainState extends State<_Main> {
                 child: Text(
                   "             זיהוי",
                   //textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: GoogleFonts.assistant(
                     color: Colors.black,
                     fontSize: 24,
-                    fontFamily: "Assistant",
                     fontWeight: FontWeight.w700,
                   ),
                 ),),
@@ -632,10 +636,9 @@ class _MainState extends State<_Main> {
                       "בואי נזהה יחד את החרדה",
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.right,
-                      style: TextStyle(
+                      style: GoogleFonts.assistant(
                         color: Colors.black,
                         fontSize: 20,
-                        fontFamily: "Assistant",
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -645,7 +648,7 @@ class _MainState extends State<_Main> {
                     Text(
                       "בחרי עם איזה זיהוי להתחיל",
                       textAlign: TextAlign.right,
-                      style: TextStyle(
+                      style: GoogleFonts.assistant(
                         color: Colors.black,
                         fontSize: 18,
                       ),
@@ -965,4 +968,94 @@ class ExpoData {
 
   List<String> painSpots=[];
   AvatarData adata;
+}
+
+class _LoadBar extends CustomPainter {
+  final double percent;
+  final Size size;
+
+  _LoadBar({
+    required this.percent,
+    required this.size,
+  });
+  @override
+  void paint(Canvas canvas, Size size) {
+    var painter = Paint()
+      ..color = Colors.grey
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8;
+    Offset center = Offset(size.width / 2, -size.width * 0.3);
+    canvas.drawCircle(center, size.width*1.05,painter..color = Color(0xffdee8f3)
+      ..style = PaintingStyle.fill );
+    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.05), 0, pi,
+        false, painter..color = Color(0xffc4c4c4)..style = PaintingStyle.stroke);
+    double pad = 0.2;
+
+    Offset off1 = center +
+        Offset(-sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
+    painter
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 2;
+    Offset off2 = center +//
+        Offset(sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
+    painter
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 2;
+  }
+
+  @override
+  bool shouldRepaint(_LoadBar oldDelegate) {
+    return percent != oldDelegate.percent;
+  }
+}
+class _PaintTask extends CustomPainter {
+  final int slices, complete;
+
+  _PaintTask({required this.slices, required this.complete});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double sw = 7;
+    var painter = Paint()
+      ..color = Color(0xFFC4C4C4)
+    // ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = sw;
+    Offset c = Offset(size.height / 2, size.width / 2);
+    double radius = size.height / 2;
+    canvas.drawCircle(c, radius, painter);
+    canvas.drawArc(Rect.fromCircle(center: c, radius: radius), -pi / 2,
+        2 * pi * complete / slices, false, painter..color = Colors.green);
+
+    if (slices > 1 && slices < 21) {
+      for (int i = 0; i < slices; i++) {
+        var painter2 = Paint()
+          ..color = Colors.black
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2;
+
+        double phea = 2 * pi * i / slices - pi / 2;
+        Offset start = c +
+            Offset(
+                (radius - sw / 2) * cos(phea), (radius - sw / 2) * sin(phea));
+        Offset end = c +
+            Offset(
+                (radius + sw / 2) * cos(phea), (radius + sw / 2) * sin(phea));
+        canvas.drawLine(start, end, painter2);
+      }
+    }
+    canvas.drawCircle(
+        Offset(size.height / 2, size.width / 2),
+        radius * 0.85,
+        painter
+          ..style = PaintingStyle.fill
+          ..color = Color(0xFFEBE9D6));
+  }
+
+  @override
+  bool shouldRepaint(_PaintTask oldDelegate) {
+    return (slices != oldDelegate.slices) || (complete != oldDelegate.complete);
+  }
 }

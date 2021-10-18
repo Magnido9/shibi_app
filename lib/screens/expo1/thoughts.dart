@@ -53,26 +53,6 @@ class _thought1_state extends State<thought1_1> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-              top: -height,
-              left: -width * 0.5,
-              child: Container(
-                width: width * 2,
-                height: width * 2,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.9),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    )
-                  ],
-                  shape: BoxShape.circle,
-                  color: Color(0xffF3F1DE),
-                  //color: Colors.yellow,
-                ),
-              )),
           Positioned(top:-150,child:
           Container(
             child: TweenAnimationBuilder<double>(
@@ -195,7 +175,7 @@ class _thought1_state extends State<thought1_1> {
                     ),
                   ),
                   Container(
-                    width: width * 0.8,
+                    width: width * 0.78,
                     margin: EdgeInsets.only(right: 20, left: 20, bottom: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -204,10 +184,9 @@ class _thought1_state extends State<thought1_1> {
                           "בואי נזהה מחשבות מכשילות!",
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: GoogleFonts.assistant(
                             color: Colors.black,
                             fontSize: 20,
-                            fontFamily: "Assistant",
                             fontWeight: FontWeight.w700,
                           ),
                         ),
@@ -218,7 +197,7 @@ class _thought1_state extends State<thought1_1> {
                           "בחרי ב-3 בלוני מחשבה אותם תרצי לאתגר.\n\nאתגור המחשבה יסיע להרגיע  את החרדה בכדי שתצליחי לבצע את החשיפה בהצלחה.",
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: GoogleFonts.assistant(
                             color: Colors.black,
                             fontSize: 18,
                           ),
