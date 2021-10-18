@@ -70,7 +70,7 @@ class _Page1State extends State<_Page1> {
                 builder:
                     (BuildContext context, double percent, Widget? child) {
                   return CustomPaint(
-                      painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
+                      painter: _LoadBar(percent: 0.5, size: MediaQuery.of(context).size),
                       size: MediaQuery.of(context).size);
                 }),
             // color:Colors.green
@@ -123,6 +123,24 @@ class _Page1State extends State<_Page1> {
               ],
             )
     ]),
+          Positioned(
+            top:125,
+            left: 170,
+            child:
+            Container(
+              padding: EdgeInsets.all(5),
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Image.asset('images/expo/meditate.png',
+                    color: Color(0xffB3E8EF)),
+              ),
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xff35258A),
+              ),
+            ),
+          ),
       Positioned(
           right:10,
           left:10,
@@ -489,7 +507,7 @@ class _Page2State extends State<_Page2> {
               builder:
                   (BuildContext context, double percent, Widget? child) {
                 return CustomPaint(
-                    painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
+                    painter: _LoadBar(percent: -1, size: MediaQuery.of(context).size),
                     size: MediaQuery.of(context).size);
               }),
           // color:Colors.green
@@ -1196,11 +1214,33 @@ class _LoadBar extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8;
     Offset center = Offset(size.width / 2, -size.width * 0.3);
+
     canvas.drawCircle(center, size.width*1.05,painter..color = Color(0xffdef3df)
       ..style = PaintingStyle.fill );
-    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.05), 0, pi,
+    if (percent != -1)
+      canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.05), 0, pi,
         false, painter..color = Color(0xffc4c4c4)..style = PaintingStyle.stroke);
+    else
+      canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.05), 0, pi,
+          false, painter..color = Color(0xffDEF3DF)..style = PaintingStyle.stroke);
+
     double pad = 0.2;
+    if (percent != -1)
+
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: size.width*1.05),
+        0,
+        pi / 2 - pi / 6 + pad,
+        false,
+        painter..color = Color(0xff35258A)..style = PaintingStyle.stroke);
+    if (percent != -1)
+
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: size.width*1.05),
+        pi / 2 - pi / 6 + pad,
+        (2 * pi / 6 - 2 * pad) * percent,
+        false,
+        painter..color = Color(0xff35258A));
 
     Offset off1 = center +
         Offset(-sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
