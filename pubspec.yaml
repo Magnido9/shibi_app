@@ -38,6 +38,7 @@ dependencies:
   firebase_storage: ^8.0.0
   firebase_auth: ^1.0.1
   google_fonts: any
+  audioplayers:
   provider: ^5.0.0
   http: ^0.13.0
   shared_preferences: ^2.0.4
@@ -126,6 +127,7 @@ flutter:
     - images/expo/smile.jpg
     - images/expo/meditate.jpg
     - images/expo/baloon.jpg
+    - images/meditate1.png
 
     - music/meditation.mp3
   uses-material-design: true

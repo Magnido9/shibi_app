@@ -1,4 +1,6 @@
 library expo;
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:tuple/tuple.dart';
 
 import 'package:application/screens/Avatar/avatar.dart';
@@ -434,7 +436,45 @@ class _Page2 extends StatefulWidget {
 
 class _Page2State extends State<_Page2> {
   double feeling = 50;
+  AudioPlayer music=AudioPlayer();
+  Duration _position = new Duration();
+  Timer? timer;
+  Duration duration = Duration();
+  int length=60*12+17;
 
+  @override
+  void dispose() {
+    super.dispose();
+    timer?.cancel();
+  }
+
+  void reset() {
+      setState(() => duration = Duration());
+
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) => addTime());
+  }
+
+  void addTime() {
+    setState(() {
+      final seconds = duration.inSeconds + 1;
+      if (seconds >=length) {
+          stopTimer(resets:true);
+      } else {
+        duration = Duration(seconds: seconds);
+      }
+    });
+  }
+
+  void stopTimer({bool resets = false}) {
+    if (resets) {
+      reset();
+    }
+    setState(() => timer?.cancel());
+  }
+  bool playing=false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -463,6 +503,7 @@ class _Page2State extends State<_Page2> {
                 disabledElevation: 0,
                 backgroundColor: Colors.grey.shade400,
                 onPressed: () {
+                  timer?.cancel();
                   Navigator.pop(context);
                 },
                 child: Icon(Icons.arrow_forward),
@@ -489,7 +530,7 @@ class _Page2State extends State<_Page2> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "           דיווח ראשון",
+                      "        הרפיית שרירים",
                       //textAlign: TextAlign.center,
                       style: GoogleFonts.assistant(
                         color: Colors.black,
@@ -503,224 +544,133 @@ class _Page2State extends State<_Page2> {
               Container(
                 height: MediaQuery.of(context).size.height * 0.15,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    child: Container(
-                      child: Center(
-                        child: Text(
-                          '?',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ),
-                      width: 26,
-                      height: 26,
+            Container(
+                width: 358,
+                height: 255,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children:[
+                    Container(
+                      width: 358,
+                      height: 255,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Color(0xffc4c4c4),
-                      ),
-                    ),
-                    onTap: () =>
-                        showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                            child:
-                          AlertDialog(
-                            backgroundColor: Color(0xffECECEC),
-                        content: RichText(
-                          textDirection: TextDirection.rtl,
-                          text: TextSpan(
-                            style: GoogleFonts.assistant(
-                              color: Colors.black,
-                              fontSize: 18,
-                            ),
-                            children: <TextSpan>[
-                              //
-                              TextSpan(
-                                  text:
-                                      'עלייך לדרג מ-0 עד 100 יחידות מצוקה.\n'),
-                              TextSpan(
-                                  text: '0 - ',
-                                  style: GoogleFonts.assistant(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff35258A))),
-                              TextSpan(text: 'המצב לא מעורר חרדה.\n'),
-                              TextSpan(
-                                  text: '50 - ',
-                                  style: GoogleFonts.assistant(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff35258A))),
-                              TextSpan(
-                                  text:
-                                      'מצב מעורר חרדה אך, במאמץ את מרגישה שתוכלי להתמודד איתו.\n'),
-                              TextSpan(
-                                  text: '100 - ',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff35258A))),
-                              TextSpan(
-                                  text:
-                                      'המצב שבו את מדמיינת שתחווי את החרדה הגרועה ביותר שתחויי בחייך.\n'),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text(
-                              'x',
-                              style: TextStyle(fontSize: 20),
-                            ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x3f000000),
+                            blurRadius: 10,
+                            offset: Offset(0, 2),
                           ),
                         ],
-                      ),),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(right: 20, left: 20, bottom: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          "עד כמה את מרגישה לחץ או חרדה?",
-                          textDirection: TextDirection.rtl,
+                        color: Color(0xffdeeef3),
+                      ),
+                      padding: const EdgeInsets.only(left: 30, right: 31, top: 37, bottom: 25, ),
+                      child:Column(children:[
+                          Text(
+                            "לפני התחלת תרגיל הרפיית השרירים\n"
+                            "עברו למצב של שכיבה\n",
+                            textAlign: TextAlign.right,
+                            style: GoogleFonts.assistant(
+                              color: CupertinoColors.systemGrey,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+
+                        Text(" לחצו על הכפתור להתחלת התרגיל",
                           textAlign: TextAlign.right,
                           style: GoogleFonts.assistant(
-                            color: Colors.black,
                             fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                        Container(
-                          height: 5,
+
+                        //                        " לחצו על הכפתור להתחלת התרגיל",
+                          Container(height:20),
+                        Row(children:[
+                        TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color(0xff8eafc3),
+                        shape: CircleBorder(),
+                        fixedSize: Size(
+                            57,
+                            57
                         ),
-                        Text(
-                          "דרגי את המשימה בהתאם",
-                          textAlign: TextAlign.right,
-                          style: GoogleFonts.assistant(
-                            color: Colors.black,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),Container(
-                height:50),
-              Consumer<ExpoData>(
-                builder: (context, data, x) {
-                  AvatarData x = data.adata.clone();
-                  if (feeling > 50)
-                    x.hands = 'images/handsclosed.png';
-                  else
-                    x.hands = 'images/handsopen.png';
-                  // if(feeling<50 ) x= x.clone()..hands='images/handsdown.png';
-
-                  return Container(
-                    height:210,
-                    width:210,child:Flexible(
-                    flex: 1,
-                    child:AvatarStack(data: x),
-          fit: FlexFit.tight,
-                    // child: AvatarStack(data: AvatarData()),
-                  ));
-                },
-              ),
-              Container(
-                margin:
-                    EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 0),
-                child: SfSliderTheme(
-                  data: SfSliderThemeData(
-                    activeTrackHeight: 20,
-                    inactiveTrackHeight: 20,
-                    thumbColor: Color(0xffefb3e2),
-                    inactiveTrackColor: Color(0xffececec),
-                    activeTrackColor: Color(0xffececec),
-                      thumbRadius: 20,
-                    activeDividerRadius: 0,
-                    activeDividerStrokeWidth: 0,
-                    thumbStrokeWidth: 0,
-
-                  ),
-                  child: SfSlider(
-
-                    thumbIcon: Center(child:Text(
-                        '${feeling.round()}',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.assistant(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
                       ),
-                    )),
-                    value: feeling.round(),
-                    min: 0,
-                    max: 100,
-                    showLabels: true,
-                    onChanged: (dynamic value) {
-                      setState(() {
-                        feeling = value;
-                      });
-                    },
-                  ),
+                      child:playing? Icon(
+                        Icons.pause_rounded,
+                        size: 45,
+                        color: Colors.white,
+                      ):Icon(
+                        Icons.play_arrow_rounded,
+                        size: 45,
+                        color: Colors.white,
+                      )
 
+                          ,
+                      onPressed:   ()   {
+setState(() {
+  if (music.state == PlayerState.PLAYING) {
+    stopTimer();
+    music.pause();
+    playing=false;
+  }
+  else if (music.state == PlayerState.PAUSED) {
+    startTimer();
+    music.resume();
+    playing=true;
+  }
+  else if (music.state == PlayerState.STOPPED) {
+    startTimer();
+    music.play(
+        'https://v3-fastupload.s3-accelerate.amazonaws.com/1634553458-m.mp3?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASQBHBZCRVR4NVFHK%2F20211018%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20211018T103751Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=144428c197c9417f46348a691ade244fb61183710667355ecf64987f3aae19fe');
+  playing=true;
+  }
+  else {
+    startTimer();
+    music.play(
+        'https://v3-fastupload.s3-accelerate.amazonaws.com/1634553458-m.mp3?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIASQBHBZCRVR4NVFHK%2F20211018%2Fap-southeast-1%2Fs3%2Faws4_request&X-Amz-Date=20211018T103751Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=144428c197c9417f46348a691ade244fb61183710667355ecf64987f3aae19fe');
+  playing=true;
+  }
+});          }
 
-                ),
-              ),
-              /*Container(
-                child: Text
-                  (
-                  "0                                                   100",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontFamily: "Assistant",
-                    //fontWeight: FontWeight.w700,
-                  ),
-                ),
-
-              ),*/
-              Container(
-                height: 20,
-              ),
-            ],
-          ),    Positioned(
-              top: height*0.92,
-              right: width*0.8,
-
-              child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xff35258a),
-                      shape: CircleBorder(),
-                      fixedSize: Size(
-                          55,
-                          55
-                      ),
+                      ,
                     ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                    onPressed:   ()   {Navigator.pushNamed(context, '/main');}
-                    ,
-                  )
-                ],
-              )
-          ),
+                          Container(width:230,child:
+                          SliderTheme(
+                              child:Slider(
+                              value: duration.inSeconds.toDouble(),
+                              min: 0.0,
+                              max: 12*60+17,
+
+                              onChanged: (double value) {
+                                setState(() {
+                                  value = value;
+                                  print(value);
+                                });})
+                              ,data:SliderTheme.of(context).copyWith(
+
+                              inactiveTrackColor: Color(0xffc1c1c1) ,
+                              activeTrackColor: Color(0xff6c92a7),
+                              overlayColor: Color(0xff6c92a7),
+                              trackHeight: 2,
+                              thumbColor: Colors.transparent,
+                              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0.0)),
+                          ),)
+
+                        ])
+                        ])
+
+              ),])),
         ],
       ),
-    );
+          Positioned(
+            bottom: 0,
+                child: Image.asset('images/meditate1.png')
+          )
+    ]));
   }
 }
 
