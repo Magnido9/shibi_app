@@ -583,7 +583,7 @@ class _MainState extends State<_Main> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "             זיהוי",
+                  "                 זיהוי",
                   //textAlign: TextAlign.center,
                   style: GoogleFonts.assistant(
                     color: Colors.black,
@@ -635,6 +635,9 @@ class _MainState extends State<_Main> {
                 ),
               ),
               Container(
+                width:80
+              ),
+              Container(
                 margin: EdgeInsets.only(right: 20, left: 20, bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -662,6 +665,9 @@ class _MainState extends State<_Main> {
                     ),
                   ],
                 ),
+              ),
+              Container(
+                  width:20
               ),
             ],
           ),
@@ -733,7 +739,7 @@ class _MainState extends State<_Main> {
                         offset: Offset(0, 2),
                       ),
                     ],
-                    color: Color(0xfff3f1de),
+                    color: _color(),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -766,37 +772,51 @@ class _MainState extends State<_Main> {
                     ],
                   )),
             ),
-          if (choose != -1)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Color(0xff35258a),
-                    shape: CircleBorder(),
-                  ),
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                  ),
-                  onPressed: () async {
-                    if (choose == 2) {
-                      await Navigator.pushNamed(context, '/thoughts/1');
-                    } else if (choose == 0) {
-                      await Navigator.pushNamed(context, '/body/1');
-                    } else if (choose == 1) {
-                      await Navigator.pushNamed(context, '/feelings/1');
-                    }
-                    setState(() {
-                      choose = -1;
-                    });
-                  },
-                )
-              ],
-            )
+
         ],
       ),
-    ]));
+    Positioned(
+      top: height*0.92,
+      right: width*0.8,
+
+      child:
+    (choose != -1)?
+      Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        TextButton(
+          style: TextButton.styleFrom(
+            backgroundColor: Color(0xff35258a),
+            shape: CircleBorder(),
+            fixedSize: Size(
+             55,
+              55
+            ),
+          ),
+          child: Icon(
+            Icons.arrow_back,
+            size: 40,
+            color: Colors.white,
+          ),
+          onPressed: () async {
+            if (choose == 2) {
+              await Navigator.pushNamed(context, '/thoughts/1');
+            } else if (choose == 0) {
+              await Navigator.pushNamed(context, '/body/1');
+            } else if (choose == 1) {
+              await Navigator.pushNamed(context, '/feelings/1');
+            }
+            setState(() {
+              choose = -1;
+            });
+          },
+        )
+      ],
+    ):Container()
+    ),
+        ])
+
+    );
   }
 
   String _title() {
@@ -813,6 +833,14 @@ class _MainState extends State<_Main> {
     if (choose == 1) return x[1].item2;
     if (choose == 2) return  x[2].item2;
     return '';
+  }
+
+  Color _color() {
+    var x = Provider.of<ExpoData>(context, listen: false).colors;
+    if (choose == 0) return  x[1];
+    if (choose == 1) return x[2];
+    if (choose == 2) return  x[0];
+    return Color(0xffefd6ee);
   }
 }
 
@@ -910,6 +938,11 @@ class ExpoData {
   }
   int body_task, feelings_task, thoughts_task;
   String theCase;
+  List<Color> colors=[
+    Color(0xfff3f1de),
+    Color(0xffdef3df),
+    Color(0xffefd6ee)
+  ];
   List<List<Tuple2<String,String>>> all_introductions=[
     [Tuple2('זיהוי גוף','חשוב שנלמד לזהות כיצד הגוף משפיע על החרדה שלנו.'  )],
     [Tuple2('זיהוי רגשות',  'הרגש הוא חלק מהותי מן החרדה שלנו......')],
