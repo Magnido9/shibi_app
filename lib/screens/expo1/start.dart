@@ -417,7 +417,8 @@ class _Page2State extends State<_Page2> {
                     ),
                   ),
                 ],
-              ),
+              ),Container(
+                height:50),
               Consumer<ExpoData>(
                 builder: (context, data, x) {
                   AvatarData x = data.adata.clone();
@@ -428,7 +429,7 @@ class _Page2State extends State<_Page2> {
                   // if(feeling<50 ) x= x.clone()..hands='images/handsdown.png';
 
                   return Container(
-                    height:308,
+                    height:210,
                     width:210,child:Flexible(
                     flex: 1,
                     child:AvatarStack(data: x),
