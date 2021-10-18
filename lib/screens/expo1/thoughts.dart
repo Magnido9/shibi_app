@@ -15,6 +15,7 @@ import 'dart:math';
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as UI;
+import 'dart:ui';
 
 import 'package:flutter/services.dart';
 class thought1_1 extends StatefulWidget {
@@ -160,18 +161,38 @@ class _thought1_state extends State<thought1_1> {
                     ),
                     onTap: () => showDialog<String>(
                       context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        content: Text('חכה שתראה את הטוסיק בחלק הגופני'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text(
-                              'x',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ],
-                      ),
+                      builder: (BuildContext context) =>
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                            child:
+                            AlertDialog(
+                              backgroundColor: Color(0xffECECEC),
+                              content: RichText(
+                                textDirection: TextDirection.rtl,
+                                text: TextSpan(
+                                  style: GoogleFonts.assistant(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  children: <TextSpan>[
+                                    //
+                                    TextSpan(
+                                        text:
+                                        'עוד לא הוכנס מלל.\n'),
+
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                                  child: const Text(
+                                    'x',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                              ],
+                            ),),
                     ),
                   ),
                   Container(

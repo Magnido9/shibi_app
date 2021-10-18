@@ -244,25 +244,7 @@ class _Page2State extends State<_Page2> {
               }),
           // color:Colors.green
         )),
-          Positioned(
-              top: -height,
-              left: -width * 0.5,
-              child: Container(
-                width: width * 2,
-                height: width * 2,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.9),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    )
-                  ],
-                  shape: BoxShape.circle,
-                  color: Color(0xffdee8f3),
-                ),
-              )),
+
           Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -338,6 +320,7 @@ class _Page2State extends State<_Page2> {
                             filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
                             child:
                           AlertDialog(
+                            backgroundColor: Color(0xffECECEC),
                         content: RichText(
                           textDirection: TextDirection.rtl,
                           text: TextSpan(
@@ -461,8 +444,8 @@ class _Page2State extends State<_Page2> {
                     min: 0,
                     max: 100,
                     showLabels: true,
-                    la
-                    onChanged: (dynamic value) {
+
+                      onChanged: (dynamic value) {
                       setState(() {
                         feeling = value;
                       });
@@ -576,7 +559,7 @@ class _MainState extends State<_Main> {
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "             זיהוי",
+                  "                  זיהוי",
                   //textAlign: TextAlign.center,
                   style: GoogleFonts.assistant(
                     color: Colors.black,
@@ -611,20 +594,38 @@ class _MainState extends State<_Main> {
                 ),
                 onTap: () => showDialog<String>(
                   context: context,
-                  builder: (BuildContext context) => BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                    child:AlertDialog(
-                    content: Text('יאללה תלחץ על משהו'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text(
-                          'x',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                    ],
-                  ),),
+                  builder: (BuildContext context) =>
+                      BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                        child:
+                        AlertDialog(
+                          backgroundColor: Color(0xffECECEC),
+                          content: RichText(
+                            textDirection: TextDirection.rtl,
+                            text: TextSpan(
+                              style: GoogleFonts.assistant(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                              children: <TextSpan>[
+                                //
+                                TextSpan(
+                                    text:
+                                    'עוד לא הוכנס מלל.\n'),
+
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text(
+                                'x',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          ],
+                        ),),
                 ),
               ),
               Container(

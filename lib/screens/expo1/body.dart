@@ -11,6 +11,61 @@ import '../../services/auth_services.dart';
 import 'package:flutter/material.dart';
 import '../Avatar/color_switch.dart';
 import 'dart:math';
+import 'dart:ui';
+
+class _LoadBar extends CustomPainter {
+  final double percent;
+  final Size size;
+
+  _LoadBar({
+    required this.percent,
+    required this.size,
+  });
+  @override
+  void paint(Canvas canvas, Size size) {
+    var painter = Paint()
+      ..color = Colors.grey
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 8;
+    Offset center = Offset(size.width / 2, -size.width * 0.3);
+    canvas.drawCircle(center, size.width*1.05,painter..color = Color(0xffDEF3DF)
+      ..style = PaintingStyle.fill );
+    canvas.drawArc(Rect.fromCircle(center: center, radius: size.width*1.05), 0, pi,
+        false, painter..color = Color(0xffc4c4c4)..style = PaintingStyle.stroke);
+    double pad = 0.2;
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: size.width*1.05),
+        0,
+        pi / 2 - pi / 6 + pad,
+        false,
+        painter..color = Color(0xff35258A)..style = PaintingStyle.stroke);
+    canvas.drawArc(
+        Rect.fromCircle(center: center, radius: size.width*1.05),
+        pi / 2 - pi / 6 + pad,
+        (2 * pi / 6 - 2 * pad) * percent,
+        false,
+        painter..color = Color(0xff35258A));
+
+    Offset off1 = center +
+        Offset(-sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
+    painter
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 2;
+    Offset off2 = center +//
+        Offset(sin(pi / 6 - pad) * size.width, cos(pi / 6 - pad) * size.width);
+    painter
+      ..color = Colors.grey
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 2;
+  }
+
+  @override
+  bool shouldRepaint(_LoadBar oldDelegate) {
+    return percent != oldDelegate.percent;
+  }
+}
+
 
 class body1_1 extends StatefulWidget {
 
@@ -27,25 +82,20 @@ class _body1_state extends State<body1_1> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-              top: -height,
-              left: -width * 0.5,
-              child: Container(
-                width: width * 2,
-                height: width * 2,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.9),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: Offset(0, 3), // changes position of shadow
-                    )
-                  ],
-                  shape: BoxShape.circle,
-                  color: Color(0xffDEF3DF),
-                ),
-              )),
+
+          Positioned(top:-150,child:
+          Container(
+            child: TweenAnimationBuilder<double>(
+                tween: Tween<double>(begin: 0, end: 0.7),
+                duration: Duration(seconds: 1),
+                builder:
+                    (BuildContext context, double percent, Widget? child) {
+                  return CustomPaint(
+                      painter: _LoadBar(percent: 0.5, size: MediaQuery.of(context).size),
+                      size: MediaQuery.of(context).size);
+                }),
+            // color:Colors.green
+          )),
           Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -59,28 +109,30 @@ class _body1_state extends State<body1_1> {
                     },
                     child: Icon(Icons.arrow_forward),
                   ),
-                  Container(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Image.asset('images/expo/meditate.png',
-                          color: Color(0xffB3E8EF)),
-                    ),
-                    width: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xff35258A),
-                    ),
-                  )
+
                 ],
               ),
               margin: EdgeInsets.all(30),
             ),
           ),
-
+          Positioned(
+            top:125,
+            left: 170,
+            child:
+            Container(
+              padding: EdgeInsets.all(5),
+              child: FittedBox(
+                fit: BoxFit.fitHeight,
+                child: Image.asset('images/expo/meditate.png',
+                    color: Color(0xffB3E8EF)),
+              ),
+              width: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xff35258A),
+              ),
+            ),
+          ),
           Column(
             children: [
               Container(
@@ -135,18 +187,38 @@ class _body1_state extends State<body1_1> {
                     ),
                     onTap: () => showDialog<String>(
                       context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        content: Text('הנה הטוסיק שהבטחתי לך'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text(
-                              'x',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ],
-                      ),
+                      builder: (BuildContext context) =>
+                          BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                            child:
+                            AlertDialog(
+                              backgroundColor: Color(0xffECECEC),
+                              content: RichText(
+                                textDirection: TextDirection.rtl,
+                                text: TextSpan(
+                                  style: GoogleFonts.assistant(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  children: <TextSpan>[
+                                    //
+                                    TextSpan(
+                                        text:
+                                        'עוד לא הוכנס מלל.\n'),
+
+                                  ],
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                                  child: const Text(
+                                    'x',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                ),
+                              ],
+                            ),),
                     ),
                   ),
                   Container(
