@@ -444,11 +444,11 @@ class _Page2State extends State<_Page2> {
                     thumbColor: Color(0xffefb3e2),
                     inactiveTrackColor: Color(0xffececec),
                     activeTrackColor: Color(0xffececec),
-                      thumbRadius: 11,
+                      thumbRadius: 20,
                   ),
                   child: SfSlider(
 
-                    thumbIcon: Text(
+                    thumbIcon: Center(child:Text(
                         '${feeling.round()}',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.assistant(
@@ -456,12 +456,11 @@ class _Page2State extends State<_Page2> {
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),
-                    ),
+                    )),
                     value: feeling.round(),
                     min: 0,
                     max: 100,
                     showLabels: true,
-                    la
                     onChanged: (dynamic value) {
                       setState(() {
                         feeling = value;
