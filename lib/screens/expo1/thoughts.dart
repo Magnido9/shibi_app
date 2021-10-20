@@ -329,6 +329,7 @@ class _thought1_state extends State<thought1_1> {
                                             // Provider.of<ExpoData>(context,
                                             //         listen: false)
                                             //     .replies = replies;
+                                            _save(data);
                                             Navigator.pushNamed(
                                                 context, '/thoughts/2',
                                                 arguments: chosen);
@@ -353,6 +354,12 @@ class _thought1_state extends State<thought1_1> {
         ],
       ),
     );
+  }
+  void _save(data) async {
+    String? pid = AuthRepository.instance().user?.uid;
+    await FirebaseFirestore.instance.collection("balloons").doc(pid).set({
+      'chosen': chosen,'replies':data.replies,'thoughts':data.thoughts
+    });
   }
 }
 
@@ -691,8 +698,8 @@ class Baloon extends StatelessWidget {
   final colors = [
     Color(0xffDEEEF3),
     Color(0xffDEEEF3),
-    Color(0xffCFC781).withOpacity(0.26),
-    Color(0xff81CF8D).withOpacity(0.26),
+    Color(0xffCFC781),
+    Color(0xff81CF8D),
   ];
 
   @override
@@ -710,6 +717,14 @@ class Baloon extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.blue)),
             ),
+          Container(
+            width: diameter,
+            height: diameter*0.93,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: colors[color % 4],
+            ),
+          ),
           Transform.rotate(
             angle: angle,
             child: ImageColorSwitcher(

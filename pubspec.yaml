@@ -46,6 +46,10 @@ dependencies:
   file_picker: ^3.0.0
   path_provider: ^2.0.1
   camera: ^0.8.0
+
+  device_apps:
+  android_intent:
+  url_launcher:
   # save_in_gallery: ^0.1.3
   image: ^3.0.8
   flutter_svg: ^0.22.0
@@ -128,6 +132,37 @@ flutter:
     - images/expo/meditate.jpg
     - images/expo/baloon.jpg
     - images/meditate1.png
+    - images/ColorSlider.png
+    - images/spotify.png
+    - images/apple-music.png
+    - images/youtube.png
+    - images/skater2.png
+    - images/skater.png
+    - images/talk.png
+    - images/cloud1.png
+    - images/cloud2.png
+    - images/needle.png
+    - images/boom1.png
+    - images/boom2.png
+    - images/Soldier1.png
+    - images/Soldier2.png
+    - images/Soldier3.png
+    - images/Soldier4.png
+    - images/Yellow_Star.png
+    - images/Blue_Star.png
+    - images/Green_Star.png
+    - images/Pink_Star.png
+    - images/thumbsup.png
+    - images/smiley.png
+    - images/human.png
+    - images/cloud.png
+    - images/talky.png
+    - images/coin.png
+    - images/staron.png
+    - images/staroff.png
+    - images/expo/ppl.png
+    - images/Shoola.png
+    - images/meditate9.png
 
     - music/meditation.mp3
   uses-material-design: true
