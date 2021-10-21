@@ -21,63 +21,123 @@ class _HomeState extends State<CareHome> {
   tiles(context,data) {
     List<Widget> list=[];
     for(int g=0;g<data.length;g++){
+
       final Map<String, dynamic> item = data[g].data();
       var b=(item['name'] !=null && item['name'] !='');
+
+      var t=  FirebaseFirestore.instance
+          .collection("users")
+          .doc(item['uid']).get();
       print(item);
       list.add( (b)?
-          Column(children:[Text(
-         "מטופל " +item['name'],
+      Column(children:[Text(
+          "מטופל " +item['name'],
           style: GoogleFonts.assistant(color: Colors.black,fontSize:20,fontWeight: FontWeight.w800)),
 
 
-          (item.keys.contains('expos'))?
-            Column(children:exposL(item)):Container(),
+        (item.keys.contains('expos'))?
+        Column(children:exposL(item)):Container(),
 
-          (item.keys.contains('expos'))?
-            MaterialButton(
-                color: Colors.blue,
-                shape: CircleBorder(),
-                onPressed: ((){
-                  var exp=[];
-                  print(expos);
-                  for(int h=0;h<expos.length;h++)
-                    exp.add(expos[h].text);
-                  print(exp);
-                  FirebaseFirestore.instance
-                      .collection("users")
-                      .doc(item['uid'])
-                      .set({'expos': exp},
-                      SetOptions(merge: true));
-                  setState((){});
-                }
-                )):Container(),
-          TextFormField(
-            controller: newExp,
-            decoration: InputDecoration(
-              hintText: "חשיפה חדשה",
-            ),
+        (item.keys.contains('expos'))?
+        MaterialButton(
+            color: Colors.blue,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36)),
+            child:Text("שינוי חשיפות"),
+            onPressed: (() async {
+              var exp=[];
+              print(expos);
+
+              var t= await FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(item['uid']).get();
+              exp=t['expos'];
+              for(int h=0;h<expos.length;h++)
+                exp[h]['expo']=expos[h].text;
+              print(exp);
+              FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(item['uid'])
+                  .set({'expos': exp},
+                  SetOptions(merge: true));
+              setState((){});
+            }
+            )):Container(),
+        TextFormField(
+          controller: newExp,
+          decoration: InputDecoration(
+            hintText: "חשיפה חדשה",
           ),
-          MaterialButton(
-              color: Colors.orange,
-              shape: CircleBorder(),
-              onPressed: ((){
+        ),
+        MaterialButton(
+            color: Colors.orange,
+            shape:  RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(36)),
+            child:Text("הוספת חשיפה"),
+            onPressed: (() async {
 
+              var exp=[];
+              if(item.keys.contains('expos')){
                 var exp=[];
-                if(item.keys.contains('expos')){
-                  var exp=[];
-                  print(expos);
-                  for(int h=0;h<expos.length;h++)
-                    exp.add(expos[h].text);
-                  print(exp);
-                  exp.add(newExp.text);
-                  print("THE EXP "+exp.toString());
-                  FirebaseFirestore.instance
-                      .collection("users")
-                      .doc(item['uid'])
-                      .set({'expos': exp},
-                      SetOptions(merge: true));}}
-              ))
-        ],
+
+                var t= await FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(item['uid']).get();
+                exp=t['expos'];
+                print(exp);
+                exp.add({'expo':newExp.text,
+                  'feelings':[0,0,0],
+                  'after':""
+                });
+                FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(item['uid'])
+                    .set({'expos': exp},
+                    SetOptions(merge: true));}  else{FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(item['uid'])
+                  .set({'expos': [{'expo':newExp.text,
+                'feelings':[0,0,0],
+                'after':""
+              }]},
+                  SetOptions(merge: true));}
+
+
+
+
+            }
+
+
+            )),
+        FutureBuilder(
+            future: t,
+            builder:
+                (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.hasData) {
+                return Column(children:[
+
+                  for(int i=0;i<snapshot.data.data()['expos'].length;i++)
+                    Container( width:MediaQuery.of(context).size.width*0.5,
+                        child:Column(children:[Text(snapshot.data.data()['expos'][i]['expo'].toString()+":", textDirection: TextDirection.rtl,),
+                          Text(" דירוג  רגשות:", textDirection: TextDirection.rtl,),
+                          Text("לפני:  "+snapshot.data.data()['expos'][i]['feelings'][0].toString(),textDirection:TextDirection.rtl),
+                          Text("זיהוי רגשות:  "+snapshot.data.data()['expos'][i]['feelings'][1].toString(),textDirection:TextDirection.rtl),
+                          Text("אחרי ביצוע:  "+snapshot.data.data()['expos'][i]['feelings'][2].toString(),textDirection:TextDirection.rtl),
+                          Text("הרגשה בחשיפה:  "+snapshot.data.data()['expos'][i]['after'].toString(),textDirection:TextDirection.rtl),
+
+                          Text("",textDirection:TextDirection.rtl)
+                        ]),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(36),
+                          border: Border.all(color: Colors.indigo, width: 9),
+                        ))
+
+
+                ]); } else
+                return CircularProgressIndicator();
+            })
+
+      ],
       )
           :LayoutBuilder(
         builder: (BuildContext context, BoxConstraints con){
@@ -128,9 +188,9 @@ class _HomeState extends State<CareHome> {
     print(item['expos'].length);
     expos=[];
     for(int i=0;i<item['expos'].length;i++){
-      expos.add(TextEditingController(text: item['expos'][i]));
+      expos.add(TextEditingController(text: item['expos'][i]['expo']));
       arr.add(TextFormField(
-        controller: expos[i]
+          controller: expos[i]
       ));
     }
     print(expos);
@@ -145,7 +205,7 @@ class _HomeState extends State<CareHome> {
               stream: FirebaseFirestore.instance
                   .collection('users')
                   .where('caretakeId',
-                      isEqualTo: AuthRepository.instance().user?.uid)
+                  isEqualTo: AuthRepository.instance().user?.uid)
                   .snapshots()
                   .map((value) => value.docs),
               builder: (BuildContext context,
@@ -169,7 +229,7 @@ class _HomeState extends State<CareHome> {
                     .collection("caretakers")
                     .doc(AuthRepository.instance().user?.uid)
                     .set({'time': FieldValue.serverTimestamp()},
-                        SetOptions(merge: true));
+                    SetOptions(merge: true));
               },
             ),
             drawer: Builder(
@@ -242,7 +302,7 @@ class _HomeState extends State<CareHome> {
                                     .collection("caretakers")
                                     .doc(AuthRepository.instance().user?.uid)
                                     .set({'usedId': pass},
-                                        SetOptions(merge: true));
+                                    SetOptions(merge: true));
                                 setState(() {
                                   createPass = !createPass;
                                 });
