@@ -418,6 +418,7 @@ class _body1_state extends State<body1_1> {
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: GestureDetector(
+
                                   child: Container(
                                     height: w*0.3,
                                     width: w,
@@ -484,8 +485,10 @@ class _body1_state extends State<body1_1> {
               )
             ],
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
+          Positioned(
+            top: height*0.92,
+            right: width*0.8,
+
             child:
             Row(
               mainAxisAlignment: MainAxisAlignment.start,

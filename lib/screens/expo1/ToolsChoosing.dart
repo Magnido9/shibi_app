@@ -451,7 +451,7 @@ class _tools_state extends State<tools> {
     ),
 
 
-          (choose != -1)?Positioned(bottom:0,right:0,child:Image.asset((choose==0)?"images/CoolBoi.png":(choose==1)?"images/skater.png":"images/MiniMedi.png")):Container()
+          (choose != -1)?Positioned(bottom:0,right:0,child:Image.asset((choose==0)?"images/MiniMedi.png":(choose==1)?"images/skater.png":"images/CoolBoi.png")):Container()
         ])
 
     );

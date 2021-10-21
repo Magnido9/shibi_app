@@ -259,7 +259,7 @@ class _Page1State extends State<_Page1> {
             )
     ]),
           Positioned(
-            top:140,
+            top:130,
             left: 190,
             child:
             Container(
@@ -592,7 +592,7 @@ class _Page1State extends State<_Page1> {
           ),
         )),
 
-           Positioned(bottom:10,left:100,child:Image.asset('images/shibi_pages/green.png'))
+           //Positioned(bottom:10,left:100,child:Image.asset('images/shibi_pages/green.png'))
             ]
       ),
     );

@@ -281,7 +281,7 @@ class _Page1State extends State<_Page1> {
           )
         ]),
         Positioned(
-          top: 113,
+          top: 100,
           left: 320,
           child: Container(
             width: 40,
@@ -972,7 +972,7 @@ class _Page2State extends State<_Page2> {
         )
       ]),
       Positioned(
-        top: 113,
+        top: 100,
         left: 320,
         child: Container(
           padding: EdgeInsets.all(5),
@@ -1080,11 +1080,12 @@ class _Page2State extends State<_Page2> {
             ],
           )),
 
-          Positioned(bottom:170,right:202,child:Stack(children:[Image.asset("images/talk.png"),Positioned(top:20,left:20,child:Container(width:125,height:90,child:Text("תוכלו לבחור גם בדרכים אחרות כמו בתעמלות שיחה עם חבר, אומנות או יצירה",textDirection: TextDirection.rtl,)))])),
+          Positioned(bottom:170,right:202,child:Stack(children:[Image.asset("images/talk.png"),Positioned(top:40,left:20,child:Container(width:125,height:90,child:Text("תוכלו לבחור גם בדרכים אחרות כמו בתעמלות שיחה עם חבר, אומנות או יצירה",textDirection: TextDirection.rtl,)))])),
           Positioned(
             left:0,
               right:0,
-              top:height*0.5,
+              //top:height*0.5,
+              top:height*0.45,
               child:
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
