@@ -4,6 +4,8 @@ import 'package:application/screens/map/map.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/painting.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../login/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../services/auth_services.dart';
@@ -16,8 +18,124 @@ class CareHome extends StatefulWidget {
 
 class _HomeState extends State<CareHome> {
   bool createPass = false;
-  TextEditingController password = TextEditingController(text: Random().nextInt(999999).toString(),);
+  tiles(context,data) {
+    List<Widget> list=[];
+    for(int g=0;g<data.length;g++){
+      final Map<String, dynamic> item = data[g].data();
+      var b=(item['name'] !=null && item['name'] !='');
+      print(item);
+      list.add( (b)?
+          Column(children:[Text(
+         "מטופל " +item['name'],
+          style: GoogleFonts.assistant(color: Colors.black,fontSize:20,fontWeight: FontWeight.w800)),
 
+
+          (item.keys.contains('expos'))?
+            Column(children:exposL(item)):Container(),
+
+          (item.keys.contains('expos'))?
+            MaterialButton(
+                color: Colors.blue,
+                shape: CircleBorder(),
+                onPressed: ((){
+                  var exp=[];
+                  print(expos);
+                  for(int h=0;h<expos.length;h++)
+                    exp.add(expos[h].text);
+                  print(exp);
+                  FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(item['uid'])
+                      .set({'expos': exp},
+                      SetOptions(merge: true));
+                  setState((){});
+                }
+                )):Container(),
+          TextFormField(
+            controller: newExp,
+            decoration: InputDecoration(
+              hintText: "חשיפה חדשה",
+            ),
+          ),
+          MaterialButton(
+              color: Colors.orange,
+              shape: CircleBorder(),
+              onPressed: ((){
+
+                var exp=[];
+                if(item.keys.contains('expos')){
+                  var exp=[];
+                  print(expos);
+                  for(int h=0;h<expos.length;h++)
+                    exp.add(expos[h].text);
+                  print(exp);
+                  exp.add(newExp.text);
+                  print("THE EXP "+exp.toString());
+                  FirebaseFirestore.instance
+                      .collection("users")
+                      .doc(item['uid'])
+                      .set({'expos': exp},
+                      SetOptions(merge: true));}}
+              ))
+        ],
+      )
+          :LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints con){
+          return Container(
+              color: Colors.white30,
+              width: con.maxWidth*1,
+              child: Builder(
+                builder: (context){
+                  TextEditingController controller =  TextEditingController();
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: con.maxWidth*0.5,
+                        child: TextFormField(
+                          controller: controller,
+                          decoration: InputDecoration(
+                            hintText: "שם הפציינט",
+                          ),
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: (){
+                            final String name = controller.text.trim();
+                            FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(item['uid'])
+                                .set({'name': name},
+                                SetOptions(merge: true));
+                          },
+                          child: Icon(Icons.arrow_forward_rounded))
+                    ],
+                  );
+                },
+              )
+          );
+        },
+      ) );}
+    return list;
+
+  }
+  List<TextEditingController> expos=[];
+  TextEditingController password = TextEditingController(text: Random().nextInt(99999).toString(),);
+  TextEditingController newExp = TextEditingController(text: "",);
+  List<Widget> exposL(item){
+    List<Widget> arr=[];
+    print(item['expos']);
+    print(item['expos'].length);
+    expos=[];
+    for(int i=0;i<item['expos'].length;i++){
+      expos.add(TextEditingController(text: item['expos'][i]));
+      arr.add(TextFormField(
+        controller: expos[i]
+      ));
+    }
+    print(expos);
+    return arr;
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,64 +155,8 @@ class _HomeState extends State<CareHome> {
                   final List<QueryDocumentSnapshot> data = snapshot.data!;
                   print(data);
                   print(AuthRepository.instance().user?.uid);
-                  return SizedBox(
-                    height: 200.0,
-                    child: ListView.separated(
-                        itemBuilder: (context, index) {
-                          final Map<String, dynamic> item = data[index].data();
-                          var b=(item['name'] !=null && item['name'] !='');
-                          return (b)
-                              ?ListTile(
-                            title: Text(
-                                item['name'],
-                              style: TextStyle(color: Colors.black),
-                            ),
+                  return SingleChildScrollView(child:Column(children: tiles(context,  data)),
 
-                            trailing: IconButton(
-                              icon: Icon(Icons.delete_outline),
-                              onPressed: () {},
-                            ),
-                          )
-                              :LayoutBuilder(
-                            builder: (BuildContext context, BoxConstraints con){
-                              return Container(
-                                  color: Colors.white30,
-                                  width: con.maxWidth*1,
-                                  child: Builder(
-                                    builder: (context){
-                                      TextEditingController controller =  TextEditingController();
-                                      return Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            width: con.maxWidth*0.5,
-                                            child: TextFormField(
-                                              controller: controller,
-                                              decoration: InputDecoration(
-                                                hintText: "שם הפציינט",
-                                              ),
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                              onPressed: (){
-                                                final String name = controller.text.trim();
-                                                FirebaseFirestore.instance
-                                                    .collection("users")
-                                                    .doc(item['uid'])
-                                                    .set({'name': name},
-                                                    SetOptions(merge: true));
-                                              },
-                                              child: Icon(Icons.arrow_forward_rounded))
-                                        ],
-                                      );
-                                    },
-                                  )
-                              );
-                            },
-                          ) ;
-                        },
-                        separatorBuilder: (_, __) => Divider(),
-                        itemCount: data.length),
                   );
                 }
                 return Center(child: CircularProgressIndicator(),);
