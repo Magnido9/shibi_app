@@ -2,7 +2,11 @@ library expo;
 
 import 'package:application/screens/Avatar/color_switch.dart';
 import 'package:application/screens/expo1/ToolsChoosing.dart';
+import 'package:application/screens/home/home.dart';
+import 'package:application/screens/login/login.dart';
+import 'package:application/screens/map/questioneer.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
@@ -31,7 +35,8 @@ import 'dart:math';
 import 'dart:async';
 
 class ThoughtsChallenge extends StatelessWidget {
-  ThoughtsChallenge({required this.adata, required this.theCase});
+  ThoughtsChallenge({required this.adata, required this.theCase,required this.prev});
+  final int prev;
   final AvatarData adata;
   final String theCase;
   int fear = 0;
@@ -51,7 +56,7 @@ class ThoughtsChallenge extends StatelessWidget {
         initialRoute: '/',
         routes: {
           // When navigating to the "/" route, build the FirstScreen widget.
-          '/': (context) => _Page1(on: [true,true,true],),
+          '/': (context) => _Page1(on: [true,true,true],prev:prev),
           // When navigating to the "/second" route, build the SecondScreen widget.
           '/second': (context) => _Page2(),
           '/main': (context) => _Main(),
@@ -68,9 +73,9 @@ class ThoughtsChallenge extends StatelessWidget {
 }
 
 class _Page1 extends StatefulWidget {
-
+  final int prev;
   List<bool> on=[true,true,true];
-  _Page1({required this.on});
+  _Page1({required this.on,required this.prev});
   @override
   _Page1State createState() => _Page1State(on:on);
 }
@@ -100,7 +105,119 @@ class _Page1State extends State<_Page1> {
   void initState() {
     super.initState();
     _data = load();
+    _adata = AvatarData.load();
+    _name = _getname();
   }
+
+  Future<AvatarData>? _adata;
+  Future<String>? _name;
+
+  Future<String> _getname() async {
+    var name = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get())['name'];
+    print(name);
+    return name;
+  }
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  /*key: scaffoldKey,
+      drawer: Drawer(
+          child: ListView(padding: EdgeInsets.zero, children: [
+            DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Stack(children: [
+                  Stack(
+                    children: [
+                      Positioned(
+                          child: Image.asset('images/talky.png'),
+                          top: 0,
+                          right: 0),
+                      Positioned(
+                          top: 10,
+                          right: 6,
+                          child: FutureBuilder<String>(
+                            future: _name,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<String> snapshot) {
+                              // ...
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                String data = snapshot.data ?? '';
+                                return Text(
+                                  'היי $data\n מה קורה?',
+                                  textDirection: TextDirection.rtl,
+                                  style: GoogleFonts.assistant(),
+                                );
+                              }
+                              return CircularProgressIndicator();
+                            },
+                          )),
+                    ],
+                  ),
+                  Positioned(
+                      child: FutureBuilder<AvatarData>(
+                        future: _adata,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<AvatarData> snapshot) {
+                          // ...
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return AvatarStack(
+                                data: (snapshot.data ??
+                                    AvatarData(body: AvatarData.body_default)));
+                          }
+                          return CircularProgressIndicator();
+                        },
+                      )),
+                ])),
+            ListTile(
+              title: Text("עצב דמות",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Avatar(first: false, data: _adata)));
+              },
+            ),
+            ListTile(
+              title: Text("מפת דרכים",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Home()));
+              },
+            ),ListTile(
+              title: Text("שאלון יומי",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        MyQuestions()));
+              },
+            ),
+            ListTile(
+              title: Text("התנתק",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+                Future<void> _signOut() async {
+                  await FirebaseAuth.instance.signOut();
+                }
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => Login()));
+              },
+            ),
+          ]),
+        ),*/
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +225,103 @@ class _Page1State extends State<_Page1> {
     double height = MediaQuery.of(context).size.height;
 
     print(width);
-    return Scaffold(
+    return Scaffold(key: scaffoldKey,
+        drawer: Drawer(
+          child: ListView(padding: EdgeInsets.zero, children: [
+            DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Stack(children: [
+                  Stack(
+                    children: [
+                      Positioned(
+                          child: Image.asset('images/talky.png'),
+                          top: 0,
+                          right: 0),
+                      Positioned(
+                          top: 10,
+                          right: 6,
+                          child: FutureBuilder<String>(
+                            future: _name,
+                            builder: (BuildContext context,
+                                AsyncSnapshot<String> snapshot) {
+                              // ...
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                String data = snapshot.data ?? '';
+                                return Text(
+                                  'היי $data\n מה קורה?',
+                                  textDirection: TextDirection.rtl,
+                                  style: GoogleFonts.assistant(),
+                                );
+                              }
+                              return CircularProgressIndicator();
+                            },
+                          )),
+                    ],
+                  ),
+                  Positioned(
+                      child: FutureBuilder<AvatarData>(
+                        future: _adata,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<AvatarData> snapshot) {
+                          // ...
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return AvatarStack(
+                                data: (snapshot.data ??
+                                    AvatarData(body: AvatarData.body_default)));
+                          }
+                          return CircularProgressIndicator();
+                        },
+                      )),
+                ])),
+            ListTile(
+              title: Text("עצב דמות",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Avatar(first: false, data: _adata)));
+              },
+            ),
+            ListTile(
+              title: Text("מפת דרכים",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        Home()));
+              },
+            ),ListTile(
+              title: Text("שאלון יומי",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        MyQuestions()));
+              },
+            ),
+            ListTile(
+              title: Text("התנתק",
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant()),
+              onTap: () {
+                Future<void> _signOut() async {
+                  await FirebaseAuth.instance.signOut();
+                }
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (BuildContext context) => Login()));
+              },
+            ),
+          ]),
+        ),
         body: Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -141,7 +354,15 @@ class _Page1State extends State<_Page1> {
               disabledElevation: 0,
               backgroundColor: Colors.grey.shade400,
               onPressed: () {
-                Navigator.pushNamed(context, '/tools');
+                if(this.widget.prev==1)
+                  Navigator.pushNamed(context, '/tools');
+                else
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Home()),
+                );
+
               },
               child: Icon(Icons.arrow_forward),
             ),
@@ -156,16 +377,16 @@ class _Page1State extends State<_Page1> {
             children: [
               FlatButton(
                 color: Colors.transparent,
-                onPressed: () {},
+                onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                 child: new IconTheme(
-                  data: new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                  child: new Icon(Icons.menu),
+                  data: new IconThemeData(size: 35, color: Colors.black),
+                  child: new Icon(Icons.menu_rounded),
                 ),
               ),
               Align(
                 alignment: Alignment.topLeft,
                 child: Text(
-                  "     הרפיית מחשבות",
+                  "     אתגור מחשבות",
                   //textAlign: TextAlign.center,
                   style: GoogleFonts.assistant(
                     color: Colors.black,
@@ -197,7 +418,7 @@ class _Page1State extends State<_Page1> {
         Positioned(
             right: 10,
             left: 10,
-            top: height * 0.25,
+            top: height * 0.22,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,14 +470,14 @@ class _Page1State extends State<_Page1> {
                     ),
                   ),
                 ),
-                Container(width: 30),
+                Container(width: 0),
                 Container(
-                  margin: EdgeInsets.only(right: 10, left: 20, bottom: 10),
+                  margin: EdgeInsets.only(right: 10, left: 0, bottom: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        " זוכרים את המחשבות שבחרתם?",
+                        "זוכרים את המחשבות שבחרתם?",
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
@@ -266,7 +487,7 @@ class _Page1State extends State<_Page1> {
                         ),
                       ),
                       Text(
-                        " הם חזרו לנקמה",
+                        "בואו נאתגר אותן! בחרו בבלון שתרצו לאתגר.",
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
@@ -278,7 +499,6 @@ class _Page1State extends State<_Page1> {
                     ],
                   ),
                 ),
-                Container(width: 20),
               ],
             )),
         FutureBuilder(
@@ -1555,7 +1775,9 @@ class _ballonState extends State<_BallonPage> {
                                       BackdropFilter(
                                     filter:
                                         ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                                    child: AlertDialog(
+                                    child: Stack(children:[AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(36)),
                                       backgroundColor: Color(0xffECECEC),
                                       content: RichText(
                                         textDirection: TextDirection.rtl,
@@ -1567,21 +1789,27 @@ class _ballonState extends State<_BallonPage> {
                                           children: <TextSpan>[
                                             //
                                             TextSpan(
-                                                text: 'עוד לא הוכנס מלל.\n'),
+                                                text: 'חשיבה מסוג הכל או כלום, היא חשיבה קיצונית- שחור לבן. לא גווני אפור או פשרות\n\n שחור לדוגמא- "אם אכשל במבחן הזה זה אומר שאני טיפשה". \n\n באתגור הזה עלייכם למצוא את הגוון האפור שבמחשבה\nלדוגמא- "אם אכשל במבחן כנראה שהפעם לא למדתי מספיק"'),
                                           ],
                                         ),
                                       ),
                                       actions: <Widget>[
-                                        TextButton(
+                                        /*TextButton(
                                           onPressed: () =>
                                               Navigator.pop(context, 'Cancel'),
                                           child: const Text(
                                             'x',
                                             style: TextStyle(fontSize: 20),
                                           ),
-                                        ),
+                                        )*/
                                       ],
                                     ),
+                                    Positioned(top:height*0.32,left:width*0.12,child:GestureDetector(
+                                      child: Icon(Icons.cancel_outlined,size:32,color:Color(0xff35258A)),
+                                      onTap:() =>
+                                          Navigator.pop(context, 'Cancel') ,
+                                    ))
+                                    ])
                                   ),
                                 ),
                               ),
@@ -1829,7 +2057,7 @@ class _baboomState extends State<_BaboomPage> {
     setState(() {
                               Navigator.of(context).pushReplacement(MaterialPageRoute(
     builder: (BuildContext context) =>
-    _Page1(on: t)));
+    _Page1(on: t,prev:1)));
     }); });
                           return  Positioned(
                             top: 80,

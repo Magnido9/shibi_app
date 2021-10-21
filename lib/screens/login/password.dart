@@ -56,17 +56,7 @@ class _MyHomePageState extends State<PasswordPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Align(
-            alignment: FractionalOffset.bottomLeft,
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.2,
-              padding: EdgeInsets.only(left: 20),
-              child: FittedBox(
-                child: Image.asset('images/shibi_pages/'+((codes.isEmpty)? 'clean' : 'dirty')+'.png'),
-                fit: BoxFit.fitHeight,
-              ),
-            ),
-          ),
+          Positioned(left: 10 ,bottom:0,child:Image.asset('images/shibi_pages/'+((codes.isEmpty)? 'clean' : 'dirty')+'.png')),
           CustomPaint(
             painter: _Painter(),
             size: MediaQuery.of(context).size,
@@ -81,7 +71,7 @@ class _MyHomePageState extends State<PasswordPage> {
                       Container(
                           height: MediaQuery.of(context).size.height * 0.1),
                       Text(
-                        "ציירי את הסיסמה שלך",
+                        "ציירו את הסיסמה שלכם",
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
                           color: Colors.black,
@@ -91,7 +81,7 @@ class _MyHomePageState extends State<PasswordPage> {
                       ),
                       Container(height: 10),
                       Text(
-                        ",בכדי שנוכל לשמור על פרטיותך \n    .צרי פאטרן על גבי העיגולים, בעזרתו תכנסי לשיבי",
+                        ",בכדי שנוכל לשמור על פרטיותכם \n    .צרו פאטרן על גבי העיגולים, בעזרתו תכנסו לשיבי",
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
                           color: Colors.black,
@@ -134,6 +124,7 @@ class _MyHomePageState extends State<PasswordPage> {
                         },
                       ),
                       Container(height: 20),
+                      widget.first?
                       Center(
                           child: Stack(children: [
                         Container(
@@ -185,7 +176,7 @@ class _MyHomePageState extends State<PasswordPage> {
                                   border:
                                       Border.all(color: Colors.white, width: 9),
                                 ))),
-                      ])),
+                      ])):Container(),
                     ],
                   ))),
           Container(
@@ -243,6 +234,7 @@ class _MyHomePageState extends State<PasswordPage> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
     } else {
       final snackBar = SnackBar(
+        duration: Duration(seconds:1),
         content: const Text('Wrong Password'),
       );
 
