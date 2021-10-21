@@ -428,9 +428,7 @@ class StarsState extends State<Stars> {
     );
   }
 }
-_getRequests()async{
 
-}
 ExpoStars(int amount,expos,_adata,prevs,curr_page){
 
   List<Widget> stars=[Container(width: 20)];
@@ -489,8 +487,7 @@ ExpoStars(int amount,expos,_adata,prevs,curr_page){
                                   adata: data,
                                   theCase: data1,
                                 )
-                            ,),)
-                            .then((val)=>val?_getRequests():null);
+                            ,),);
                       },
                       child: Image.asset(
                           "images/staron.png"));

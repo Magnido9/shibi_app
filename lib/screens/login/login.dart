@@ -149,10 +149,7 @@ class _MainScreenState extends State<LoginPage> {
             ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: <
                 Widget>[
-              Positioned(
-                  top: MediaQuery.of(context).size.height * 0.6,
-                  right: MediaQuery.of(context).size.width / 2 - 100,
-                  child: Stack(children: [
+                  Stack(children: [
                     Container(
                         width: 150,
                         height: 39,
@@ -199,7 +196,7 @@ class _MainScreenState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(36),
                               border: Border.all(color: Colors.white, width: 9),
                             ))),
-                  ])),
+                  ]),
               /* onPressed: () {
                   final String email = emailController.text.trim();
                   final String password = passwordController.text.trim();
@@ -209,11 +206,7 @@ class _MainScreenState extends State<LoginPage> {
                       ),context);
 
 
-                },*/
-              Positioned(
-                  top: MediaQuery.of(context).size.height * 0.6,
-                  right: MediaQuery.of(context).size.width / 2 - 100,
-                  child: Stack(children: [
+                },*/Stack(children: [
                     Container(
                         width: 150,
                         height: 39,
@@ -259,7 +252,7 @@ class _MainScreenState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(36),
                               border: Border.all(color: Colors.white, width: 9),
                             ))),
-                  ]))
+                  ])
             ]),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text('מטפל?'),

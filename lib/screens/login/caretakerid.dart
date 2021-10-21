@@ -24,7 +24,7 @@ class _Connection extends ChangeNotifier {
   void _getCare(int pass, String name, BuildContext context) async {
     list = (await FirebaseFirestore.instance
             .collection("caretakers")
-            .where('usedId', isEqualTo: pass)
+            .where('usedId', isEqualTo: pass.toString())
             .get())
         .docs;
     //return q.docs[0].data()['uid'];
@@ -376,10 +376,7 @@ class _CareTakerIdState extends State<CareTakerId> {
                         ),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1),
-                        Positioned(
-                            top: MediaQuery.of(context).size.height * 0.6,
-                            right: MediaQuery.of(context).size.width / 2 - 100,
-                            child: Stack(children: [
+                   Stack(children: [
                               Container(
                                   width:200,
                                   height: 39,
@@ -426,34 +423,7 @@ class _CareTakerIdState extends State<CareTakerId> {
                                         borderRadius: BorderRadius.circular(36),
                                         border: Border.all(color: Colors.white, width: 9),
                                       ))),
-                            ])),
-                        /*MaterialButton(
-                          color: Color(0xFF1A237E),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(36)),
-                          onPressed: () {
-                            print(code.toString());
-                            int c = 0;
-                            for (int i = 0; i < code.length; i++)
-                              c = c * 10 + code[i];
-                            print(c);
-                            _Connection()
-                                ._getCare(c, name.text.trim(), context);
-                          },
-                          child:
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              '               שלח               ',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontFamily: "Assistant",
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        )*/
+                            ])
                       ],
                     ),
                   ),

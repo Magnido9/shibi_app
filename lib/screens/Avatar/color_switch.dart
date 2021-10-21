@@ -99,7 +99,7 @@ class _ImageColorSwitcherState extends State<ImageColorSwitcher> {
       }
     }
     oldImage =
-        Image.memory(Uint8List.fromList(External.encodePng(image))).image;
+        Image.memory(Uint8List.fromList(External.encodePng(image,level: 1))).image;
     return oldImage!;
   }
 
