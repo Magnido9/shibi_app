@@ -204,10 +204,12 @@ class _CareTakerIdState extends State<CareTakerId> {
                                       width: 60,
                                       child: TextFormField(
                                         autofocus: true,
+
                                         obscureText: true,
                                         style: GoogleFonts.assistant(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
+
                                           fontWeight: FontWeight.w700,
                                         ),
                                         keyboardType: TextInputType.number,
@@ -241,12 +243,18 @@ class _CareTakerIdState extends State<CareTakerId> {
                                       child: TextFormField(
                                         focusNode: pin2FocusNode,
                                         obscureText: true,
-                                        style: TextStyle(
+                                        style: GoogleFonts.assistant(
+                                          color: Color(0xff6f6f6f),
+                                          fontSize: 36,
+
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                       /* style: TextStyle(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
                                           fontFamily: "Assistant",
                                           fontWeight: FontWeight.w700,
-                                        ),
+                                        ),*/
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         onChanged: (value) {
@@ -278,12 +286,18 @@ class _CareTakerIdState extends State<CareTakerId> {
                                       child: TextFormField(
                                         focusNode: pin3FocusNode,
                                         obscureText: true,
-                                        style: TextStyle(
+                                        style: GoogleFonts.assistant(
+                                          color: Color(0xff6f6f6f),
+                                          fontSize: 36,
+
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        /*style: TextStyle(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
                                           fontFamily: "Assistant",
                                           fontWeight: FontWeight.w700,
-                                        ),
+                                        ),*/
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         onChanged: (value) {
@@ -315,10 +329,16 @@ class _CareTakerIdState extends State<CareTakerId> {
                                       child: TextFormField(
                                         focusNode: pin4FocusNode,
                                         obscureText: true,
-                                        style: TextStyle(
+                                        /*style: TextStyle(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
                                           fontFamily: "Assistant",
+                                          fontWeight: FontWeight.w700,
+                                        ),*/
+                                        style: GoogleFonts.assistant(
+                                          color: Color(0xff6f6f6f),
+                                          fontSize: 36,
+
                                           fontWeight: FontWeight.w700,
                                         ),
                                         keyboardType: TextInputType.number,
@@ -353,10 +373,16 @@ class _CareTakerIdState extends State<CareTakerId> {
                                       child: TextFormField(
                                         focusNode: pin5FocusNode,
                                         obscureText: true,
-                                        style: TextStyle(
+                                        /*style: TextStyle(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
                                           fontFamily: "Assistant",
+                                          fontWeight: FontWeight.w700,
+                                        ),*/
+                                        style: GoogleFonts.assistant(
+                                          color: Color(0xff6f6f6f),
+                                          fontSize: 36,
+
                                           fontWeight: FontWeight.w700,
                                         ),
                                         keyboardType: TextInputType.number,
