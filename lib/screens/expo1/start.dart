@@ -364,7 +364,6 @@ class _Page2State extends State<_Page2> {
         if(d['expos'][i]['expo']==this.widget.theCase)
           d['expos'][i]['feelings'][0]=a;
     }
-    print(d);
     await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
   }
   double feeling = 50;
@@ -758,7 +757,6 @@ class _Page2State extends State<_Page2> {
                       color: Colors.white,
                     ),
                     onPressed:   ()   {
-                      print("FEELINGS THE:"+feeling.toString());
                       _save(feeling);Navigator.pushNamed(context, '/main');}
                     ,
                   )

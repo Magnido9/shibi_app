@@ -28,7 +28,6 @@ class _HomeState extends State<CareHome> {
       var t=  FirebaseFirestore.instance
           .collection("users")
           .doc(item['uid']).get();
-      print(item);
       list.add( (b)?
       Column(children:[Text(
           "מטופל " +item['name'],
@@ -46,7 +45,6 @@ class _HomeState extends State<CareHome> {
             child:Text("שינוי חשיפות"),
             onPressed: (() async {
               var exp=[];
-              print(expos);
 
               var t= await FirebaseFirestore.instance
                   .collection("users")
@@ -54,7 +52,6 @@ class _HomeState extends State<CareHome> {
               exp=t['expos'];
               for(int h=0;h<expos.length;h++)
                 exp[h]['expo']=expos[h].text;
-              print(exp);
               FirebaseFirestore.instance
                   .collection("users")
                   .doc(item['uid'])
@@ -84,7 +81,6 @@ class _HomeState extends State<CareHome> {
                     .collection("users")
                     .doc(item['uid']).get();
                 exp=t['expos'];
-                print(exp);
                 exp.add({'expo':newExp.text,
                   'feelings':[0,0,0],
                   'after':""
@@ -184,8 +180,6 @@ class _HomeState extends State<CareHome> {
   TextEditingController newExp = TextEditingController(text: "",);
   List<Widget> exposL(item){
     List<Widget> arr=[];
-    print(item['expos']);
-    print(item['expos'].length);
     expos=[];
     for(int i=0;i<item['expos'].length;i++){
       expos.add(TextEditingController(text: item['expos'][i]['expo']));
@@ -193,7 +187,6 @@ class _HomeState extends State<CareHome> {
           controller: expos[i]
       ));
     }
-    print(expos);
     return arr;
   }
   @override
@@ -213,8 +206,6 @@ class _HomeState extends State<CareHome> {
                 // ...
                 if (snapshot.hasData) {
                   final List<QueryDocumentSnapshot> data = snapshot.data!;
-                  print(data);
-                  print(AuthRepository.instance().user?.uid);
                   return SingleChildScrollView(child:Column(children: tiles(context,  data)),
 
                   );

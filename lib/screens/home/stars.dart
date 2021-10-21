@@ -73,7 +73,6 @@ class StarsState extends State<Stars> {
     if(n==null)
       return [];
     var name=n.data() ?? {};
-    print(name.keys.contains('expos'));
     if(name.keys.contains('expos')){
       var exps=[];
       for(int i=0;i<name['expos'].length;i++)
