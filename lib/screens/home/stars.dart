@@ -66,16 +66,20 @@ class StarsState extends State<Stars> {
   }
 
   Future<List<dynamic>> _getExpos() async {
-    var name = (await FirebaseFirestore.instance
-        .collection("expos")
+    var n = (await FirebaseFirestore.instance
+        .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get());
-    if(name.data()==null)
+    if(n==null)
       return [];
-    print(name.data()!.keys.contains('tasks'));
-    if(name.data()!.keys.contains('tasks'))
-      return name['tasks'];
-    else
+    var name=n.data() ?? {};
+    print(name.keys.contains('expos'));
+    if(name.keys.contains('expos')){
+      var exps=[];
+      for(int i=0;i<name['expos'].length;i++)
+        exps.add(name['expos'][i]['expo']);
+      return exps;
+    } else
       return [];
   }
  int page=0;

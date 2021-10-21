@@ -54,7 +54,7 @@ class FeelingsTools extends StatelessWidget {
         initialRoute: '/',
         routes: {
           // When navigating to the "/" route, build the FirstScreen widget.
-          '/': (context) => _Page1(prev:prev),
+          '/': (context) => _Page1(prev:prev,theCase:theCase),
           // When navigating to the "/second" route, build the SecondScreen widget.
           '/second': (context) => _Page2(),
           '/main': (context) => _Main(),
@@ -70,8 +70,9 @@ class FeelingsTools extends StatelessWidget {
 }
 
 class _Page1 extends StatefulWidget {
-  _Page1({required this.prev});
+  _Page1({required this.prev,required this.theCase});
   final int prev;
+  String theCase;
   @override
   _Page1State createState() => _Page1State();
 }
@@ -79,7 +80,20 @@ class _Page1 extends StatefulWidget {
 class _Page1State extends State<_Page1> {
 
   double feeling = 0;
-
+  void _save(a) async {
+    String? pid = AuthRepository.instance().user?.uid;
+    var name = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get());
+    var d=name.data()?? {};
+    for(int i=0;i<name['expos'].length;i++){
+      if(d['expos'][i]['expo']==this.widget.theCase)
+        d['expos'][i]['feelings'][1]=a;
+    }
+    print(d);
+    await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
+  }
   Future<AvatarData>? _adata;
   Future<String>? _name;
   @override
@@ -519,6 +533,7 @@ class _Page1State extends State<_Page1> {
                           color: Colors.white,
                         ),
                         onPressed: () {
+                          _save(feeling);
                           Navigator.pushNamed(context, '/second');
                         },
                       )

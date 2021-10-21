@@ -42,7 +42,7 @@ class Expo1 extends StatelessWidget {
           // When navigating to the "/" route, build the FirstScreen widget.
           '/': (context) => _Page1(),
           // When navigating to the "/second" route, build the SecondScreen widget.
-          '/second': (context) => _Page2(),
+          '/second': (context) => _Page2(theCase:theCase),
           '/main': (context) => _Main(),
           '/thoughts/1': (context) => thought1_1(),
           '/thoughts/2': (context) => thought2_1(),
@@ -346,11 +346,27 @@ class _Page1State extends State<_Page1> {
 }
 
 class _Page2 extends StatefulWidget {
+  _Page2({required this.theCase});
+  String theCase;
   @override
   _Page2State createState() => _Page2State();
 }
 
 class _Page2State extends State<_Page2> {
+  void _save(a) async {
+    String? pid = AuthRepository.instance().user?.uid;
+    var name = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get());
+    var d=name.data()?? {};
+    for(int i=0;i<name['expos'].length;i++){
+        if(d['expos'][i]['expo']==this.widget.theCase)
+          d['expos'][i]['feelings'][0]=a;
+    }
+    print(d);
+    await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
+  }
   double feeling = 50;
   Future<AvatarData>? _adata;
   Future<String>? _name;
@@ -741,7 +757,9 @@ class _Page2State extends State<_Page2> {
                       size: 40,
                       color: Colors.white,
                     ),
-                    onPressed:   ()   {Navigator.pushNamed(context, '/main');}
+                    onPressed:   ()   {
+                      print("FEELINGS THE:"+feeling.toString());
+                      _save(feeling);Navigator.pushNamed(context, '/main');}
                     ,
                   )
                 ],

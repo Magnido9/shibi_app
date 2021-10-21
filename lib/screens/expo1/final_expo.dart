@@ -50,8 +50,8 @@ class FinalExpo extends StatelessWidget {
           '/': (context) => _Page1(),
           // When navigating to the "/second" route, build the SecondScreen widget.
           '/second': (context) => _Page2(),
-          '/main': (context) => _Main(),
-          '/four': (context) => _Page4(),
+          '/main': (context) => _Main(theCase: theCase),
+          '/four': (context) => _Page4(theCase: theCase),
           '/thoughts/1': (context) => thought1_1(),
           '/thoughts/2': (context) => thought2_1(),
           '/feelings/1': (context) => feeling1_1(),
@@ -393,111 +393,6 @@ class _Page2State extends State<_Page2> {
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  /*key: scaffoldKey,
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-            DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Stack(children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                          child: Image.asset('images/talky.png'),
-                          top: 0,
-                          right: 0),
-                      Positioned(
-                          top: 10,
-                          right: 6,
-                          child: FutureBuilder<String>(
-                            future: _name,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              // ...
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                String data = snapshot.data ?? '';
-                                return Text(
-                                  'היי $data\n מה קורה?',
-                                  textDirection: TextDirection.rtl,
-                                  style: GoogleFonts.assistant(),
-                                );
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          )),
-                    ],
-                  ),
-                  Positioned(
-                      child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
-                ])),
-            ListTile(
-              title: Text("עצב דמות",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Avatar(first: false, data: _adata)));
-              },
-            ),
-            ListTile(
-              title: Text("מפת דרכים",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
-              },
-            ),ListTile(
-              title: Text("שאלון יומי",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
-              },
-            ),
-            ListTile(
-              title: Text("התנתק",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => Login()));
-              },
-            ),
-          ]),
-        ),*/
-
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -628,14 +523,6 @@ class _Page2State extends State<_Page2> {
                     }),
                 // color:Colors.green
               )),
-          /*Positioned(
-              left: -0.8 * MediaQuery.of(context).size.width,
-              top: -1.25 * MediaQuery.of(context).size.height,
-              child: Container(
-                  width: 0.8125 * MediaQuery.of(context).size.height * 2,
-                  height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xffdee8f3)))),*/
           Align(
             alignment: Alignment.topRight,
             child: Container(
@@ -779,12 +666,26 @@ class _Page2State extends State<_Page2> {
 }
 
 class _Main extends StatefulWidget {
+  _Main({required this.theCase});
+  String theCase;
   @override
   _MainState createState() => _MainState();
 }
 
 class _MainState extends State<_Main> {
-
+  void _save(a) async {
+    String? pid = AuthRepository.instance().user?.uid;
+    var name = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get());
+    var d=name.data()?? {};
+    for(int i=0;i<name['expos'].length;i++){
+      if(d['expos'][i]['expo']==this.widget.theCase)
+        d['expos'][i]['feelings'][2]=a;
+    }
+    await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
+  }
   Future<AvatarData>? _adata;
   Future<String>? _name;
   @override
@@ -803,110 +704,6 @@ class _MainState extends State<_Main> {
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  /*key: scaffoldKey,
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-            DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Stack(children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                          child: Image.asset('images/talky.png'),
-                          top: 0,
-                          right: 0),
-                      Positioned(
-                          top: 10,
-                          right: 6,
-                          child: FutureBuilder<String>(
-                            future: _name,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              // ...
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                String data = snapshot.data ?? '';
-                                return Text(
-                                  'היי $data\n מה קורה?',
-                                  textDirection: TextDirection.rtl,
-                                  style: GoogleFonts.assistant(),
-                                );
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          )),
-                    ],
-                  ),
-                  Positioned(
-                      child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
-                ])),
-            ListTile(
-              title: Text("עצב דמות",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Avatar(first: false, data: _adata)));
-              },
-            ),
-            ListTile(
-              title: Text("מפת דרכים",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
-              },
-            ),ListTile(
-              title: Text("שאלון יומי",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
-              },
-            ),
-            ListTile(
-              title: Text("התנתק",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => Login()));
-              },
-            ),
-          ]),
-        ),*/
-
   double feeling=0;
   int choose = -1;
   @override
@@ -1041,14 +838,6 @@ class _MainState extends State<_Main> {
                         }),
                     // color:Colors.green
                   )),
-              /*Positioned(
-              left: -0.8 * MediaQuery.of(context).size.width,
-              top: -1.25 * MediaQuery.of(context).size.height,
-              child: Container(
-                  width: 0.8125 * MediaQuery.of(context).size.height * 2,
-                  height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0xffdee8f3)))),*/
               Align(
                 alignment: Alignment.topRight,
                 child: Container(
@@ -1158,20 +947,6 @@ class _MainState extends State<_Main> {
                   ),
                 ),
               ),
-              /*Container(
-                child: Text
-                  (
-                  "0                                                   100",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontFamily: "Assistant",
-                    //fontWeight: FontWeight.w700,
-                  ),
-                ),
-
-              ),*/
               Container(
                 height: 20,
               ),
@@ -1198,6 +973,7 @@ class _MainState extends State<_Main> {
                       color: Colors.white,
                     ),
                     onPressed: () {
+                      _save(feeling);
                       Navigator.pushNamed(context, '/four');
                     },
                   )
@@ -1319,12 +1095,29 @@ class _MyButton extends StatelessWidget {
   }
 }
 class _Page4 extends StatefulWidget {
+  _Page4({required this.theCase});
+  String theCase;
   @override
   _Page4State createState() => _Page4State();
 }
 
 class _Page4State extends State<_Page4> {
 
+  void _save(a) async {
+    String? pid = AuthRepository.instance().user?.uid;
+    var name = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get());
+    var d=name.data()?? {};
+    for(int i=0;i<name['expos'].length;i++){
+      if(d['expos'][i]['expo']==this.widget.theCase)
+        d['expos'][i]['after']=a;
+    }
+    print(d);
+    await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
+  }
+  String s='';
   Future<AvatarData>? _adata;
   Future<String>? _name;
   @override
@@ -1343,109 +1136,6 @@ class _Page4State extends State<_Page4> {
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  /*key: scaffoldKey,
-      drawer: Drawer(
-          child: ListView(padding: EdgeInsets.zero, children: [
-            DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: Stack(children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                          child: Image.asset('images/talky.png'),
-                          top: 0,
-                          right: 0),
-                      Positioned(
-                          top: 10,
-                          right: 6,
-                          child: FutureBuilder<String>(
-                            future: _name,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              // ...
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                String data = snapshot.data ?? '';
-                                return Text(
-                                  'היי $data\n מה קורה?',
-                                  textDirection: TextDirection.rtl,
-                                  style: GoogleFonts.assistant(),
-                                );
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          )),
-                    ],
-                  ),
-                  Positioned(
-                      child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
-                ])),
-            ListTile(
-              title: Text("עצב דמות",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Avatar(first: false, data: _adata)));
-              },
-            ),
-            ListTile(
-              title: Text("מפת דרכים",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
-              },
-            ),ListTile(
-              title: Text("שאלון יומי",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
-              },
-            ),
-            ListTile(
-              title: Text("התנתק",
-                  textDirection: TextDirection.rtl,
-                  style: GoogleFonts.assistant()),
-              onTap: () {
-                Future<void> _signOut() async {
-                  await FirebaseAuth.instance.signOut();
-                }
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => Login()));
-              },
-            ),
-          ]),
-        ),*/
 
   TextEditingController? _controller;
   double feeling=0;
@@ -1753,6 +1443,9 @@ class _Page4State extends State<_Page4> {
                       right: 0,
                       left: 0,
                       child: TextFormField(
+                        onChanged: (String text){
+                          s=text;
+                        },
                         textAlign: TextAlign.start,
                         style: TextStyle(
                           color: Colors.black,
@@ -1792,6 +1485,8 @@ class _Page4State extends State<_Page4> {
                               color: Colors.white,
                             ),
                             onPressed: () {
+                              var cont = _controller ?? TextEditingController(text:'a');
+                              _save(s);
                               showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) => BackdropFilter(
