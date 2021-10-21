@@ -321,6 +321,30 @@ class _AvatarPageState extends State<AvatarPage> {
                 ),
                 Container(height: 10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color(0xff35258a),
+                        shape: CircleBorder(),
+                        fixedSize: Size(
+                            55,
+                            55
+                        ),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                      onPressed:   ()   {_save();
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) => Home()));}
+                      ,
+                    )
+                  ],
+                ),
+               /* Row(
                   children: [
                     TextButton(
                       style: TextButton.styleFrom(
@@ -338,7 +362,7 @@ class _AvatarPageState extends State<AvatarPage> {
                       },
                     ),
                   ],
-                ),
+                ),*/
                 AvatarBar(
                     shop: widget.data.acquired ?? AvatarShop(AvatarShop.empty().toString()),
                     tap: choose,

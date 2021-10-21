@@ -147,6 +147,7 @@ class _PrivacyState extends State<Privacy> {
                     top: MediaQuery.of(context).size.height * 0.5,
                     right: MediaQuery.of(context).size.width / 2 - 100,
                     child: Row(children: <Widget>[
+
                       Text(
                         "אני מאשרת שקראתי",
                         textAlign: TextAlign.right,
@@ -155,6 +156,9 @@ class _PrivacyState extends State<Privacy> {
                           fontSize: 18,
                           fontWeight: FontWeight.w700,
                         ),
+                      ),
+                      Container(
+                        width: 10,
                       ),
                       Container(
                         decoration: BoxDecoration(

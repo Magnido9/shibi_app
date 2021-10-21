@@ -238,7 +238,7 @@ class _body1_state extends State<body1_1> {
             ),
           ),
           Positioned(
-            top:140,
+            top:130,
             left: 190,
             child:
             Container(
@@ -392,7 +392,7 @@ class _body1_state extends State<body1_1> {
                         var f = (str)=> _circle(isSelected: (data.painSpots.contains(str)),width: radius*2,onTap: (){ setState(() {data.painSpots.add(str);}); }, );
                         List<Widget> widgets = [
                           Positioned( top:dx*0.4 , left: dx*0.5-radius, child: f('בטן')),
-                          Positioned( top:dx*0.24 , left: dx*0.5-radius, child: f('סנטר')),
+                          Positioned( top:dx*0.24 , left: dx*0.5-radius, child: f('צוואר')),
                           Positioned( top:dx*0.1 , left: dx*0.5-radius, child: f('ראש')),
                           Positioned( top:dx*0.29 , left: dx*0.38-radius, child: f('חזה')),
                           Positioned( top:dx*0.29 , left: dx*0.62-radius, child: f('לב')),
@@ -486,7 +486,32 @@ class _body1_state extends State<body1_1> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Row(
+            child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(0xff35258a),
+                    shape: CircleBorder(),
+                    fixedSize: Size(
+                        55,
+                        55
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                  onPressed:   ()   {Provider.of<ExpoData>(context, listen: false).done[0]=true;
+                  Navigator.popUntil(
+                      context, ModalRoute.withName('/main'));}
+                  ,
+                )
+              ],
+            ),
+            /*Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
@@ -508,7 +533,7 @@ class _body1_state extends State<body1_1> {
                   margin: EdgeInsets.all(8),
                 ),
               ],
-            ),
+            ),*/
           )
         ],
       ),
