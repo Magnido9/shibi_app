@@ -912,24 +912,33 @@ class _MainState extends State<_Main> {
         ),
       ),
           Align(
+
             alignment: Alignment.bottomCenter,
-            child: Row(
+            child:
+
+
+            Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
                   child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xff35258a),
-                      shape: CircleBorder(),
-                    ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed( context,'/tools');
-                    },
-                  ),
+            style: TextButton.styleFrom(
+                backgroundColor: Color(0xff35258a),
+            shape: CircleBorder(),
+            fixedSize: Size(
+                55,
+                55
+            ),
+          ),
+      child: Icon(
+        Icons.arrow_back,
+        size: 40,
+        color: Colors.white,
+      ),
+      onPressed:   ()   {            Navigator.pushNamed( context,'/tools');
+      }
+      ,
+    ),
                   margin: EdgeInsets.all(8),
                 ),
               ],
@@ -1194,6 +1203,7 @@ class _MainState extends State<_Main> {
             } else if (choose == 1) {
               await Navigator.pushNamed(context, '/feelings/1');
             }
+
             setState(() {
               choose = -1;
             });
@@ -1334,7 +1344,7 @@ class ExpoData {
   List<List<Tuple2<String,String>>> all_introductions=[
     [Tuple2('זיהוי גוף','חשוב שנלמד לזהות כיצד הגוף משפיע על החרדה שלנו.'  )],
     [Tuple2('זיהוי רגשות',  'הרגש הוא חלק מהותי מן החרדה שלנו......')],
-    [Tuple2( 'זיהוי מחשבות',  'המחשבות הם מחל מהמחשבה, וחשוב שנאתרן...')]];
+    [Tuple2( 'זיהוי מחשבות',  'המחשבות הן חלק מהמחשבה, וחשוב שנאתר אותן......')]];
   List<Tuple2<String,String>> introductions=[];
 
   List<bool> done = [false, false, false];
