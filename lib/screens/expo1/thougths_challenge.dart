@@ -35,7 +35,8 @@ import 'dart:math';
 import 'dart:async';
 
 class ThoughtsChallenge extends StatelessWidget {
-  ThoughtsChallenge({required this.adata, required this.theCase,required this.prev});
+  ThoughtsChallenge(
+      {required this.adata, required this.theCase, required this.prev});
   final int prev;
   final AvatarData adata;
   final String theCase;
@@ -56,11 +57,11 @@ class ThoughtsChallenge extends StatelessWidget {
         initialRoute: '/',
         routes: {
           // When navigating to the "/" route, build the FirstScreen widget.
-          '/': (context) => _Page1(on: [true,true,true],prev:prev),
+          '/': (context) => _Page1(on: [true, true, true], prev: prev),
           // When navigating to the "/second" route, build the SecondScreen widget.
           '/second': (context) => _Page2(),
           '/main': (context) => _Main(),
-          '/final': (context) => FinalExpo(adata:adata,theCase:theCase),
+          '/final': (context) => FinalExpo(adata: adata, theCase: theCase),
           '/thoughts/1': (context) => thought1_1(),
           '/thoughts/2': (context) => thought2_1(),
           '/feelings/1': (context) => feeling1_1(),
@@ -74,15 +75,15 @@ class ThoughtsChallenge extends StatelessWidget {
 
 class _Page1 extends StatefulWidget {
   final int prev;
-  List<bool> on=[true,true,true];
-  _Page1({required this.on,required this.prev});
+  List<bool> on = [true, true, true];
+  _Page1({required this.on, required this.prev});
   @override
-  _Page1State createState() => _Page1State(on:on);
+  _Page1State createState() => _Page1State(on: on);
 }
 
 class _Page1State extends State<_Page1> {
   _Page1State({required this.on});
-  List<bool> on=[true,true,true];
+  List<bool> on = [true, true, true];
   double feeling = 0;
   var chosen = [];
   var replies;
@@ -90,13 +91,11 @@ class _Page1State extends State<_Page1> {
   var _data;
 
   static load() async {
-    print("aa");
     String? pid = AuthRepository.instance().user?.uid;
     var v = (await FirebaseFirestore.instance
         .collection("balloons")
         .doc(pid)
         .get());
-    print(v['chosen']);
 
     return v;
   }
@@ -117,9 +116,9 @@ class _Page1State extends State<_Page1> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   /*key: scaffoldKey,
       drawer: Drawer(
@@ -224,8 +223,8 @@ class _Page1State extends State<_Page1> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    print(width);
-    return Scaffold(key: scaffoldKey,
+    return Scaffold(
+        key: scaffoldKey,
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             DrawerHeader(
@@ -263,18 +262,18 @@ class _Page1State extends State<_Page1> {
                   ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
+                    future: _adata,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<AvatarData> snapshot) {
+                      // ...
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return AvatarStack(
+                            data: (snapshot.data ??
+                                AvatarData(body: AvatarData.body_default)));
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  )),
                 ])),
             ListTile(
               title: Text("עצב דמות",
@@ -291,20 +290,17 @@ class _Page1State extends State<_Page1> {
                   textDirection: TextDirection.rtl,
                   style: GoogleFonts.assistant()),
               onTap: () {
-
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
+                    builder: (BuildContext context) => Home()));
               },
-            ),ListTile(
+            ),
+            ListTile(
               title: Text("שאלון יומי",
                   textDirection: TextDirection.rtl,
                   style: GoogleFonts.assistant()),
               onTap: () {
-
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
+                    builder: (BuildContext context) => MyQuestions()));
               },
             ),
             ListTile(
@@ -323,328 +319,333 @@ class _Page1State extends State<_Page1> {
           ]),
         ),
         body: Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [Colors.lightBlueAccent, Colors.white])),
-      child: Stack(children: [
-        Positioned(
-            top: -150,
-            child: Container(
-              child: TweenAnimationBuilder<double>(
-                  tween: Tween<double>(begin: 0, end: 0.7),
-                  duration: Duration(seconds: 1),
-                  builder:
-                      (BuildContext context, double percent, Widget? child) {
-                    return CustomPaint(
-                        painter: _LoadBar(
-                            percent: 0, size: MediaQuery.of(context).size),
-                        size: MediaQuery.of(context).size);
-                  }),
-              // color:Colors.green
-            )),
-        Positioned(right: 0, top: 300, child: Image.asset("images/cloud1.png")),
-        Positioned(left: 0, top: 400, child: Image.asset("images/cloud2.png")),
-        Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            child: FloatingActionButton(
-              elevation: 0,
-              disabledElevation: 0,
-              backgroundColor: Colors.grey.shade400,
-              onPressed: () {
-                if(this.widget.prev==1)
-                  Navigator.pushNamed(context, '/tools');
-                else
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Home()),
-                );
-
-              },
-              child: Icon(Icons.arrow_forward),
-            ),
-            margin: EdgeInsets.all(30),
-          ),
-        ),
-        Column(children: [
-          Container(
-            height: 40,
-          ),
-          Row(
-            children: [
-              FlatButton(
-                color: Colors.transparent,
-                onPressed:  () => scaffoldKey.currentState!.openDrawer(),
-                child: new IconTheme(
-                  data: new IconThemeData(size: 35, color: Colors.black),
-                  child: new Icon(Icons.menu_rounded),
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Colors.lightBlueAccent, Colors.white])),
+          child: Stack(children: [
+            Positioned(
+                top: -150,
+                child: Container(
+                  child: TweenAnimationBuilder<double>(
+                      tween: Tween<double>(begin: 0, end: 0.7),
+                      duration: Duration(seconds: 1),
+                      builder: (BuildContext context, double percent,
+                          Widget? child) {
+                        return CustomPaint(
+                            painter: _LoadBar(
+                                percent: 0, size: MediaQuery.of(context).size),
+                            size: MediaQuery.of(context).size);
+                      }),
+                  // color:Colors.green
+                )),
+            Positioned(
+                right: 0, top: 300, child: Image.asset("images/cloud1.png")),
+            Positioned(
+                left: 0, top: 400, child: Image.asset("images/cloud2.png")),
+            Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                child: FloatingActionButton(
+                  elevation: 0,
+                  disabledElevation: 0,
+                  backgroundColor: Colors.grey.shade400,
+                  onPressed: () {
+                    if (this.widget.prev == 1)
+                      Navigator.pushNamed(context, '/tools');
+                    else
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Home()),
+                      );
+                  },
+                  child: Icon(Icons.arrow_forward),
                 ),
+                margin: EdgeInsets.all(30),
               ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "     אתגור מחשבות",
-                  //textAlign: TextAlign.center,
-                  style: GoogleFonts.assistant(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
+            ),
+            Column(children: [
+              Container(
+                height: 40,
+              ),
+              Row(
+                children: [
+                  FlatButton(
+                    color: Colors.transparent,
+                    onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                    child: new IconTheme(
+                      data: new IconThemeData(size: 35, color: Colors.black),
+                      child: new Icon(Icons.menu_rounded),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          )
-        ]),
-        Positioned(
-          top: 113,
-          left: 320,
-          child: Container(
-            padding: EdgeInsets.all(5),
-            width: 40,
-            child: FittedBox(
-              fit: BoxFit.fitHeight,
-              child: Image.asset('images/expo/smile.png',
-                  color: Color(0xffB3E8EF)),
-            ),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(0xff35258A),
-            ),
-          ),
-        ),
-        Positioned(
-            right: 10,
-            left: 10,
-            top: height * 0.22,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  child: Container(
-                    child: Center(
-                      child: Text(
-                        '?',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "     אתגור מחשבות",
+                      //textAlign: TextAlign.center,
+                      style: GoogleFonts.assistant(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
-                    width: 26,
-                    height: 26,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle, //3
-                      color: Color(0xffc4c4c4),
-                    ),
                   ),
-                  onTap: () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                      child: AlertDialog(
-                        backgroundColor: Color(0xffECECEC),
-                        content: RichText(
-                          textDirection: TextDirection.rtl,
-                          text: TextSpan(
-                            style: GoogleFonts.assistant(
-                              color: Colors.black,
-                              fontSize: 18,
+                ],
+              )
+            ]),
+            Positioned(
+              top: 113,
+              left: 320,
+              child: Container(
+                padding: EdgeInsets.all(5),
+                width: 40,
+                height:40,
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: Image.asset('images/expo/smile.png',
+                      color: Color(0xffB3E8EF)),
+                ),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xff35258A),
+                ),
+              ),
+            ),
+            Positioned(
+                right: 10,
+                left: 10,
+                top: height * 0.22,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      child: Container(
+                        child: Center(
+                          child: Text(
+                            '?',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                        width: 26,
+                        height: 26,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle, //3
+                          color: Color(0xffc4c4c4),
+                        ),
+                      ),
+                      onTap: () => showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                          child: AlertDialog(
+                            backgroundColor: Color(0xffECECEC),
+                            content: RichText(
+                              textDirection: TextDirection.rtl,
+                              text: TextSpan(
+                                style: GoogleFonts.assistant(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                children: <TextSpan>[
+                                  //
+                                  TextSpan(text: 'עוד לא הוכנס מלל.\n'),
+                                ],
+                              ),
                             ),
-                            children: <TextSpan>[
-                              //
-                              TextSpan(text: 'עוד לא הוכנס מלל.\n'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text(
+                                  'x',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text(
-                              'x',
-                              style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                    Container(width: 0),
+                    Container(
+                      margin: EdgeInsets.only(right: 10, left: 0, bottom: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            "זוכרים את המחשבות שבחרתם?",
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.right,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          Text(
+                            "בואו נאתגר אותן! בחרו בבלון שתרצו לאתגר.",
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.right,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ),
-                Container(width: 0),
-                Container(
-                  margin: EdgeInsets.only(right: 10, left: 0, bottom: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "זוכרים את המחשבות שבחרתם?",
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      Text(
-                        "בואו נאתגר אותן! בחרו בבלון שתרצו לאתגר.",
-                        textDirection: TextDirection.rtl,
-                        textAlign: TextAlign.right,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )),
-        FutureBuilder(
-            future: _data,
-            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-              if (snapshot.hasData) {
-                chosen = snapshot.data['chosen'];
-                thoughts = snapshot.data['thoughts'];
-                replies = snapshot.data['replies'];
-                return Stack(children: [
-                  (on[0])?
-                  Positioned(
-                      top: height * 0.53,
-                      left: width * 0.11,
-                      child: GestureDetector(
-                          child: Baloon(
-                            color: chosen[0],
-                            diameter: width * 0.316,
-                            angle: -0.3,
-                            text: thoughts[chosen[0]],
-                            secondery: replies[chosen[0]],
-                          ),
-                          onTap: () async {
-                            var x = await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => _BallonPage(
-                                        on:on,
-                                        num:0,
-                                        color: chosen[0],
-                                        text: thoughts[chosen[0]],
-                                        secondery: replies[chosen[0]],
-                                      )),
-                            );
-                            print(chosen);
-                          })):Container(),
-                  on[1]?
-                  Positioned(
-                    child: GestureDetector(
-                        child: Baloon(
-                          color: chosen[1],
-                          diameter: width * 0.316,
-                          angle: 0.3,
-                          text: thoughts[chosen[1]],
-                          secondery: replies[chosen[1]],
-                        ),
-                        onTap: () async {
-                          var x = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => _BallonPage(
-                                  on:on,
-                                  num:1,
-                                      color: chosen[1],
-                                      text: thoughts[chosen[1]],
-                                      secondery: replies[chosen[1]],
-                                    )),
-                          );
-                          print(chosen);
-                        }),
-                    top: height * 0.47,
-                    right: width * 0.19,
-                  ):Container(),
-                  on[2]?
-                  Positioned(
-                    child: GestureDetector(
-                        child: Baloon(
-                          color: chosen[2],
-                          diameter: width * 0.34,
-                          angle: 0,
-                          text: thoughts[chosen[2]],
-                          secondery: replies[chosen[2]],
-                        ),
-                        onTap: () async {
-                          var x = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => _BallonPage(
-                                  on:on,
-                                  num:2,
-                                      color: chosen[2],
-                                      text: thoughts[chosen[2]],
-                                      secondery: replies[chosen[2]],
-                                    )),
-                          );
-                          print(chosen);
-                        }),
-                    top: height * 0.3,
-                    left: width * 0.3,
-                  ):Container()
-                ]);
-              } else
-                return CircularProgressIndicator(
-                  color: Colors.green,
-                );
-            }),
-        Positioned(
-            child: Stack(
-          children: [
-            Positioned(
-                top: height * 0.46,
-                left: width * 0.22,
-                child: Container(
-                  width: width * 0.5,
-                  height: height * 0.5,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Image.asset('images/strings.png'),
-                  ),
-                )),
-            Positioned(
-                top: height * 0.92,
-                left: width * 0.15,
-                child: Image.asset('images/handsbaloon.png')),
-            Positioned(
-                top: height * 0.92,
-                right: width * 0.8,
-                child: (!on[0] && !on[1] && !on[2])
-                    ? Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: Color(0xff35258a),
-                        shape: CircleBorder(),
-                        fixedSize: Size(55, 55),
-                      ),
-                      child: Icon(
-                        Icons.arrow_back,
-                        size: 40,
-                        color: Colors.white,
-                      ),
-                      onPressed: () async {
-                        Navigator.pushNamed(context,'/final');
-                      },
-                    )
                   ],
-                )
-                    : Container())
-            /*
+                )),
+            FutureBuilder(
+                future: _data,
+                builder:
+                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  if (snapshot.hasData) {
+                    chosen = snapshot.data['chosen'];
+                    thoughts = snapshot.data['thoughts'];
+                    replies = snapshot.data['replies'];
+                    return Stack(children: [
+                      (on[0])
+                          ? Positioned(
+                              top: height * 0.53,
+                              left: width * 0.11,
+                              child: GestureDetector(
+                                  child: Baloon(
+                                    color: chosen[0],
+                                    diameter: width * 0.316,
+                                    angle: -0.3,
+                                    text: thoughts[chosen[0]],
+                                    secondery: replies[chosen[0]],
+                                  ),
+                                  onTap: () async {
+                                    var x = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => _BallonPage(
+                                                on: on,
+                                                num: 0,
+                                                color: chosen[0],
+                                                text: thoughts[chosen[0]],
+                                                secondery: replies[chosen[0]],
+                                              )),
+                                    );
+                                  }))
+                          : Container(),
+                      on[1]
+                          ? Positioned(
+                              child: GestureDetector(
+                                  child: Baloon(
+                                    color: chosen[1],
+                                    diameter: width * 0.316,
+                                    angle: 0.3,
+                                    text: thoughts[chosen[1]],
+                                    secondery: replies[chosen[1]],
+                                  ),
+                                  onTap: () async {
+                                    var x = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => _BallonPage(
+                                                on: on,
+                                                num: 1,
+                                                color: chosen[1],
+                                                text: thoughts[chosen[1]],
+                                                secondery: replies[chosen[1]],
+                                              )),
+                                    );
+                                  }),
+                              top: height * 0.47,
+                              right: width * 0.19,
+                            )
+                          : Container(),
+                      on[2]
+                          ? Positioned(
+                              child: GestureDetector(
+                                  child: Baloon(
+                                    color: chosen[2],
+                                    diameter: width * 0.34,
+                                    angle: 0,
+                                    text: thoughts[chosen[2]],
+                                    secondery: replies[chosen[2]],
+                                  ),
+                                  onTap: () async {
+                                    var x = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => _BallonPage(
+                                                on: on,
+                                                num: 2,
+                                                color: chosen[2],
+                                                text: thoughts[chosen[2]],
+                                                secondery: replies[chosen[2]],
+                                              )),
+                                    );
+                                  }),
+                              top: height * 0.3,
+                              left: width * 0.3,
+                            )
+                          : Container()
+                    ]);
+                  } else
+                    return CircularProgressIndicator(
+                      color: Colors.green,
+                    );
+                }),
+            Positioned(
+                child: Stack(
+              children: [
+                Positioned(
+                    top: height * 0.46,
+                    left: width * 0.22,
+                    child: Container(
+                      width: width * 0.5,
+                      height: height * 0.5,
+                      child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: Image.asset('images/strings.png'),
+                      ),
+                    )),
+                Positioned(
+                    top: height * 0.92,
+                    left: width * 0.15,
+                    child: Image.asset('images/handsbaloon.png')),
+                Positioned(
+                    top: height * 0.92,
+                    right: width * 0.8,
+                    child: (!on[0] && !on[1] && !on[2])
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Color(0xff35258a),
+                                  shape: CircleBorder(),
+                                  fixedSize: Size(55, 55),
+                                ),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  size: 40,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () async {
+                                  Navigator.pushNamed(context, '/final');
+                                },
+                              )
+                            ],
+                          )
+                        : Container())
+                /*
 
                               */
-          ],
-        ))
-      ]),
-    ));
+              ],
+            ))
+          ]),
+        ));
   }
 }
 
@@ -866,7 +867,6 @@ class _Page2State extends State<_Page2> {
                   await intent.launch();
                 } else {
                   String url = 'com.spotify.music';
-                  print(await DeviceApps.getApp('Spotify'));
                   DeviceApps.openApp('com.spotify.music');
                 }
               },
@@ -893,7 +893,6 @@ class _Page2State extends State<_Page2> {
                   await intent.launch();
                 } else {
                   String url = 'com.spotify.music';
-                  print(await DeviceApps.getApp('Spotify'));
                   DeviceApps.openApp('com.google.android.youtube');
                 }
               },
@@ -983,7 +982,6 @@ class _MainState extends State<_Main> {
   int choose = -1;
   @override
   Widget build(BuildContext context) {
-    print('main');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -1147,7 +1145,6 @@ class _MainState extends State<_Main> {
                   width: (choose == -1) ? width : width * percent,
                   child: Consumer<ExpoData>(
                     builder: (context, data, w) {
-                      print(data.done);
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -1605,7 +1602,11 @@ class _PaintTask extends CustomPainter {
 
 class _BallonPage extends StatefulWidget {
   _BallonPage(
-      {required this.text, required this.color, required this.secondery, required this.num, required this.on});
+      {required this.text,
+      required this.color,
+      required this.secondery,
+      required this.num,
+      required this.on});
   final int num;
   final int color;
   final String text;
@@ -1652,8 +1653,10 @@ class _ballonState extends State<_BallonPage> {
               ),
               onPressed: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        _BaboomPage(color: this.widget.color,num:this.widget.num,on:this.widget.on)));
+                    builder: (BuildContext context) => _BaboomPage(
+                        color: this.widget.color,
+                        num: this.widget.num,
+                        on: this.widget.on)));
               },
             )
           ],
@@ -1773,28 +1776,34 @@ class _ballonState extends State<_BallonPage> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       BackdropFilter(
-                                    filter:
-                                        ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                                    child: Stack(children:[AlertDialog(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(36)),
-                                      backgroundColor: Color(0xffECECEC),
-                                      content: RichText(
-                                        textDirection: TextDirection.rtl,
-                                        text: TextSpan(
-                                          style: GoogleFonts.assistant(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                          ),
-                                          children: <TextSpan>[
-                                            //
-                                            TextSpan(
-                                                text: 'חשיבה מסוג הכל או כלום, היא חשיבה קיצונית- שחור לבן. לא גווני אפור או פשרות\n\n שחור לדוגמא- "אם אכשל במבחן הזה זה אומר שאני טיפשה". \n\n באתגור הזה עלייכם למצוא את הגוון האפור שבמחשבה\nלדוגמא- "אם אכשל במבחן כנראה שהפעם לא למדתי מספיק"'),
-                                          ],
-                                        ),
-                                      ),
-                                      actions: <Widget>[
-                                        /*TextButton(
+                                          filter: ImageFilter.blur(
+                                              sigmaX: 2, sigmaY: 2),
+                                          child: Stack(children: [
+                                            AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          36)),
+                                              backgroundColor:
+                                                  Color(0xffECECEC),
+                                              content: RichText(
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                text: TextSpan(
+                                                  style: GoogleFonts.assistant(
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                  ),
+                                                  children: <TextSpan>[
+                                                    //
+                                                    TextSpan(
+                                                        text:
+                                                            'חשיבה מסוג הכל או כלום, היא חשיבה קיצונית- שחור לבן. לא גווני אפור או פשרות\n\n שחור לדוגמא- "אם אכשל במבחן הזה זה אומר שאני טיפשה". \n\n באתגור הזה עלייכם למצוא את הגוון האפור שבמחשבה\nלדוגמא- "אם אכשל במבחן כנראה שהפעם לא למדתי מספיק"'),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: <Widget>[
+                                                /*TextButton(
                                           onPressed: () =>
                                               Navigator.pop(context, 'Cancel'),
                                           child: const Text(
@@ -1802,15 +1811,20 @@ class _ballonState extends State<_BallonPage> {
                                             style: TextStyle(fontSize: 20),
                                           ),
                                         )*/
-                                      ],
-                                    ),
-                                    Positioned(top:height*0.32,left:width*0.12,child:GestureDetector(
-                                      child: Icon(Icons.cancel_outlined,size:32,color:Color(0xff35258A)),
-                                      onTap:() =>
-                                          Navigator.pop(context, 'Cancel') ,
-                                    ))
-                                    ])
-                                  ),
+                                              ],
+                                            ),
+                                            Positioned(
+                                                top: height * 0.32,
+                                                left: width * 0.12,
+                                                child: GestureDetector(
+                                                  child: Icon(
+                                                      Icons.cancel_outlined,
+                                                      size: 32,
+                                                      color: Color(0xff35258A)),
+                                                  onTap: () => Navigator.pop(
+                                                      context, 'Cancel'),
+                                                ))
+                                          ])),
                                 ),
                               ),
                               Container(width: 80),
@@ -1921,7 +1935,7 @@ class _ballonState extends State<_BallonPage> {
 }
 
 class _BaboomPage extends StatefulWidget {
-  _BaboomPage({required this.color,required this.num,required this.on});
+  _BaboomPage({required this.color, required this.num, required this.on});
   final int color;
   final int num;
   List<bool> on;
@@ -1931,7 +1945,7 @@ class _BaboomPage extends StatefulWidget {
 
 class _baboomState extends State<_BaboomPage> {
   TextEditingController? _controller;
-  int stage=1;
+  int stage = 1;
   double height = 0, width = 0;
   final colors = [
     Color(0xffDEEEF3),
@@ -1995,91 +2009,102 @@ class _baboomState extends State<_BaboomPage> {
                             color: Color(0xfff3f1de),
                           ),
                         )),
-                    (stage==1)?TweenAnimationBuilder(
-                        tween: Tween(begin: height, end: height),
-                        duration: Duration(seconds: 10),
-                        builder: (context, double h, w) {
-                          Provider.of<ExpoData>(context, listen: false)
-                              .done[2] = true;
-                          Future.delayed(const Duration(seconds: 1), () {
-                            setState(() {
-                              stage=2;
-                            }); });
-                          return  Positioned(
-                            top: 80,
-                            right: -width * 0.1,
-                            left: -width * 0.1,
-                            child: Container(
-                                width: width * 1.2,
-                                height: width * 1.2,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: colors[widget.color % 4],
-                                )),
-                          )
-                            ;
-                        }):(stage==2)?TweenAnimationBuilder(
-                        tween: Tween(begin: height, end: height),
-                        duration: Duration(seconds: 10),
-                        builder: (context, double h, w) {
-                          Provider.of<ExpoData>(context, listen: false)
-                              .done[2] = true;
-                          Future.delayed(const Duration(seconds: 1), () {
-                            setState(() {
-                              stage=3;
-                            }); });
-                          return  Positioned(
-                            top: 80,
-                            right: -width * 0.1,
-                            left: -width * 0.1,
-                            child: Container(
-                                width: width * 1.2,
-                                height: width * 1.12,
-                                child:ImageColorSwitcher(
-                                  height: width * 1.2,
-                                  width: width * 1.2,
-                                  imagePath: 'images/boom1.png',
-                                  main: Color(0xffB0D4B1),
-                                  second: Color(0xffB0D4B1),
-                                  color: colors[this.widget.color % 4],
-                                )   ),
-                          )
-                          ;
-                        }):TweenAnimationBuilder(
-                        tween: Tween(begin: height, end: height),
-                        duration: Duration(seconds: 10),
-                        builder: (context, double h, w) {
-                          Provider.of<ExpoData>(context, listen: false)
-                              .done[2] = true;
-                          Future.delayed(const Duration(seconds: 3), () {
-                            var t=this.widget.on;
-                            t[this.widget.num]=false;
-    setState(() {
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(
-    builder: (BuildContext context) =>
-    _Page1(on: t,prev:1)));
-    }); });
-                          return  Positioned(
-                            top: 80,
-                            right: -width * 0.1,
-                            left: -width * 0.1,
-                            child: Container(
-                                width: width * 1.2,
-                                height: width * 1.12,
-                            child:ImageColorSwitcher(
-                              height: width * 1.2,
-                              width: width * 1.2,
-                              imagePath: 'images/boom2.png',
-                              main: Color(0xffDFF3E2),
-                              second: Color(0xff90C2AB),
-                              color: colors[this.widget.color % 4],
-                            )
-                            ),
-                          )
-                          ;
-                        }),
+                    (stage == 1)
+                        ? TweenAnimationBuilder(
+                            tween: Tween(begin: height, end: height),
+                            duration: Duration(seconds: 10),
+                            builder: (context, double h, w) {
+                              Provider.of<ExpoData>(context, listen: false)
+                                  .done[2] = true;
+                              Future.delayed(const Duration(seconds: 1), () {
+                                setState(() {
+                                  stage = 2;
+                                });
+                              });
+                              return Positioned(
+                                top: 80,
+                                right: -width * 0.1,
+                                left: -width * 0.1,
+                                child: Container(
+                                    width: width * 1.2,
+                                    height: width * 1.2,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: colors[widget.color % 4],
+                                    )),
+                              );
+                            })
+                        : (stage == 2)
+                            ? TweenAnimationBuilder(
+                                tween: Tween(begin: height, end: height),
+                                duration: Duration(seconds: 10),
+                                builder: (context, double h, w) {
+                                  Provider.of<ExpoData>(context, listen: false)
+                                      .done[2] = true;
+                                  Future.delayed(const Duration(seconds: 1),
+                                      () {
+                                    if(this.mounted)
+                                      setState((){
+                                      stage = 3;});
+                                  });
+                                  return Positioned(
+                                    top: 80,
+                                    right: -width * 0.1,
+                                    left: -width * 0.1,
+                                    child: Container(
+                                        width: width * 1.2,
+                                        height: width * 1.12,
+                                        child: ImageColorSwitcher(
+                                          height: width * 1.2,
+                                          width: width * 1.2,
+                                          imagePath: 'images/boom1.png',
+                                          main: Color(0xffB0D4B1),
+                                          second: Color(0xffB0D4B1),
+                                          color: colors[this.widget.color % 4],
+                                        )),
+                                  );
+                                })
+                            : TweenAnimationBuilder(
+                                tween: Tween(begin: height, end: height),
+                                duration: Duration(seconds: 10),
+                                builder: (context, double h, w) {
+                                  Provider.of<ExpoData>(context, listen: false)
+                                      .done[2] = true;
+                                  Future.delayed(const Duration(seconds: 3),
+                                      () {
+                                    var t = this.widget.on;
+                                    t[this.widget.num] = false;
+                                    if(this.mounted)
+                                      setState(() {
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  _Page1(on: t, prev: 1)));
+                                    });
+                                  });
+                                  return Positioned(
+                                    top: 80,
+                                    right: -width * 0.1,
+                                    left: -width * 0.1,
+                                    child: Container(
+                                        width: width * 1.2,
+                                        height: width * 1.12,
+                                        child: ImageColorSwitcher(
+                                          height: width * 1.2,
+                                          width: width * 1.2,
+                                          imagePath: 'images/boom2.png',
+                                          main: Color(0xffDFF3E2),
+                                          second: Color(0xff90C2AB),
+                                          color: colors[this.widget.color % 4],
+                                        )),
+                                  );
+                                }),
                     Positioned(
-                      top:(stage==1)? height * 0.4:(stage==2)?height*0.35:height*0.37,
+                      top: (stage == 1)
+                          ? height * 0.4
+                          : (stage == 2)
+                              ? height * 0.35
+                              : height * 0.37,
                       left: 0,
                       child: Image.asset('images/needle.png'),
                     ),

@@ -89,7 +89,6 @@ class _Page1State extends State<_Page1> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -389,7 +388,6 @@ class _Page2State extends State<_Page2> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -700,7 +698,6 @@ class _MainState extends State<_Main> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -708,7 +705,6 @@ class _MainState extends State<_Main> {
   int choose = -1;
   @override
   Widget build(BuildContext context) {
-    print('page3');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -1114,7 +1110,6 @@ class _Page4State extends State<_Page4> {
       if(d['expos'][i]['expo']==this.widget.theCase)
         d['expos'][i]['after']=a;
     }
-    print(d);
     await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
   }
   String s='';
@@ -1132,7 +1127,6 @@ class _Page4State extends State<_Page4> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -1144,7 +1138,6 @@ class _Page4State extends State<_Page4> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    print('page4');
 
     @override
     void initState() {
@@ -1163,7 +1156,6 @@ class _Page4State extends State<_Page4> {
       else {
         money = v['money'];
       }
-      print(money);
       money+=10;
       await FirebaseFirestore.instance
           .collection("avatars")
@@ -1503,12 +1495,8 @@ class _Page4State extends State<_Page4> {
                                       Positioned(
                                         bottom:-30,
                                         right:-20,
-                                        child: Container(
-                                          child: FittedBox(
-                                            child: Image.asset('images/Soldier4.png'),
-                                            fit: BoxFit.fitHeight,
-                                          ),
-                                        ),
+                                        child: Image.asset('images/Soldier4.png'),
+
                                       ), Positioned(
                                           bottom: 0.5*0.65* MediaQuery.of(context).size.height,
                                           left: 0,

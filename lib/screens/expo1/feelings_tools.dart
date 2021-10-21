@@ -91,7 +91,6 @@ class _Page1State extends State<_Page1> {
       if(d['expos'][i]['expo']==this.widget.theCase)
         d['expos'][i]['feelings'][1]=a;
     }
-    print(d);
     await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
   }
   Future<AvatarData>? _adata;
@@ -108,7 +107,6 @@ class _Page1State extends State<_Page1> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -286,13 +284,14 @@ class _Page1State extends State<_Page1> {
           top: 113,
           left: 320,
           child: Container(
+            width: 40,
+            height:40,
             padding: EdgeInsets.all(5),
             child: FittedBox(
               fit: BoxFit.fitHeight,
               child: Image.asset('images/expo/smile.png',
                   color: Color(0xffB3E8EF)),
             ),
-            width: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Color(0xff35258A),
@@ -808,7 +807,6 @@ class _Page2State extends State<_Page2> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -978,12 +976,13 @@ class _Page2State extends State<_Page2> {
         left: 320,
         child: Container(
           padding: EdgeInsets.all(5),
+          width: 40,
+          height: 40,
           child: FittedBox(
             fit: BoxFit.fitHeight,
             child:
                 Image.asset('images/expo/smile.png', color: Color(0xffB3E8EF)),
           ),
-          width: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Color(0xff35258A),
@@ -1102,7 +1101,6 @@ class _Page2State extends State<_Page2> {
                     await intent.launch();
                   } else {
                     String url = 'com.spotify.music';
-                    print(await DeviceApps.getApp('Spotify'));
                     DeviceApps.openApp('com.spotify.music');
                   }
                 },
@@ -1119,7 +1117,6 @@ class _Page2State extends State<_Page2> {
                     await intent.launch();
                   } else {
                     String url = 'com.spotify.music';
-                    print(await DeviceApps.getApp('Spotify'));
                     DeviceApps.openApp('com.google.android.youtube');
                   }
                 },
@@ -1211,7 +1208,6 @@ class _MainState extends State<_Main> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get())['name'];
-    print(name);
     return name;
   }
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -1219,7 +1215,6 @@ class _MainState extends State<_Main> {
 
   @override
   Widget build(BuildContext context) {
-    print('main');
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
@@ -1479,7 +1474,6 @@ class _MainState extends State<_Main> {
                   width: (choose == -1) ? width : width * percent,
                   child: Consumer<ExpoData>(
                     builder: (context, data, w) {
-                      print(data.done);
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

@@ -64,8 +64,6 @@ class AvatarData {
         (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
 
 
-    print('load');
-    print(v.data()!.keys.contains('purchased')?v['purchased']:"SSSSS");
     var a = AvatarData(
         money: v['money'],
         body: v['body'],
@@ -149,8 +147,6 @@ class _AvatarPageState extends State<AvatarPage> {
   }
 
   choose(int group, int sub_group, int object){
-    print('group: '+ group.toString()+' sub_group: '+ sub_group.toString()+ " object: "+object.toString());
-    print(widget.data.acquired?.acquired_items);
     if(widget.data.acquired?.acquired_items[group][sub_group][object]?? false){
       switch (group){
         case 0:{
@@ -546,8 +542,7 @@ class _LoadAvatarState extends State<LoadAvatar> {
 
 class AvatarShop {
   AvatarShop(String s) : acquired_items=[] {
-    print(s);
-    print(fromString(s));
+    fromString(s);
   }
 
   List<List<List<bool>>> acquired_items;
@@ -639,11 +634,7 @@ class AvatarShop {
 
   fromString(String s) {
 
-    print("list:");
-    print(s);
     var lists = json.decode(s);
-    print("lists:");
-    print(lists);
     if (lists.length != merch.length) {
       acquired_items = AvatarShop
           .empty()
