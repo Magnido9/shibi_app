@@ -734,7 +734,8 @@ class _Page2State extends State<_Page2> {
                 height: 20,
               ),
             ],
-          ),    Positioned(
+          ),
+          Positioned(
               top: height*0.92,
               right: width*0.8,
 
@@ -898,6 +899,7 @@ class _MainState extends State<_Main> {
             ),
           ]),
         ),
+
         body: Stack(  children: [  Positioned(top:-150,child:
         Container(
           child: TweenAnimationBuilder<double>(
@@ -927,38 +929,34 @@ class _MainState extends State<_Main> {
           margin: EdgeInsets.all(30),
         ),
       ),
-          Align(
+          Positioned(
+              top: height*0.92,
+              right: width*0.8,
 
-            alignment: Alignment.bottomCenter,
-            child:
-
-
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  child: TextButton(
-            style: TextButton.styleFrom(
-                backgroundColor: Color(0xff35258a),
-            shape: CircleBorder(),
-            fixedSize: Size(
-                55,
-                55
-            ),
-          ),
-      child: Icon(
-        Icons.arrow_back,
-        size: 40,
-        color: Colors.white,
-      ),
-      onPressed:   ()   {            Navigator.pushNamed( context,'/tools');
-      }
-      ,
-    ),
-                  margin: EdgeInsets.all(8),
-                ),
-              ],
-            ),
+              child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Color(0xff35258a),
+                      shape: CircleBorder(),
+                      fixedSize: Size(
+                          55,
+                          55
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.arrow_back,
+                      size: 40,
+                      color: Colors.white,
+                    ),
+                    onPressed:   ()   {
+                      Navigator.pushNamed( context,'/tools');}
+                    ,
+                  )
+                ],
+              )
           ),
 
       Column(
