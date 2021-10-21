@@ -78,7 +78,7 @@ class _PreDesignState extends State<PreDesign> {
                                 height: 20,
                               ),
                               Text(
-                                "הדמות תלווה אותכם באפליקציה,\nתוכלו לעצב אותה כרצונכם \nולרכוש לה פריטים מיוחדים",
+                                "הדמות תלווה אותכם באפליקציה,\nתוכלו לעצב אותה כרצונכם \nולרכוש לה פריטים מיוחדים!",
                                 textDirection: TextDirection.rtl,
                                 textAlign: TextAlign.start,
                                 style: GoogleFonts.assistant(
@@ -91,7 +91,7 @@ class _PreDesignState extends State<PreDesign> {
                                 height: 5,
                               ),
                               Text(
-                                "ככל שתלמדו ותכירו את החרדה שלכם,\nתוכלו לצבור יותר ויותר מטבעות",
+                                "ככל שתלמדו ותכירו את החרדה שלכם,\nתוכלו לצבור יותר ויותר מטבעות!",
                                 textDirection: TextDirection.rtl,
                                 textAlign: TextAlign.right,
                                 style: GoogleFonts.assistant(

@@ -137,7 +137,7 @@ class HomePageState extends State<HomePage> {
 
           ]
           )
-      ),  'images/shibi_pages/2.png'),
+      ),  'images/shibi_pages/2.png',  ),
       _add_image(context, Center(
           child: Column(children:<Widget>[
 

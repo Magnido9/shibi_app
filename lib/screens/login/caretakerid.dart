@@ -173,11 +173,11 @@ class _CareTakerIdState extends State<CareTakerId> {
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך",
+                            "?לפני שנתחיל, מה הקוד שקיבלת מהמטפל שלך",
                             textAlign: TextAlign.right,
                             style: GoogleFonts.assistant(
                               color: Colors.black,
-                              fontSize: 18,
+                              fontSize: 16,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
