@@ -1126,7 +1126,7 @@ class _HomeState extends State<Home> {
             ),
             Column(children: [
               Container(
-                height: 80,
+                height: 150,
               ),
               (page_index == 0
                   ? homeBody(size, _name)
