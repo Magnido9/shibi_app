@@ -21,8 +21,9 @@ class AvatarData {
       this.body_color,
       this.money,
         this.acquired,
-      this.eye_color
-      ,this.hobby
+      this.eye_color,
+        this.pants,
+      this.hobby
       }) {
     legs = legs ?? 'images/legs.png';
     body = body ?? AvatarData.body_default;
@@ -31,7 +32,6 @@ class AvatarData {
     acquired = acquired ?? AvatarShop.empty();
     body_color = body_color ?? color_default;
     eye_color = eye_color ?? Colors.black;
-    hobby = hobby ?? "";
   }
   Color? eye_color;
 
@@ -79,6 +79,7 @@ class AvatarData {
         eye_color: Color(int.parse(v['eye_color'], radix: 16)),
         body_color: Color(int.parse(v['body_color'], radix: 16)),
       acquired: v.data()!.keys.contains('purchased')?AvatarShop(v['purchased']): AvatarShop.empty(),
+      pants: v.data()!.keys.contains('pants')?v["pants"]: null,
     );
     return a;
   }
@@ -142,6 +143,7 @@ class _AvatarPageState extends State<AvatarPage> {
       'hobby':widget.data.hobby,
       'money' : widget.data.money,
       'eye_color': widget.data.eye_color.toString().split('(0x')[1].split(')')[0],
+      'pants': widget.data.pants
     });
   }
 
@@ -634,7 +636,7 @@ class AvatarShop {
     'images/face.png',
     'images/color.png',
     'images/hanger.png'
-    'images/heart.png'
+    // 'images/heart.png'
 
   ];
 
@@ -654,13 +656,12 @@ class AvatarShop {
       'images/pantssign.png',
       'images/skirtsign.png'
     ],
-    [
-      'images/paint.png',
-      'images/tennis.png',
-      'images/headphones.png',
-    ]
+    // [
+    //   'images/paint.png',
+    //   'images/tennis.png',
+    //   'images/headphones.png',
+    // ]
   ];
-
   static List<List<List<Tuple2<String, int>>>> merch =
   [
     [ //face
@@ -700,20 +701,21 @@ class AvatarShop {
         Tuple2('images/pinkpants.png', 0),
       ],
       [
-        Tuple2('images/skirt.png', 0),
-        Tuple2('images/skirt2.png', 0),
+        Tuple2('images/skirt.png', 2),
+        Tuple2('images/skirt2.png', 3),
       ]
-    ]
     ],
-    [
-      [
-        Tuple2('images/hobbies/angel.png', 0),
-        Tuple2('images/hobbies/StayInSchoolKids.png', 0),
-        Tuple2('images/hobbies/me.png', 0),
-        Tuple2('images/hobbies/Painter.png', 0),
-
-      ],[],[],[]
-    ],[[],[],[],[]]
+    // [
+    //   [
+    //     Tuple2('images/hobbies/angel.png', 0),
+    //     Tuple2('images/hobbies/StayInSchoolKids.png', 0),
+    //     Tuple2('images/hobbies/me.png', 0),
+    //     Tuple2('images/hobbies/Painter.png', 0),
+    //
+    //   ],
+    //   [],
+    //   [],
+    // ],
 
   ];
 
@@ -741,7 +743,7 @@ class AvatarShop {
       for (int j = 0; j < sub_groups[i].length; j++) {
         ret[i].add([]);
         for (int n = 0; n < merch[i][j].length; n++) {
-          ret[i].add(acquired_items[i][j][n] ? 1 : 0);
+          ret[i][j].add(acquired_items[i][j][n] ? 1 : 0);
         }
       }
     }
@@ -749,8 +751,10 @@ class AvatarShop {
   }
 
   fromString(String s) {
-
+    print(s);
     var lists = json.decode(s);
+    print(lists);
+    print('e');
     if (lists.length != merch.length) {
       acquired_items = AvatarShop
           .empty()
@@ -773,7 +777,6 @@ class AvatarShop {
         }
       }
     }
-
 
     acquired_items = [];
     for (int i = 0; i < groups.length; i++) {

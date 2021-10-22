@@ -181,14 +181,14 @@ flutter:
     - assets/music/breathing.mp3
     - assets/music/muscles.mp3
     - assets/music/meditation.mp3
-    - images/paint.png
-    - images/tennis.png
-    - images/headphones.png
-    - images/hobbies/angel.png
-    - images/hobbies/StayInSchoolKids.png
-    - images/hobbies/me.png
-    - images/hobbies/Painter.png
-    - images/heart.png
+#    - images/paint.png
+#    - images/tennis.png
+#    - images/headphones.png
+#    - images/hobbies/angel.png
+#    - images/hobbies/StayInSchoolKids.png
+#    - images/hobbies/me.png
+#    - images/hobbies/Painter.png
+#    - images/heart.png
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
