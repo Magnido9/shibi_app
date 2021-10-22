@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
 
   Widget medBody() {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.7,
+        height: MediaQuery.of(context).size.height * 0.68,
         child: Stack(children: [
           Center(
             child: Column(
@@ -284,7 +284,7 @@ class _HomeState extends State<Home> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Container(
-        height: height * 0.7,
+        height: height * 0.68,
         width: width,
         child: Stack(
           children: [
@@ -610,7 +610,7 @@ class _HomeState extends State<Home> {
           Container(height: 70),
           Container(
             width: 370,
-            height: height * 0.6,
+            height: height * 0.58,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(31),
               boxShadow: [
@@ -625,17 +625,6 @@ class _HomeState extends State<Home> {
             child: Stack(children: [
               Column(
                 children: [
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
                   Container(height: 42),
                   Container(
                     width: 360,
@@ -800,7 +789,7 @@ class _HomeState extends State<Home> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Container(
-        height: height * 0.7,
+        height: height * 0.68,
         width: width,
         child: Stack(
           children: [
