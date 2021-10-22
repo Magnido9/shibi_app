@@ -563,35 +563,37 @@ class _feeling1_state extends State<feeling1_1> {
                         },
                       )),
                 ),
-                Container(
-                  width: 30340304,
-                  margin: EdgeInsets.only(left: 40, right: 40, bottom: 20),
+                Flexible(
+                  child: Container(
+                    width: width,
+                    margin: EdgeInsets.only(left: 40, right: 40, bottom: 20),
 
-                  child: SliderTheme(
-                      data: SliderThemeData(
-                        thumbColor: Color(0xffFFFFFF).withOpacity(0.8),
-                        //thumbColor: Colors.black,
-                        activeTrackColor: _getColor(),
-
-
-                      ),
+                    child: SliderTheme(
+                        data: SliderThemeData(
+                          thumbColor: Color(0xffFFFFFF).withOpacity(0.8),
+                          //thumbColor: Colors.black,
+                          activeTrackColor: _getColor(),
 
 
-                      child: Slider(
-                        //activeColor: _getColor(),
-                        //thumbColor: Colors.grey,
-                        value: pointer,
-                        min: 0,
-                        max: 100,
-                        divisions: 100,
-                        label: _label(),
-                        onChanged: (double value) {
-                          setState(() {
-                            pointer = value;
-                            _controller.jumpTo(value / 100 * width * 4.5);
-                          });
-                        },
-                      )),),
+                        ),
+
+
+                        child: Slider(
+                          //activeColor: _getColor(),
+                          //thumbColor: Colors.grey,
+                          value: pointer,
+                          min: 0,
+                          max: 100,
+                          divisions: 100,
+                          label: _label(),
+                          onChanged: (double value) {
+                            setState(() {
+                              pointer = value;
+                              _controller.jumpTo(value / 100 * width * 4.5);
+                            });
+                          },
+                        )),),
+                )
               ],
             ),
             if (Provider.of<ExpoData>(context, listen: false).felt.length >= 3)

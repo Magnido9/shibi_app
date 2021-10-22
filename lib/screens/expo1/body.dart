@@ -148,8 +148,10 @@ class _body1_state extends State<body1_1> {
                         // ...
                         if (snapshot.connectionState == ConnectionState.done) {
                           return AvatarStack(
-                              data: (snapshot.data ??
-                                  AvatarData(body: AvatarData.body_default)));
+                              data: (snapshot.data ?? AvatarData(body: AvatarData.body_default)),
+
+
+                          );
                         }
                         return CircularProgressIndicator();
                       },
@@ -390,9 +392,9 @@ class _body1_state extends State<body1_1> {
                         print(w);
                         double dx = min(w,h), radius = dx*0.02;
                         var f = (str)=> _circle(isSelected: (data.painSpots.contains(str)),width: radius*2,onTap: (){ setState(() {data.painSpots.add(str);}); }, );
-                        List<Widget> widgets = [
+                        List<Widget> widgetsFront = [
                           Positioned( top:dx*0.4 , left: dx*0.5-radius, child: f('בטן')),
-                          Positioned( top:dx*0.24 , left: dx*0.5-radius, child: f('צוואר')),
+                          Positioned( top:dx*0.24 , left: dx*0.5-radius, child: f('גרון')),
                           Positioned( top:dx*0.1 , left: dx*0.5-radius, child: f('ראש')),
                           Positioned( top:dx*0.29 , left: dx*0.38-radius, child: f('חזה')),
                           Positioned( top:dx*0.29 , left: dx*0.62-radius, child: f('לב')),
@@ -402,14 +404,17 @@ class _body1_state extends State<body1_1> {
                           Positioned( top:dx*0.38 , left: dx*0.72-radius, child: f('יד')),
                           Positioned( top:dx*0.6 , left: dx*0.43-radius, child: f('רגל')),
                           Positioned( top:dx*0.6 , left: dx*0.57-radius, child: f('רגל')),
-
-
-
-
-
-
+                        ];
+                        List<Widget> widgetsBack = [
+                          Positioned( top:dx*0.4 , left: dx*0.5-radius, child: f('טוסיק')),
+                          Positioned( top:dx*0.24 , left: dx*0.5-radius, child: f('צוואר')),
+                          Positioned( top:dx*0.29 , left: dx*0.62-radius, child: f('גב')),
+                          Positioned( top:dx*0.29 , left: dx*0.38-radius, child: f('גב')),
+                          Positioned( top:dx*0.31 , left: dx*0.7-radius, child: f('כתף')),
+                          Positioned( top:dx*0.31 , left: dx*0.3-radius, child: f('כתף')),
 
                         ];
+
                         return Container(
                           width: dx,
                           height: dx,
@@ -429,6 +434,7 @@ class _body1_state extends State<body1_1> {
                                   ),
                                   onTap: (){
                                     return setState(() {
+                                      print('cewc');
                                       isBack = !isBack;
                                     });
                                   },
@@ -438,7 +444,7 @@ class _body1_state extends State<body1_1> {
                                   alignment: Alignment.center,
                                   child:Container(
                                     margin: EdgeInsets.only(bottom:dx*0.2),
-                                    child:  AvatarStack(data: x),
+                                    child:  AvatarStack(data: x, isNude: true, isBack: isBack),
                                   )
                               ),
                               Align(
@@ -474,7 +480,7 @@ class _body1_state extends State<body1_1> {
                                   ),
                                 )
                               )
-                            ]..addAll(widgets),
+                            ]..addAll((isBack)?widgetsBack :widgetsFront),
 
                           ),
                         );

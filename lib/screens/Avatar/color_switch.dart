@@ -23,7 +23,7 @@ class ImageColorSwitcher extends StatefulWidget {
       required this.height,
       required this.width,
       this.darker = true,
-      this.forgive = 40});
+      this.forgive = 40, Key? key}) : super(key: key);
 
   @override
   _ImageColorSwitcherState createState() => _ImageColorSwitcherState();
@@ -133,9 +133,7 @@ class _ImageColorSwitcherState extends State<ImageColorSwitcher> {
                               image: DecorationImage(
                                   fit: BoxFit.fitHeight, image: oldImage!)),
                         )
-                      : CircularProgressIndicator(
-                          color: Colors.green,
-                        );
+                      : Container(width: 1,height: 1,);
             });
   }
 }

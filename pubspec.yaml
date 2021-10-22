@@ -84,6 +84,15 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   assets:
+    - images/pantssign.png
+    - images/skirtsign.png
+    - images/armypants.png
+    - images/bluepants.png
+    - images/pinkpants.png
+    - images/skirt.png
+    - images/skirt2.png
+    - images/hanger.png
+    - images/ass.png
     - images/strings.png
     - images/platform.png
     - images/handsclosed.png

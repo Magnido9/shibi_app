@@ -36,6 +36,7 @@ class AvatarData {
   String? body;
   String? glasses;
   String? hands;
+  String? pants;
   String? legs;
   int? money;
   Color? body_color;
@@ -147,6 +148,7 @@ class _AvatarPageState extends State<AvatarPage> {
   }
 
   choose(int group, int sub_group, int object){
+    print(object);
     if(widget.data.acquired?.acquired_items[group][sub_group][object]?? false){
       switch (group){
         case 0:{
@@ -167,6 +169,13 @@ class _AvatarPageState extends State<AvatarPage> {
             if(object ==2) setState(() {widget.data.eye_color = Color(0xffdabfa0);});
             if(object ==3) setState(() {widget.data.eye_color = Color(0xffefb3e2);});
           }
+        }break;
+        case 2:{
+          setState(() {
+            widget.data.pants = AvatarShop.merch[group][sub_group][object].item1;
+
+          });
+
         }break;
       }
     }
@@ -373,13 +382,22 @@ class _AvatarPageState extends State<AvatarPage> {
 }
 
 class AvatarStack extends StatelessWidget {
-  AvatarStack({required this.data, Key? key}) : super(key: key);
+  AvatarStack({required this.data,this.isBack=false, this.isNude= false, Key? key}) : super(key: key);
+
+  final bool isNude, isBack;
   Map<String,Tuple3<double,double,double>> dits=
   {// image :            top offset , left offset, height
     'images/handsclosed.png': Tuple3(0.3,0,0.25,),
     'images/handsopen.png':   Tuple3(0.2,0,0.3,),
     'images/handsdown.png':   Tuple3(0.4,0.02,0.3,),
-    'images/handsbaloon.png':   Tuple3(0,0,0.9,)
+    'images/handsbaloon.png':   Tuple3(0,0,0.9,),
+
+    'images/skirt.png': Tuple3(0.58,0,0.15,),
+    'images/skirt2.png': Tuple3(0.6,0,0.15,),
+    'images/bluepants.png': Tuple3(0.6,0,0.17,),
+    'images/armypants.png': Tuple3(0.6,0,0.23,),
+    'images/pinkpants.png': Tuple3(0.58,0,0.15,),
+
 
 
   };
@@ -421,6 +439,31 @@ class AvatarStack extends StatelessWidget {
                     ]);
               },
             ),
+            //pants
+            if(!isNude && data.pants!=null)
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                if (dits[data.pants!] == null) return Container();
+                Tuple3<double,double,double> dit = dits[data.pants!]!;
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        // color: Colors.green,
+                        child: FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: Image.asset(data.pants!)
+                        ),
+                        height: constraints.maxHeight*dit.item3 ,
+                        margin: EdgeInsets.only(
+                          top: constraints.maxHeight * dit.item1,
+                          left: constraints.maxWidth * dit.item2,
+                          // left: constraints.maxWidth/14
+                        ),
+                      ),
+                    ]);
+              },
+            ),
             //body
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
@@ -444,6 +487,37 @@ class AvatarStack extends StatelessWidget {
                     ]);
               },
             ),
+            //ass
+            if( isBack  && isNude)
+            LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                print('ass');
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        // color: Colors.green,
+                        child: FittedBox(
+                            fit: BoxFit.fitHeight,
+                            child: ImageColorSwitcher(
+                              width: constraints.maxWidth,
+                              height: constraints.maxHeight*0.04,
+                              color: data.body_color!,
+                              imagePath: 'images/ass.png',
+                              second:  Color(0xffAC957B),
+                              main:    Color(0xffDABFA0),
+                            )
+                        ),
+                        height: constraints.maxHeight*0.04 ,
+                        margin: EdgeInsets.only(
+                          top: constraints.maxHeight*0.56,
+                          // left: constraints.maxWidth * dit.item2,
+                          // left: constraints.maxWidth/14
+                        ),
+                      ),
+                    ]);
+              },
+            ),
             //hands
             LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
@@ -463,6 +537,7 @@ class AvatarStack extends StatelessWidget {
                               imagePath: data.hands!,
                               second:  Color(0xffAC957B),
                               main:    Color(0xffDABFA0),
+                              forgive: (isBack)? 80 : 40,
                             )
                         ),
                         height: constraints.maxHeight*dit.item3 ,
@@ -475,8 +550,8 @@ class AvatarStack extends StatelessWidget {
                     ]);
               },
             ),
-            //glasses
-            if (data.glasses != null)
+            //eyes
+            if (!isBack)
               LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
                   return Row(
@@ -550,6 +625,7 @@ class AvatarShop {
   [
     'images/face.png',
     'images/color.png',
+    'images/hanger.png'
 
   ];
 
@@ -564,6 +640,10 @@ class AvatarShop {
       'images/body.png',
       'images/eyes.png',
       'images/mouth.png',
+    ],
+    [
+      'images/pantssign.png',
+      'images/skirtsign.png'
     ]
   ];
 
@@ -597,6 +677,17 @@ class AvatarShop {
         Tuple2('images/color(ffa6d6c3).png', 0),
         Tuple2('images/color(ffdabfa0).png', 0),
         Tuple2('images/color(ffefb3e2).png', 0),
+      ]
+    ],
+    [//clothes
+      [//pants
+        Tuple2('images/armypants.png', 0),
+        Tuple2('images/bluepants.png', 0),
+        Tuple2('images/pinkpants.png', 0),
+      ],
+      [
+        Tuple2('images/skirt.png', 0),
+        Tuple2('images/skirt2.png', 0),
       ]
     ]
   ];
