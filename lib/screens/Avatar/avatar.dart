@@ -21,7 +21,9 @@ class AvatarData {
       this.body_color,
       this.money,
         this.acquired,
-      this.eye_color}) {
+      this.eye_color
+      ,this.hobby
+      }) {
     legs = legs ?? 'images/legs.png';
     body = body ?? AvatarData.body_default;
     hands = hands ?? AvatarData.hand_default;
@@ -29,11 +31,14 @@ class AvatarData {
     acquired = acquired ?? AvatarShop.empty();
     body_color = body_color ?? color_default;
     eye_color = eye_color ?? Colors.black;
+    hobby = hobby ?? "";
   }
   Color? eye_color;
 
   AvatarShop? acquired;
   String? body;
+
+  String? hobby;
   String? glasses;
   String? hands;
   String? legs;
@@ -54,7 +59,8 @@ class AvatarData {
         body_color: this.body_color,
         money: this.money,
         acquired: this.acquired,
-        eye_color: this.eye_color
+        eye_color: this.eye_color,
+        hobby: this.hobby
     );
   }
 
@@ -68,6 +74,7 @@ class AvatarData {
         money: v['money'],
         body: v['body'],
         glasses: v['glasses'],
+        hobby: v['hobby'],
         eye_color: Color(int.parse(v['eye_color'], radix: 16)),
         body_color: Color(int.parse(v['body_color'], radix: 16)),
       acquired: v.data()!.keys.contains('purchased')?AvatarShop(v['purchased']): AvatarShop.empty(),
@@ -131,6 +138,7 @@ class _AvatarPageState extends State<AvatarPage> {
       'glasses': widget.data.glasses,
       'body_color': widget.data.body_color.toString().split('(0x')[1].split(')')[0],
       'purchased' : widget.data.acquired.toString(),
+      'hobby':widget.data.hobby,
       'money' : widget.data.money,
       'eye_color': widget.data.eye_color.toString().split('(0x')[1].split(')')[0],
     });
@@ -168,6 +176,10 @@ class _AvatarPageState extends State<AvatarPage> {
             if(object ==3) setState(() {widget.data.eye_color = Color(0xffefb3e2);});
           }
         }break;
+        case 2:{
+
+
+      }break;
       }
     }
   }
@@ -550,6 +562,7 @@ class AvatarShop {
   [
     'images/face.png',
     'images/color.png',
+    'images/heart.png'
 
   ];
 
@@ -564,6 +577,11 @@ class AvatarShop {
       'images/body.png',
       'images/eyes.png',
       'images/mouth.png',
+    ],
+    [
+      'images/paint.png',
+      'images/tennis.png',
+      'images/headphones.png',
     ]
   ];
 
@@ -598,7 +616,17 @@ class AvatarShop {
         Tuple2('images/color(ffdabfa0).png', 0),
         Tuple2('images/color(ffefb3e2).png', 0),
       ]
-    ]
+    ],
+    [
+      [
+        Tuple2('images/hobbies/angel.png', 0),
+        Tuple2('images/hobbies/StayInSchoolKids.png', 0),
+        Tuple2('images/hobbies/me.png', 0),
+        Tuple2('images/hobbies/Painter.png', 0),
+
+      ],[],[],[]
+    ],[[],[],[],[]]
+
   ];
 
   static AvatarShop empty() {
