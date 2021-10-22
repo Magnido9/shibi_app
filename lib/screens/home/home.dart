@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   static Future<String> loadMoney() async {
     String? pid = AuthRepository.instance().user?.uid;
     var v =
-        (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
+    (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
     var a = v['money'];
     var s = a.toString();
     return s;
@@ -122,7 +122,7 @@ class _HomeState extends State<Home> {
 
   Widget medBody() {
     return Container(
-        height: MediaQuery.of(context).size.height * 0.68,
+        height: MediaQuery.of(context).size.height * 0.7,
         child: Stack(children: [
           Center(
             child: Column(
@@ -144,7 +144,9 @@ class _HomeState extends State<Home> {
                 SizedBox(
                   height: 10,
                 ),
-                Image.asset("images/meditate9.png")
+                Flexible(
+                  child: Image.asset("images/meditate9.png"),
+                )
               ],
             ),
           ),
@@ -189,289 +191,290 @@ class _HomeState extends State<Home> {
     final isCompleted = duration.inSeconds == 0;
     return isRunning || isCompleted
         ? Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 12,
-              ),
-              Stack(children: [
-                Container(
-                    width: 200,
-                    height: 39,
-                    child: MaterialButton(
-                        onPressed: () {
-                          stopTimer();
-                        },
-                        minWidth: 200,
-                        height: 39,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(36)),
-                        color: Color(0xff35258a),
-                        child: Stack(children: <Widget>[
-                          Positioned(
-                            top: 5,
-                            right: 50,
-                            child: Text(
-                              "הפסק!",
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.assistant(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          )
-                        ]))),
-                Positioned(
-                    top: 5,
-                    right: 165,
-                    child: Container(
-                        width: 28,
-                        height: 28,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(36),
-                          border: Border.all(color: Colors.white, width: 9),
-                        ))),
-              ]),
-            ],
-          )
-        : Stack(children: [
-            Container(
-                width: 200,
-                height: 39,
-                child: MaterialButton(
-                    onPressed: () {
-                      medistage = 1;
-                      medi = "בוא נתחיל בשאיפה דרך האף";
-                      startTimer();
-                    },
-                    minWidth: 200,
-                    height: 39,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(36)),
-                    color: Color(0xff35258a),
-                    child: Stack(children: <Widget>[
-                      Positioned(
-                        top: 5,
-                        right: 30,
-                        child: Text(
-                          "בואו נתחיל!",
-                          textDirection: TextDirection.rtl,
-                          textAlign: TextAlign.left,
-                          style: GoogleFonts.assistant(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 12,
+        ),
+        Stack(children: [
+          Container(
+              width: 200,
+              height: 39,
+              child: MaterialButton(
+                  onPressed: () {
+                    stopTimer();
+                  },
+                  minWidth: 200,
+                  height: 39,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(36)),
+                  color: Color(0xff35258a),
+                  child: Stack(children: <Widget>[
+                    Positioned(
+                      top: 5,
+                      right: 50,
+                      child: Text(
+                        "הפסק!",
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.assistant(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
                         ),
-                      )
-                    ]))),
-            Positioned(
-                top: 5,
-                right: 165,
-                child: Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(36),
-                      border: Border.all(color: Colors.white, width: 9),
-                    ))),
-          ]);
+                      ),
+                    )
+                  ]))),
+          Positioned(
+              top: 5,
+              right: 165,
+              child: Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(36),
+                    border: Border.all(color: Colors.white, width: 9),
+                  ))),
+        ]),
+      ],
+    )
+        : Stack(children: [
+      Container(
+          width: 200,
+          height: 39,
+          child: MaterialButton(
+              onPressed: () {
+                medistage = 1;
+                medi = "בוא נתחיל בשאיפה דרך האף";
+                startTimer();
+              },
+              minWidth: 200,
+              height: 39,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(36)),
+              color: Color(0xff35258a),
+              child: Stack(children: <Widget>[
+                Positioned(
+                  top: 5,
+                  right: 30,
+                  child: Text(
+                    "בואו נתחיל!",
+                    textDirection: TextDirection.rtl,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.assistant(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                )
+              ]))),
+      Positioned(
+          top: 5,
+          right: 165,
+          child: Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(36),
+                border: Border.all(color: Colors.white, width: 9),
+              ))),
+    ]);
   }
 
   Widget homeBody(size, _name) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    return Container(
-        height: height * 0.68,
-        width: width,
-        child: Stack(
-          children: [
-            Column(children: [
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Container(
-                    margin: EdgeInsets.fromLTRB(20, 20, 50, 5),
-                    child: nameIt(_name, Colors.white))
+    return Flexible(
+      child: Container(
+          height: height * 0.7,
+          width: width,
+          child: Stack(
+            children: [
+              Column(children: [
+                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(20, 20, 50, 5),
+                      child: nameIt(_name, Colors.white))
+                ]),
+                Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  Container(
+                      margin: EdgeInsets.fromLTRB(20, 20, 50, 5),
+                      child: Text(
+                        'כוכבי הלכת יעזרו לכם להבין טוב יותר את החרדה,\n ולהבין באיזה כלים אתם בדרך כלל משתמשים, \nעל מנת שתוכלו להחזיק ולהשלים את ארגז הכלים שלכם ',
+                        textDirection: TextDirection.rtl,
+                        style: GoogleFonts.assistant(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ))
+                ]),
+                // width:MediaQuery.of(context).size.width,
               ]),
-              Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                Container(
-                    margin: EdgeInsets.fromLTRB(20, 20, 50, 5),
-                    child: Text(
-                      'כוכבי הלכת יעזרו לכם להבין טוב יותר את החרדה,\n ולהבין באיזה כלים אתם בדרך כלל משתמשים, \nעל מנת שתוכלו להחזיק ולהשלים את ארגז הכלים שלכם ',
-                      textDirection: TextDirection.rtl,
-                      style: GoogleFonts.assistant(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ))
-              ]),
-              // width:MediaQuery.of(context).size.width,
-            ]),
-            Positioned(
-              right: 20,
-              top: height * 0.25,
-              child: GestureDetector(
-                child: Container(
-                    height: 200,
-                    width: 200,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                            left: 5,
-                            child: Container(
-                              width: 165,
-                              height: 165,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x0c000000),
-                                    blurRadius: 18,
-                                    offset: Offset(0, -2),
-                                  ),
-                                ],
-                                color: Color(0xfffaf5c6),
+              Positioned(
+                right: 20,
+                top: height * 0.25,
+                child: GestureDetector(
+                  child: Container(
+                      height: 200,
+                      width: 200,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                              left: 5,
+                              child: Container(
+                                width: 165,
+                                height: 165,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x0c000000),
+                                      blurRadius: 18,
+                                      offset: Offset(0, -2),
+                                    ),
+                                  ],
+                                  color: Color(0xfffaf5c6),
+                                ),
+                              )),
+                          Image.asset('images/Yellow_Star.png'),
+                          Positioned(
+                              child: Text(
+                                'מחשבות',
+                                style: GoogleFonts.assistant(),
                               ),
-                            )),
-                        Image.asset('images/Yellow_Star.png'),
-                        Positioned(
-                            child: Text(
-                              'מחשבות',
-                              style: GoogleFonts.assistant(),
-                            ),
-                            right: 85,
-                            top: 70),
-                      ],
-                    )),
-                onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => Stars(cur_star: 3)));
-                },
+                              right: 85,
+                              top: 70),
+                        ],
+                      )),
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) => Stars(cur_star: 3)));
+                  },
+                ),
               ),
-            ),
-            Positioned(
-                left: 70,
-                top: MediaQuery.of(context).size.height * 0.3,
-                child: GestureDetector(
-                    child: Stack(
-                      children: [
-                        Positioned(
-                            left: 5,
-                            child: Container(
-                              width: 98,
-                              height: 98,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Color(0x0c000000),
-                                    blurRadius: 18,
-                                    offset: Offset(0, -2),
-                                  ),
-                                ],
-                                color: Color(0xffa9e1f4),
+              Positioned(
+                  left: 70,
+                  top: MediaQuery.of(context).size.height * 0.3,
+                  child: GestureDetector(
+                      child: Stack(
+                        children: [
+                          Positioned(
+                              left: 5,
+                              child: Container(
+                                width: 98,
+                                height: 98,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Color(0x0c000000),
+                                      blurRadius: 18,
+                                      offset: Offset(0, -2),
+                                    ),
+                                  ],
+                                  color: Color(0xffa9e1f4),
+                                ),
+                              )),
+                          Image.asset('images/Blue_Star.png'),
+                          Positioned(
+                              child: Text(
+                                'רגש',
+                                style: GoogleFonts.assistant(),
                               ),
-                            )),
-                        Image.asset('images/Blue_Star.png'),
-                        Positioned(
-                            child: Text(
-                              'רגש',
-                              style: GoogleFonts.assistant(),
-                            ),
-                            right: 43,
-                            top: 35),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              Stars(cur_star: 2)));
-                    })),
-            Positioned(
-                left: 5,
-                top: height * 0.45,
-                child: GestureDetector(
-                    child: Container(
-                        height: 100,
-                        width: 100,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                left: 7,
-                                top: 7,
-                                child: Container(
-                                  width: 74,
-                                  height: 74,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0x0c000000),
-                                        blurRadius: 18,
-                                        offset: Offset(0, -2),
-                                      ),
-                                    ],
-                                    color: Color(0xffefb3e2),
+                              right: 43,
+                              top: 35),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                Stars(cur_star: 2)));
+                      })),
+              Positioned(
+                  left: 5,
+                  top: height * 0.45,
+                  child: GestureDetector(
+                      child: Container(
+                          height: 100,
+                          width: 100,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                  left: 7,
+                                  top: 7,
+                                  child: Container(
+                                    width: 74,
+                                    height: 74,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(0x0c000000),
+                                          blurRadius: 18,
+                                          offset: Offset(0, -2),
+                                        ),
+                                      ],
+                                      color: Color(0xffefb3e2),
+                                    ),
+                                  )),
+                              Image.asset('images/Pink_Star.png'),
+                              Positioned(
+                                  child: Text(
+                                    'התנהגות',
+                                    style: GoogleFonts.assistant(),
                                   ),
-                                )),
-                            Image.asset('images/Pink_Star.png'),
-                            Positioned(
-                                child: Text(
-                                  'התנהגות',
-                                  style: GoogleFonts.assistant(),
-                                ),
-                                right: 28,
-                                top: 32),
-                          ],
-                        )),
-                    onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              Stars(cur_star: 0)));
-                    })),
-            Positioned(
-                right: 150,
-                top: height * 0.50,
-                child: GestureDetector(
-                    child: Container(
-                        height: 150,
-                        width: 150,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                left: 3,
-                                top: -1,
-                                child: Container(
-                                  width: 132,
-                                  height: 132,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Color(0x0c000000),
-                                        blurRadius: 18,
-                                        offset: Offset(0, -2),
-                                      ),
-                                    ],
-                                    color: Color(0xffc7f5e0),
+                                  right: 28,
+                                  top: 32),
+                            ],
+                          )),
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                Stars(cur_star: 0)));
+                      })),
+              Positioned(
+                  right: 150,
+                  top: height * 0.50,
+                  child: GestureDetector(
+                      child: Container(
+                          height: 150,
+                          width: 150,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                  left: 3,
+                                  top: -1,
+                                  child: Container(
+                                    width: 132,
+                                    height: 132,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color(0x0c000000),
+                                          blurRadius: 18,
+                                          offset: Offset(0, -2),
+                                        ),
+                                      ],
+                                      color: Color(0xffc7f5e0),
+                                    ),
+                                  )),
+                              Image.asset('images/Green_Star.png'),
+                              Positioned(
+                                  child: Text(
+                                    'גוף',
+                                    style: GoogleFonts.assistant(),
                                   ),
-                                )),
-                            Image.asset('images/Green_Star.png'),
-                            Positioned(
-                                child: Text(
-                                  'גוף',
-                                  style: GoogleFonts.assistant(),
-                                ),
-                                right: 75,
-                                top: 55),
-                          ],
-                        )),
-                    onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              Stars(cur_star: 1)));
-                    })) /*Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  right: 75,
+                                  top: 55),
+                            ],
+                          )),
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                Stars(cur_star: 1)));
+                      })) /*Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Container(
                   // color: Colors.green,
                   height: 500),
@@ -511,8 +514,9 @@ class _HomeState extends State<Home> {
               ),
             ),
          */
-          ],
-        ));
+            ],
+          )),
+    );
   }
 
   Widget diaryBody() {
@@ -556,7 +560,7 @@ class _HomeState extends State<Home> {
                           //
                           TextSpan(
                               text:
-                                  'זה היומן האישי שלכם, כל מה שתכתבו כאן אישי לכם ואף אדם אחר לא יוכל לראות אותו.\n'),
+                              'זה היומן האישי שלכם, כל מה שתכתבו כאן אישי לכם ואף אדם אחר לא יוכל לראות אותו.\n'),
                         ],
                       ),
                     ),
@@ -610,7 +614,7 @@ class _HomeState extends State<Home> {
           Container(height: 70),
           Container(
             width: 370,
-            height: height * 0.58,
+            height: height * 0.6,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(31),
               boxShadow: [
@@ -622,148 +626,64 @@ class _HomeState extends State<Home> {
               ],
               color: Color(0xffe0dfd9),
             ),
-            child: Stack(children: [
-              Column(
-                children: [
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
+            child:
+            LayoutBuilder(builder: (context, constraints){
+              var x = constraints.maxHeight/11;
+              var widg  = Container(
+                width: 360,
+                height: x,
+                decoration: BoxDecoration(
+                    border: Border(bottom: BorderSide( color: Color(0x2d34248a),))
+                ),
+              );
+              return
+                Stack(children: [
+                  Column(
+                    children: [
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+                      widg,
+
+                    ],
                   ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Positioned(
-                  top: -10,
-                  right: 0,
-                  left: 0,
-                  child: TextFormField(
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      height: 2.25,
-                      fontFamily: "Assistant",
-                      fontWeight: FontWeight.w300,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: '',
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                      ),
-                    ),
-                    textDirection: TextDirection.rtl,
-                    controller: _controller,
-                    maxLines: 11,
-                  )),
-            ]),
+                  Positioned(
+                      top: -5,
+                      right: 0,
+                      left: 0,
+                      child: TextFormField(
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          height: 2.25/370*constraints.maxHeight,
+                          fontFamily: "Assistant",
+                          fontWeight: FontWeight.w300,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: '',
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.transparent),
+                          ),
+                        ),
+                        textDirection: TextDirection.rtl,
+                        controller: _controller,
+                        maxLines: 11,
+                      )),
+                ]);
+
+            }),
+
 
             /*Container(
                 child: Text
@@ -789,7 +709,7 @@ class _HomeState extends State<Home> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Container(
-        height: height * 0.68,
+        height: height * 0.7,
         width: width,
         child: Stack(
           children: [
@@ -1036,21 +956,21 @@ class _HomeState extends State<Home> {
             ),
           ),
         ),
-        backgroundColor: Color(0xb2ffffff),
+        backgroundColor: Color(0x0),
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.black),
         leading: Builder(
             builder: (context) => GestureDetector(
-                  onTap: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                  child: Padding(
-                      padding: EdgeInsets.only(left: 20.0, top: 15.0),
-                      child: Icon(
-                        Icons.menu_rounded,
-                        size: 50,
-                      )),
-                )),
+              onTap: () {
+                Scaffold.of(context).openDrawer();
+              },
+              child: Padding(
+                  padding: EdgeInsets.only(left: 20.0, top: 15.0),
+                  child: Icon(
+                    Icons.menu_rounded,
+                    size: 50,
+                  )),
+            )),
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 20.0, top: 25.0),
@@ -1079,70 +999,130 @@ class _HomeState extends State<Home> {
     var size = Size(x, 0.7 * x);
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-            centerTitle: true,
-            title: Padding(
-              padding: EdgeInsets.only(top: 25.0),
-              child: Text(
-                "מפת דרכים",
-                //textAlign: TextAlign.center,
-                style: GoogleFonts.assistant(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-            backgroundColor: Color(0xb2ffffff),
-            elevation: 0.0,
-            iconTheme: IconThemeData(color: Colors.black),
-            leading: Builder(
-                builder: (context) => GestureDetector(
-                      onTap: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                      child: Padding(
-                          padding: EdgeInsets.only(left: 20.0, top: 15.0),
-                          child: Icon(
-                            Icons.menu_rounded,
-                            size: 50,
-                          )),
-                    )),
-            actions: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(right: 20.0, top: 25.0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: FutureBuilder<String>(
-                      future: moneyd,
-                      builder: (BuildContext context,
-                          AsyncSnapshot<String> snapshot) {
-                        // ...
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          String data = snapshot.data ?? '';
-                          return build_money(data);
-                        }
-                        return CircularProgressIndicator();
-                      },
-                    ),
-                  )),
-            ]),
+        // appBar: AppBar(
+        //     centerTitle: true,
+        //     title: Padding(
+        //       padding: EdgeInsets.only(top: 25.0),
+        //       child: Text(
+        //         "מפת דרכים",
+        //         //textAlign: TextAlign.center,
+        //         style: GoogleFonts.assistant(
+        //           color: Colors.black,
+        //           fontSize: 24,
+        //           fontWeight: FontWeight.w700,
+        //         ),
+        //       ),
+        //     ),
+        //     backgroundColor: Color(0x0),
+        //     elevation: 0.0,
+        //     iconTheme: IconThemeData(color: Colors.black),
+        //     leading: Builder(
+        //         builder: (context) => GestureDetector(
+        //               onTap: () {
+        //                 Scaffold.of(context).openDrawer();
+        //               },
+        //               child: Padding(
+        //                   padding: EdgeInsets.only(left: 20.0, top: 15.0),
+        //                   child: Icon(
+        //                     Icons.menu_rounded,
+        //                     size: 50,
+        //                   )),
+        //             )),
+        //     actions: <Widget>[
+        //       Padding(
+        //           padding: EdgeInsets.only(right: 20.0, top: 25.0),
+        //           child: GestureDetector(
+        //             onTap: () {},
+        //             child: FutureBuilder<String>(
+        //               future: moneyd,
+        //               builder: (BuildContext context,
+        //                   AsyncSnapshot<String> snapshot) {
+        //                 // ...
+        //                 if (snapshot.connectionState == ConnectionState.done) {
+        //                   String data = snapshot.data ?? '';
+        //                   return build_money(data);
+        //                 }
+        //                 return CircularProgressIndicator();
+        //               },
+        //             ),
+        //           )),
+        //     ]),
         backgroundColor: Colors.deepPurple,
         body: Stack(
           children: [
             Positioned(
-              left: -((1 * MediaQuery.of(context).size.height) -
-                      MediaQuery.of(context).size.width) /
-                  2,
-              top: -0.91 * MediaQuery.of(context).size.height,
+              left: -((1.3 * MediaQuery.of(context).size.height) -
+                  MediaQuery.of(context).size.width) / 2,
+              top: -1.13 * MediaQuery.of(context).size.height,
               child: Container(
-                  width: 1 * MediaQuery.of(context).size.height,
-                  height: 1 * MediaQuery.of(context).size.height,
+                  width: 1.3 * MediaQuery.of(context).size.height,
+                  height: 1.3 * MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Color(
                         0xb2ffffff,
                       ))),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  flex: 1,
+                  child: Builder(
+                      builder: (context) => GestureDetector(
+                        onTap: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                        child: Padding(
+                            padding: EdgeInsets.only(left: 20.0, top: 15.0),
+                            child: Icon(
+                              Icons.menu_rounded,
+                              size: 50,
+                            )),
+                      )),
+                ),
+                Flexible(
+                  flex: 4,
+                  child: Container(
+                    width: 1000,
+                    height: 100,
+                    child: Center(child: Padding(
+                      padding: EdgeInsets.only(top: 25.0),
+                      child: Text(
+                        "מפת דרכים",
+                        //textAlign: TextAlign.center,
+                        style: GoogleFonts.assistant(
+                          color: Colors.black,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),),
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Padding(
+                      padding: EdgeInsets.only(right: 20.0, top: 25.0),
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: FutureBuilder<String>(
+                          future: moneyd,
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            // ...
+                            if (snapshot.connectionState == ConnectionState.done) {
+                              String data = snapshot.data ?? '';
+                              return build_money(data);
+                            }
+                            return CircularProgressIndicator();
+                          },
+                        ),
+                      )),
+                ),
+
+
+              ],
             ),
             Column(children: [
               Container(
@@ -1151,12 +1131,12 @@ class _HomeState extends State<Home> {
               (page_index == 0
                   ? homeBody(size, _name)
                   : page_index == 1
-                      ? diaryBody()
-                      : page_index == 2
-                          ? psychoBody(_name)
-                          : page_index == 3
-                              ? medBody()
-                              : homeBody(size, _name))
+                  ? diaryBody()
+                  : page_index == 2
+                  ? psychoBody(_name)
+                  : page_index == 3
+                  ? medBody()
+                  : homeBody(size, _name))
             ])
           ],
         ),
@@ -1197,18 +1177,18 @@ class _HomeState extends State<Home> {
                   ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
-                    future: _adata,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<AvatarData> snapshot) {
-                      // ...
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        return AvatarStack(
-                            data: (snapshot.data ??
-                                AvatarData(body: AvatarData.body_default)));
-                      }
-                      return CircularProgressIndicator();
-                    },
-                  )),
+                        future: _adata,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<AvatarData> snapshot) {
+                          // ...
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            return AvatarStack(
+                                data: (snapshot.data ??
+                                    AvatarData(body: AvatarData.body_default)));
+                          }
+                          return CircularProgressIndicator();
+                        },
+                      )),
                 ])),
             ListTile(
               title: Text("עצב דמות",
@@ -1376,10 +1356,10 @@ class _LoadBar extends CustomPainter {
 class _TaskIcon extends StatelessWidget {
   _TaskIcon(
       {this.text,
-      this.surprise = false,
-      this.daily = false,
-      required this.slices,
-      required this.complete});
+        this.surprise = false,
+        this.daily = false,
+        required this.slices,
+        required this.complete});
 
   final String? text;
   final bool surprise, daily;
@@ -1390,43 +1370,43 @@ class _TaskIcon extends StatelessWidget {
     DateTime date = DateTime.now();
     return LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-      return Column(
-        children: [
-          Container(
-            height: 0.7 * min(constraints.maxWidth, constraints.maxHeight),
-            width: 0.7 * min(constraints.maxWidth, constraints.maxHeight),
-            child: Stack(children: [
-              CustomPaint(
-                size: Size.square(
-                    0.7 * min(constraints.maxWidth, constraints.maxHeight)),
-                painter: _PaintTask(slices: slices, complete: complete),
-              ),
-              Center(
-                child: Container(
-                  height: 0.5 * constraints.maxHeight,
-                  width: 0.5 * constraints.maxWidth,
-                  child: Center(
-                    child: Text(
-                      (surprise)
-                          ? '?'
-                          : ((daily)
-                              ? date.day.toString() +
-                                  '/' +
-                                  (date.month.toString())
-                              : ""),
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
+          return Column(
+            children: [
+              Container(
+                height: 0.7 * min(constraints.maxWidth, constraints.maxHeight),
+                width: 0.7 * min(constraints.maxWidth, constraints.maxHeight),
+                child: Stack(children: [
+                  CustomPaint(
+                    size: Size.square(
+                        0.7 * min(constraints.maxWidth, constraints.maxHeight)),
+                    painter: _PaintTask(slices: slices, complete: complete),
                   ),
-                ),
-              )
-            ]),
-          ),
-          if (daily) Text('עדכון יומי'),
-          if (surprise) Text('הפתעה'),
-          if (text != null && !daily && !surprise) Text((text ?? ''))
-        ],
-      );
-    });
+                  Center(
+                    child: Container(
+                      height: 0.5 * constraints.maxHeight,
+                      width: 0.5 * constraints.maxWidth,
+                      child: Center(
+                        child: Text(
+                          (surprise)
+                              ? '?'
+                              : ((daily)
+                              ? date.day.toString() +
+                              '/' +
+                              (date.month.toString())
+                              : ""),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+                  )
+                ]),
+              ),
+              if (daily) Text('עדכון יומי'),
+              if (surprise) Text('הפתעה'),
+              if (text != null && !daily && !surprise) Text((text ?? ''))
+            ],
+          );
+        });
   }
 }
 
@@ -1440,7 +1420,7 @@ class _PaintTask extends CustomPainter {
     double sw = 7;
     var painter = Paint()
       ..color = Color(0xFFC4C4C4)
-      // ..color = Colors.black
+    // ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = sw;
     Offset c = Offset(size.height / 2, size.width / 2);

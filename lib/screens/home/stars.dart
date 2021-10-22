@@ -44,7 +44,7 @@ class StarsState extends State<Stars> {
   static Future<String> loadMoney() async {
     String? pid = AuthRepository.instance().user?.uid;
     var v =
-        (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
+    (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
     var a = v['money'];
     var s = a.toString();
     return s;
@@ -81,7 +81,7 @@ class StarsState extends State<Stars> {
     } else
       return [];
   }
- int page=0;
+  int page=0;
   List<Color> colors=[Color(0xffEEDBEA),Color(0xffC7F5E1),Color(0xffA9E1F4),Color(0xffFBF6C6)];
   Color _chooseColor() {
     int i = geti();
@@ -117,7 +117,7 @@ class StarsState extends State<Stars> {
 
 
     if(first){
-     return cur_star;
+      return cur_star;
     }else
     {return page;}
 
@@ -126,8 +126,8 @@ class StarsState extends State<Stars> {
   @override
   void initState() {
     super.initState();
-      background=colors[cur_star];
-      page=cur_star;
+    background=colors[cur_star];
+    page=cur_star;
     _pageController = PageController(initialPage: cur_star);
     _currentPageNotifier = ValueNotifier<int>(cur_star);
     _adata = AvatarData.load();
@@ -147,83 +147,144 @@ class StarsState extends State<Stars> {
     var height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-          centerTitle: true,
-          title: Padding(
-            padding: EdgeInsets.only(top: 25.0),
-            child: Text(
-              "מפת דרכים",
-              //textAlign: TextAlign.center,
-              style: GoogleFonts.assistant(
-                color: Colors.black,
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          backgroundColor: Color(0xb2ffffff),
-          elevation: 0.0,
-          iconTheme: IconThemeData(color: Colors.black),
-          leading: Builder(
-              builder: (context) => GestureDetector(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 15.0),
-                        child: Icon(
-                          Icons.menu_rounded,
-                          size: 50,
-                        )),
-                  )),
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(right: 20.0, top: 25.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: FutureBuilder<String>(
-                    future: moneyd,
-                    builder:
-                        (BuildContext context, AsyncSnapshot<String> snapshot) {
-                      // ...
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        String data = snapshot.data ?? '';
-                        return build_money(data);
-                      }
-                      return CircularProgressIndicator();
-                    },
-                  ),
-                )),
-          ]),
+      // appBar: AppBar(
+      //     centerTitle: true,
+      //     title: Padding(
+      //       padding: EdgeInsets.only(top: 25.0),
+      //       child: Text(
+      //         "מפת דרכים",
+      //         //textAlign: TextAlign.center,
+      //         style: GoogleFonts.assistant(
+      //           color: Colors.black,
+      //           fontSize: 24,
+      //           fontWeight: FontWeight.w700,
+      //         ),
+      //       ),
+      //     ),
+      //     backgroundColor: Color(0xb2ffffff),
+      //     elevation: 0.0,
+      //     iconTheme: IconThemeData(color: Colors.black),
+      //     leading: Builder(
+      //         builder: (context) => GestureDetector(
+      //               onTap: () {
+      //                 Scaffold.of(context).openDrawer();
+      //               },
+      //               child: Padding(
+      //                   padding: EdgeInsets.only(left: 20.0, top: 15.0),
+      //                   child: Icon(
+      //                     Icons.menu_rounded,
+      //                     size: 50,
+      //                   )),
+      //             )),
+      //     actions: <Widget>[
+      //       Padding(
+      //           padding: EdgeInsets.only(right: 20.0, top: 25.0),
+      //           child: GestureDetector(
+      //             onTap: () {},
+      //             child: FutureBuilder<String>(
+      //               future: moneyd,
+      //               builder:
+      //                   (BuildContext context, AsyncSnapshot<String> snapshot) {
+      //                 // ...
+      //                 if (snapshot.connectionState == ConnectionState.done) {
+      //                   String data = snapshot.data ?? '';
+      //                   return build_money(data);
+      //                 }
+      //                 return CircularProgressIndicator();
+      //               },
+      //             ),
+      //           )),
+      //     ]),
       backgroundColor: Colors.deepPurple,
       body: Container(child:Stack(
         children: [
           Positioned(
-            left: -((1 * MediaQuery.of(context).size.height) -
-                    MediaQuery.of(context).size.width) /
-                2,
-            top: -0.91 * MediaQuery.of(context).size.height,
+            left: -((1.3 * MediaQuery.of(context).size.height) -
+                MediaQuery.of(context).size.width) / 2,
+            top: -1.13 * MediaQuery.of(context).size.height,
             child: Container(
-                width: 1 * MediaQuery.of(context).size.height,
-                height: 1 * MediaQuery.of(context).size.height,
+                width: 1.3 * MediaQuery.of(context).size.height,
+                height: 1.3 * MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(
                       0xb2ffffff,
                     ))),
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Builder(
+                    builder: (context) => GestureDetector(
+                      onTap: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                      child: Padding(
+                          padding: EdgeInsets.only(left: 20.0, top: 15.0),
+                          child: Icon(
+                            Icons.menu_rounded,
+                            size: 50,
+                          )),
+                    )),
+              ),
+              Flexible(
+                flex: 4,
+                child: Container(
+                  width: 1000,
+                  height: 100,
+                  child: Center(child: Padding(
+                    padding: EdgeInsets.only(top: 25.0),
+                    child: Text(
+                      "מפת דרכים",
+                      //textAlign: TextAlign.center,
+                      style: GoogleFonts.assistant(
+                        color: Colors.black,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),),
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Padding(
+                    padding: EdgeInsets.only(right: 20.0, top: 25.0),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: FutureBuilder<String>(
+                        future: moneyd,
+                        builder: (BuildContext context,
+                            AsyncSnapshot<String> snapshot) {
+                          // ...
+                          if (snapshot.connectionState == ConnectionState.done) {
+                            String data = snapshot.data ?? '';
+                            return build_money(data);
+                          }
+                          return CircularProgressIndicator();
+                        },
+                      ),
+                    )),
+              ),
+
+
+            ],
+          ),
           Column(children: [
             Container(
-              height: 80,
+              height: height * 0.2,
             ),
             Container(
+              // color: Colors.green,
                 height: height * 0.8,
                 width: width,
                 child: Stack(
                   children: [
                     Positioned(
                         top: 20,
-                        right: -height * 0.7 * 0.15,
+                        right: -height * 0.7/2+width/2,
                         child: Container(
                           width: height * 0.7,
                           height: height * 0.7,
@@ -238,18 +299,18 @@ class StarsState extends State<Stars> {
                                 first=false;
 
                               background=colors[index];
-                                page=index;
-                                _currentPageNotifier.value = index;
+                              page=index;
+                              _currentPageNotifier.value = index;
                               setState(() {});
                             },
                             controller: _pageController,
-                  children: [ for (var i = 0; i < 4; i++)
-                    Column(
+                            children: [ for (var i = 0; i < 4; i++)
+                              Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   children: [
                                     ExpoStars(3,expos,_adata,0,i),
-                              ExpoStars(2,expos,_adata,3,i),
+                                    ExpoStars(2,expos,_adata,3,i),
                                     Container(height: 5)
                                   ])],
 
@@ -270,41 +331,43 @@ class StarsState extends State<Stars> {
                         top: height * 0.75,
                         right: width * 0.4)
                   ],
-                ))
+                )
+            )
           ]),
           Positioned(
-            top: 0.13 * height,
+            top: 0.15 * height,
             left: (first)?((cur_star == 0 ||
                 cur_star == 3)
                 ? width * 0.4
                 : width * 0.45):(_currentPageNotifier.value == 0 ||
-                    _currentPageNotifier.value == 3)
+                _currentPageNotifier.value == 3)
                 ? width * 0.4
                 : width * 0.45,
-            child: Text(
-              _chooseTitle(),
-              textAlign: TextAlign.center,
-              textDirection: TextDirection.rtl,
-              style: GoogleFonts.assistant(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xff35258A)),
+            child: Column(
+              children: [
+                Container(
+                  height: 50,
+                  width:50,
+                  padding: EdgeInsets.all(5),
+                  child: Image.asset(_chooseIcon(), color: Color(0xffB3E8EF)),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xff35258A),
+                  ),
+                ),
+                Text(
+                  _chooseTitle(),
+                  textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
+                  style: GoogleFonts.assistant(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xff35258A)),
+                )
+              ],
             ),
           ),
-          Positioned(
-            top: 60,
-            left: width * 0.44,
-            child: Container(
-              height: 50,
-              width:50,
-              padding: EdgeInsets.all(5),
-                child: Image.asset(_chooseIcon(), color: Color(0xffB3E8EF)),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xff35258A),
-              ),
-            ),
-          ),
+
           Positioned(child: TextButton(
             style: TextButton.styleFrom(
               backgroundColor: Color(0xff35258a),
@@ -320,13 +383,13 @@ class StarsState extends State<Stars> {
               color: Colors.white,
             ),
             onPressed:   ()   {Navigator.of(context).pushReplacement(MaterialPageRoute(
-    builder: (BuildContext context) =>
-    Home()));
-    }
+                builder: (BuildContext context) =>
+                    Home()));
+            }
             ,
           ),
-          top:30,
-          left:width*0.8
+              top:30,
+              left:width*0.8
           ),
           Positioned(
               child: Image.asset('images/Shoola.png'),
@@ -372,18 +435,18 @@ class StarsState extends State<Stars> {
                 ),
                 Positioned(
                     child: FutureBuilder<AvatarData>(
-                  future: _adata,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<AvatarData> snapshot) {
-                    // ...
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return AvatarStack(
-                          data: (snapshot.data ??
-                              AvatarData(body: AvatarData.body_default)));
-                    }
-                    return CircularProgressIndicator();
-                  },
-                )),
+                      future: _adata,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<AvatarData> snapshot) {
+                        // ...
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return AvatarStack(
+                              data: (snapshot.data ??
+                                  AvatarData(body: AvatarData.body_default)));
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    )),
               ])),
           ListTile(
             title: Text("עצב דמות",
@@ -474,22 +537,22 @@ ExpoStars(int amount,expos,_adata,prevs,curr_page){
                         Navigator.of(
                             context)
                             .pushReplacement(
-                            new MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                (curr_page==0)?new Expo1(
-                                      adata: data,
-                                      theCase: data1,
-                                    ):(curr_page==1)? new BodyTools(
-                                  adata: data,
-                                  theCase: data1,prev:0
-                                ):(curr_page==2)?new FeelingsTools(
-                                  adata: data,
-                                  theCase: data1,
-                                  prev:0
-                                ):new ThoughtsChallenge(prev:0,
-                                  adata: data,
-                                  theCase: data1,
-                                )
+                          new MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                            (curr_page==0)?new Expo1(
+                              adata: data,
+                              theCase: data1,
+                            ):(curr_page==1)? new BodyTools(
+                                adata: data,
+                                theCase: data1,prev:0
+                            ):(curr_page==2)?new FeelingsTools(
+                                adata: data,
+                                theCase: data1,
+                                prev:0
+                            ):new ThoughtsChallenge(prev:0,
+                              adata: data,
+                              theCase: data1,
+                            )
                             ,),);
                       },
                       child: Image.asset(
@@ -498,8 +561,8 @@ ExpoStars(int amount,expos,_adata,prevs,curr_page){
                 return CircularProgressIndicator();
               },
             ),
-          Positioned(top:85,left:17,child:(Text('חשיפה '+(i+1).toString(),style: GoogleFonts.assistant(),)))
-          ]));
+              Positioned(top:85,left:17,child:(Text('חשיפה '+(i+1).toString(),style: GoogleFonts.assistant(),)))
+            ]));
           }
           return CircularProgressIndicator();
         })

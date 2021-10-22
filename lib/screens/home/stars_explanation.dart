@@ -45,7 +45,7 @@ class StarsExpState extends State<StarsExp> {
   static Future<String> loadMoney() async {
     String? pid = AuthRepository.instance().user?.uid;
     var v =
-        (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
+    (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
     print('load');
     var a = v['money'];
     var s = a.toString();
@@ -104,8 +104,7 @@ class StarsExpState extends State<StarsExp> {
     int i = _currentPageNotifier.value;
     if (i == 0) return "images/expo/ppl.png";
     if (i == 1) return "images/expo/meditate.png";
-    if (i == 2)
-      return "images/expo/smile.png";
+    if (i == 2) return "images/expo/smile.png";
     else
       return "images/expo/brain.png";
   }
@@ -161,16 +160,16 @@ class StarsExpState extends State<StarsExp> {
           iconTheme: IconThemeData(color: Colors.black),
           leading: Builder(
               builder: (context) => GestureDetector(
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    child: Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 15.0),
-                        child: Icon(
-                          Icons.menu_rounded,
-                          size: 50,
-                        )),
-                  )),
+                onTap: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                child: Padding(
+                    padding: EdgeInsets.only(left: 20.0, top: 15.0),
+                    child: Icon(
+                      Icons.menu_rounded,
+                      size: 50,
+                    )),
+              )),
           actions: <Widget>[
             Padding(
                 padding: EdgeInsets.only(right: 20.0, top: 25.0),
@@ -196,7 +195,7 @@ class StarsExpState extends State<StarsExp> {
         children: [
           Positioned(
             left: -((1 * MediaQuery.of(context).size.height) -
-                    MediaQuery.of(context).size.width) /
+                MediaQuery.of(context).size.width) /
                 2,
             top: -0.91 * MediaQuery.of(context).size.height,
             child: Container(
@@ -212,62 +211,64 @@ class StarsExpState extends State<StarsExp> {
             Container(
               height: 80,
             ),
-            Container(
-                height: height * 0.8,
-                width: width,
-                child: Stack(
-                  children: [
-                    Positioned(
-                        top: 20,
-                        right: -height * 0.7 * 0.15,
-                        child: Container(
-                          width: height * 0.7,
-                          height: height * 0.7,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: _chooseColor(),
+            Flexible(
+              child: Container(
+                  height: height * 0.8,
+                  width: width,
+                  child: Stack(
+                    children: [
+                      Positioned(
+                          top: 20,
+                          right: -height * 0.7 * 0.15,
+                          child: Container(
+                            width: height * 0.7,
+                            height: height * 0.7,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: _chooseColor(),
+                            ),
+                            child: PageView.builder(
+                              scrollDirection: Axis.horizontal,
+                              onPageChanged: (int index) {
+                                _currentPageNotifier.value = index;
+                                setState(() {});
+                              },
+                              itemCount: 4,
+                              controller: _pageController,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      ExpoStars(3,expos,_adata,0,_currentPageNotifier.value),
+                                      ExpoStars(2,expos,_adata,3,_currentPageNotifier.value),
+                                      Container(height: 5)
+                                    ]);
+                              },
+                            ),
+                          )),
+                      Positioned(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CirclePageIndicator(
+                              itemCount: 4,
+                              currentPageNotifier: _currentPageNotifier,
+                              size: 10,
+                              dotColor: Colors.white54,
+                              selectedSize: 10,
+                              selectedDotColor: Colors.white,
+                            ),
                           ),
-                          child: PageView.builder(
-                            scrollDirection: Axis.horizontal,
-                            onPageChanged: (int index) {
-                              _currentPageNotifier.value = index;
-                              setState(() {});
-                            },
-                            itemCount: 4,
-                            controller: _pageController,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ExpoStars(3,expos,_adata,0,_currentPageNotifier.value),
-                              ExpoStars(2,expos,_adata,3,_currentPageNotifier.value),
-                                    Container(height: 5)
-                                  ]);
-                            },
-                          ),
-                        )),
-                    Positioned(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CirclePageIndicator(
-                            itemCount: 4,
-                            currentPageNotifier: _currentPageNotifier,
-                            size: 10,
-                            dotColor: Colors.white54,
-                            selectedSize: 10,
-                            selectedDotColor: Colors.white,
-                          ),
-                        ),
-                        top: height * 0.75,
-                        right: width * 0.4)
-                  ],
-                ))
+                          top: height * 0.75,
+                          right: width * 0.4)
+                    ],
+                  )),
+            )
           ]),
           Positioned(
             top: 0.13 * height,
             left: (_currentPageNotifier.value == 0 ||
-                    _currentPageNotifier.value == 3)
+                _currentPageNotifier.value == 3)
                 ? width * 0.4
                 : width * 0.45,
             child: Text(
@@ -282,6 +283,7 @@ class StarsExpState extends State<StarsExp> {
           ),
           Positioned(
             top: 60,
+
             left: width * 0.44,
             child: Container(
               height: 50,
@@ -312,13 +314,13 @@ class StarsExpState extends State<StarsExp> {
               color: Colors.white,
             ),
             onPressed:   ()   {Navigator.of(context).pushReplacement(MaterialPageRoute(
-    builder: (BuildContext context) =>
-    Home()));
-    }
+                builder: (BuildContext context) =>
+                    Home()));
+            }
             ,
           ),
-          top:30,
-          left:width*0.8
+              top:30,
+              left:width*0.8
           ),
           Positioned(
               child: Image.asset('images/Shoola.png'),
@@ -363,59 +365,59 @@ class StarsExpState extends State<StarsExp> {
                 ),
                 Positioned(
                     child: FutureBuilder<AvatarData>(
-                  future: _adata,
-                  builder: (BuildContext context,
-                      AsyncSnapshot<AvatarData> snapshot) {
-                    // ...
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      return AvatarStack(
-                          data: (snapshot.data ??
-                              AvatarData(body: AvatarData.body_default)));
-                    }
-                    return CircularProgressIndicator();
-                  },
-                )),
+                      future: _adata,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<AvatarData> snapshot) {
+                        // ...
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return AvatarStack(
+                              data: (snapshot.data ??
+                                  AvatarData(body: AvatarData.body_default)));
+                        }
+                        return CircularProgressIndicator();
+                      },
+                    )),
               ])),
-        ListTile(
-          title: Text("עצב דמות",
-              textDirection: TextDirection.rtl,
-              style: GoogleFonts.assistant()),
-          onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    Avatar(first: false, data: _adata)));
-          },
-        ),
-        ListTile(
-          title: Text("מפת דרכים",
-              textDirection: TextDirection.rtl,
-              style: GoogleFonts.assistant()),
-          onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => Home()));
-          },
-        ),
-        ListTile(
-          title: Text("שאלון יומי",
-              textDirection: TextDirection.rtl,
-              style: GoogleFonts.assistant()),
-          onTap: () {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => MyQuestions()));
-          },
-        ),
-        ListTile(
-          title: Text("התנתק",
-              textDirection: TextDirection.rtl,
-              style: GoogleFonts.assistant()),
-          onTap: () {
-            Future<void> _signOut() async {
-              await FirebaseAuth.instance.signOut();
-            }
+          ListTile(
+            title: Text("עצב דמות",
+                textDirection: TextDirection.rtl,
+                style: GoogleFonts.assistant()),
+            onTap: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      Avatar(first: false, data: _adata)));
+            },
+          ),
+          ListTile(
+            title: Text("מפת דרכים",
+                textDirection: TextDirection.rtl,
+                style: GoogleFonts.assistant()),
+            onTap: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) => Home()));
+            },
+          ),
+          ListTile(
+            title: Text("שאלון יומי",
+                textDirection: TextDirection.rtl,
+                style: GoogleFonts.assistant()),
+            onTap: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) => MyQuestions()));
+            },
+          ),
+          ListTile(
+            title: Text("התנתק",
+                textDirection: TextDirection.rtl,
+                style: GoogleFonts.assistant()),
+            onTap: () {
+              Future<void> _signOut() async {
+                await FirebaseAuth.instance.signOut();
+              }
 
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) => Login()));
-          },
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) => Login()));
+            },
           ),
         ]),
       ),
@@ -426,11 +428,11 @@ class StarsExpState extends State<StarsExp> {
 ExpoStars(int amount,expos,_adata,prevs,curr_page){
 
   List<Widget> stars=[
-  Text("זה טקסט שמדבר על מחשבות וחרדה וכל הדברים\nזה טקסט שמדבר על מחשבות וחרדה וכל הדברים\nזה טקסט שמדבר על מחשבות וחרדה וכל הדברים\nזה טקסט שמדבר על מחשבות וחרדה וכל הדברים\n",
-    style:GoogleFonts.assistant(fontSize: 18, fontWeight: FontWeight.w500,color:Color(0xff35258A) ),)
+    Text("זה טקסט שמדבר על מחשבות וחרדה וכל הדברים\nזה טקסט שמדבר על מחשבות וחרדה וכל הדברים\nזה טקסט שמדבר על מחשבות וחרדה וכל הדברים\nזה טקסט שמדבר על מחשבות וחרדה וכל הדברים\n",
+      style:GoogleFonts.assistant(fontSize: 18, fontWeight: FontWeight.w500,color:Color(0xff35258A) ),)
 
   ];
-    return Row(mainAxisAlignment:MainAxisAlignment.center,children:stars);
+  return Row(mainAxisAlignment:MainAxisAlignment.center,children:stars);
 }
 Widget build_money(String text) {
   return Stack(children: [
