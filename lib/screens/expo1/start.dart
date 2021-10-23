@@ -800,6 +800,7 @@ class _MainState extends State<_Main> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    // print(Provider.of<ExpoData>(context, listen: false).done == [true ,true, true]);
 
     return Scaffold(
         key: scaffoldKey,
@@ -927,7 +928,9 @@ class _MainState extends State<_Main> {
               margin: EdgeInsets.all(30),
             ),
           ),
-          if(Provider.of<ExpoData>(context, listen: false).done == [true ,true, true])
+
+
+          if(ListEquality().equals(Provider.of<ExpoData>(context, listen: false).done,  [true ,true, true]))
           Positioned(
               top: height * 0.92,
               right: width * 0.8,

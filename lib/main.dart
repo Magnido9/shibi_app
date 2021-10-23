@@ -23,8 +23,8 @@ void main() async {
   await Firebase.initializeApp();
   // AuthRepository.instance().signOut();
   // runApp(Avatar(first: true,));
-  // runApp(Expo1(adata: AvatarData(), theCase: '\"להכנס לחנות בגדים ולבקש למדוד פריט מסוים. לבקש עוד פריט, לצאת ולומר תודה רבה מבלי לקנות דבר.\"'));
-  runApp(Wrapper());
+  runApp(Expo1(adata: AvatarData(), theCase: '\"להכנס לחנות בגדים ולבקש למדוד פריט מסוים. לבקש עוד פריט, לצאת ולומר תודה רבה מבלי לקנות דבר.\"'));
+  // runApp(Wrapper());
 }
 
 class Wrapper extends StatefulWidget {
