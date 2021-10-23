@@ -175,8 +175,8 @@ class _tools_state extends State<tools> {
             elevation: 0,
             disabledElevation: 0,
             backgroundColor: Colors.grey.shade400,
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () {Navigator.push(context,MaterialPageRoute(
+                builder: (BuildContext context) =>Home()) );
             },
             child: Icon(Icons.arrow_forward),
           ),

@@ -813,6 +813,7 @@ class _ballonState extends State<_BallonPage> {
     height = MediaQuery.of(context).size.height;
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         floatingActionButton: Row(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [

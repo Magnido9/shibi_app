@@ -283,7 +283,7 @@ class StarsState extends State<Stars> {
                 child: Stack(
                   children: [
                     Positioned(
-                        top: 20,
+                        top: 0,
                         right: -height * 0.7/2+width/2,
                         child: Container(
                           width: height * 0.7,

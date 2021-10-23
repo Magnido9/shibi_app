@@ -337,7 +337,7 @@ class _Page1State extends State<_Page1> {
                           Widget? child) {
                         return CustomPaint(
                             painter: _LoadBar(
-                                percent: 0, size: MediaQuery.of(context).size),
+                                percent: 1, size: MediaQuery.of(context).size),
                             size: MediaQuery.of(context).size);
                       }),
                   // color:Colors.green
@@ -398,14 +398,14 @@ class _Page1State extends State<_Page1> {
             ]),
             Positioned(
               top: 113,
-              left: 320,
+              right: 320,
               child: Container(
                 padding: EdgeInsets.all(5),
                 width: 40,
                 height:40,
                 child: FittedBox(
                   fit: BoxFit.fitHeight,
-                  child: Image.asset('images/expo/smile.png',
+                  child: Image.asset('images/expo/brain.png',
                       color: Color(0xffB3E8EF)),
                 ),
                 decoration: BoxDecoration(
@@ -670,7 +670,7 @@ class _Page2State extends State<_Page2> {
                 builder: (BuildContext context, double percent, Widget? child) {
                   return CustomPaint(
                       painter: _LoadBar(
-                          percent: 0, size: MediaQuery.of(context).size),
+                          percent: 100, size: MediaQuery.of(context).size),
                       size: MediaQuery.of(context).size);
                 }),
             // color:Colors.green
@@ -996,7 +996,7 @@ class _MainState extends State<_Main> {
                 builder: (BuildContext context, double percent, Widget? child) {
                   return CustomPaint(
                       painter: _LoadBar(
-                          percent: 0, size: MediaQuery.of(context).size),
+                          percent: 100, size: MediaQuery.of(context).size),
                       size: MediaQuery.of(context).size);
                 }),
             // color:Colors.green
@@ -1491,7 +1491,7 @@ class _LoadBar extends CustomPainter {
         center,
         size.width * 1.05,
         painter
-          ..color = Color(0xffeffbff)
+          ..color = Color(0xffF3F1DE)
           ..style = PaintingStyle.fill);
     if (percent != -1)
       canvas.drawArc(

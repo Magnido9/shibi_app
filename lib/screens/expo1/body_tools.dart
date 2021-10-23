@@ -1416,7 +1416,7 @@ class _Page3State extends State<_Page3> {
                                     child: Slider(
                                         value: duration.inSeconds.toDouble(),
                                         min: 0.0,
-                                        max: 12 * 60 + 17,
+                                        max: 80,
                                         onChanged: (double value) {
                                           setState(() {
                                             value = value;
@@ -1437,7 +1437,7 @@ class _Page3State extends State<_Page3> {
                       ])),
             ],
           ),
-          // Positioned(bottom: 0, child: Image.asset('images/meditate1.png'))
+          Positioned(bottom: 0, child: Image.asset('images/meditate1.png'))
         ]));
   }
 }
