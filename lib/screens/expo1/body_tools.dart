@@ -1113,6 +1113,61 @@ class _Page3State extends State<_Page3> {
     stopTimer();
     music.pause(); // stop the file like this
   }
+  var lines=[" נשמי נשימה עמוקה",
+    " חשבי על כל שלבי הנשימה",
+    " הרגישי את האוויר הנכנס הממלא את הריאות",
+    " נשמי ללא מאמץ",
+    " תוך כדי הנשימות, הכניסי מחשבה רצויה",
+    " מחשבה של בריאות, רוגע",
+    " אפשרי לסרעפת שלך לרדת ולריאות להתרחב",
+    " נשפי את האוויר תוך אנחה קלה",
+    " כן, מותר להאנח האנחה מנקה את הריאות",
+    "עכשיו נחזור על מה שתרגלנו ונבצע עשר נשימות",
+    " נשמי נשימה עמוקה ונשפי את האוויר",
+    " הכניסי מחשבה רצויה פנימה ותוציאי",
+    " פנימה, החוצה",
+    " ושוב אפשרי לסרעפת שלך לרדת ולריאות להתרחב",
+    " אל תשכחי להכניס ולהוציא",
+    " חזרי על הנשימות במהלך היום כשאת מרגישה צורך",
+    " ,זו הדרך הפשוטה ביותר להרפיה","",""
+  ];
+  var boldTimes=[4,4,4,4,8,5,8,7,8,8,4,6,6,10,10,4,4];
+  getText(int i){
+    if(i>16)
+      i=16;
+    return RichText(
+      textDirection: TextDirection.rtl,
+      text: TextSpan(
+        style: GoogleFonts.assistant(
+          color: Colors.black,
+          fontSize: 18,
+        ),
+        children: <TextSpan>[
+          //
+          TextSpan(
+              text:lines[i], style: GoogleFonts.assistant(
+            color: CupertinoColors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+          )), TextSpan(
+              text:lines[i+1], style: GoogleFonts.assistant(
+            color: CupertinoColors.systemGrey,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          )), TextSpan(
+              text:lines[i+2], style: GoogleFonts.assistant(
+            color: CupertinoColors.systemGrey,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ))
+        ],
+      ),
+    );
+
+
+  }
+  int m=0;
+  bool change=true;
 
   @override
   Widget build(BuildContext context) {
@@ -1306,25 +1361,22 @@ class _Page3State extends State<_Page3> {
                               bottom: 25,
                             ),
                             child: Column(children: [
-                              Text(
-                                "תרגיל זה יעזור לכם \n"
-                                "להירגע במקרים של לחץ וחרדה\n",
-                                textAlign: TextAlign.right,
-                                style: GoogleFonts.assistant(
-                                  color: CupertinoColors.systemGrey,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-
-                              Text(
-                                " לחצו על הכפתור להתחלת התרגיל",
-                                textAlign: TextAlign.right,
-                                style: GoogleFonts.assistant(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
+                              TweenAnimationBuilder(
+                                  tween: IntTween(begin: 0, end: 17),
+                                  duration: Duration(seconds: 104),
+                                  builder: (context, int h, w) {
+                                    if(timer!=null){
+                                    if(timer!.isActive&& change){
+                                      change=false;
+                                      Future.delayed( Duration(seconds:boldTimes[m] ), () {
+                                        setState(() {
+                                        });
+                                      m++;
+                                      change=true;
+                                      });
+                                    }}
+                                    return  getText(m);
+                                  }),
 
                               //                        " לחצו על הכפתור להתחלת התרגיל",
                               Container(height: 20),
