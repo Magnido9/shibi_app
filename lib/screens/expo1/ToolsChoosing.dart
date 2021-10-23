@@ -432,16 +432,19 @@ class _tools_state extends State<tools> {
           ),
           onPressed: () async {
             if (choose == 2) {
-              await Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) =>ThoughtsChallenge(adata:adata ,theCase: theCase,prev:1)));
+              await Navigator.push(context,MaterialPageRoute(
+                  builder: (BuildContext context) =>ThoughtsChallenge(adata:adata ,theCase: theCase,prev:1)) );
             } else if (choose == 0) {
-              await Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (BuildContext context) =>BodyTools(adata:adata ,theCase: theCase, prev:1)));
+              await Navigator.push(context,MaterialPageRoute(
+                  builder: (BuildContext context) =>BodyTools(adata:adata ,theCase: theCase, prev:1)) );
+
             } else if (choose == 1) {
-              await Navigator.of(context).pushReplacement(MaterialPageRoute(
+              await Navigator.push(context,MaterialPageRoute(
                   builder: (BuildContext context) =>FeelingsTools(adata:adata ,theCase: theCase,prev:1)));
+
             }
             setState(() {
+              done[choose] == true;
               choose = -1;
             });
           },

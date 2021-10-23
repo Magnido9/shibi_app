@@ -534,6 +534,9 @@ class _Page2State extends State<_Page2> {
               margin: EdgeInsets.all(30),
             ),
           ),
+          Positioned(
+              bottom: 0,
+              child: Center(child: Image.asset('images/Soldier2.png'))),
           Column(
             children: [
               Container(
@@ -654,9 +657,7 @@ class _Page2State extends State<_Page2> {
                   ))
             ],
           ),
-          Positioned(
-              bottom: 0,
-              child: Center(child: Image.asset('images/Soldier2.png')))
+
         ],
       ),
     ));
