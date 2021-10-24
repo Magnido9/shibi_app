@@ -52,14 +52,12 @@ class Expo1 extends StatelessWidget {
           '/': (context) => _Page1(),
           // When navigating to the "/second" route, build the SecondScreen widget.
           '/second': (context) => _Page2(theCase: theCase),
-          '/main': (context) => _Main(),
+          '/main': (context) => _Main(theCase: theCase,),
           '/thoughts/1': (context) => thought1_1(),
           '/thoughts/2': (context) => thought2_1(),
           '/feelings/1': (context) => feeling1_1(),
           '/body/1': (context) => body1_1(),
-          '/tools': (context) => tools(
-                adata: adata,
-                theCase: this.theCase,
+          '/tools': (context) => Home(
               ),
         },
       ),
@@ -770,8 +768,12 @@ class _Page2State extends State<_Page2> {
 }
 
 class _Main extends StatefulWidget {
+  _Main({required this.theCase});
+  String theCase;
+
   @override
   _MainState createState() => _MainState();
+
 }
 
 /**/
@@ -949,6 +951,38 @@ class _MainState extends State<_Main> {
                       color: Colors.white,
                     ),
                     onPressed: () {
+                       _getExpos() async {
+                        var n = (await FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(AuthRepository.instance().user?.uid)
+                            .get());
+                        if(n==null)
+                          return [];
+                        var name=n.data() ?? {};
+                        return name;
+                      }
+                      _setExpos() async {
+                        var n = (await FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(AuthRepository.instance().user?.uid)
+                            .get());
+                        if(n==null)
+                          return [];
+                        var name=n.data() ?? {};
+                        if(name.keys.contains('expos')){
+                          var exps=[];
+                          for(int i=0;i<name['expos'].length;i++){
+                            if(name['expos'][i]['expo']==this.widget.theCase);
+                            name['expos'][i]['finishedFirst']=true;
+                          }
+                        }
+                        print(name);
+                        print("=========================================================================================================================================================================================================================");
+                        await FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(AuthRepository.instance().user?.uid).set(name);
+                      }
+                      _setExpos();
                       Navigator.pushNamed(context, '/tools');
                     },
                   )

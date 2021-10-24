@@ -53,6 +53,9 @@ class StarsState extends State<Stars> {
   Future<AvatarData>? _adata;
   Future<String>? _name;
   var expos;
+  var expos2;
+
+
   var moneyd;
   PageController  _pageController=PageController(initialPage: 0);
 
@@ -73,10 +76,33 @@ class StarsState extends State<Stars> {
     if(n==null)
       return [];
     var name=n.data() ?? {};
+    print(name);
     if(name.keys.contains('expos')){
       var exps=[];
       for(int i=0;i<name['expos'].length;i++)
-        exps.add(name['expos'][i]['expo']);
+        if(!name['expos'][i].keys.contains('finishedFirst'))
+          exps.add(name['expos'][i]['expo']);
+      return exps;
+    } else
+      return [];
+  }
+
+  Future<List<dynamic>> _getExpos2() async {
+    var n = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get());
+    if(n==null)
+      return [];
+    var name=n.data() ?? {};
+    print("ASDA");
+    print(name);
+    if(name.keys.contains('expos')){
+      var exps=[];
+      for(int i=0;i<name['expos'].length;i++)
+        if(name['expos'][i].keys.contains('finishedFirst'))
+          exps.add(name['expos'][i]['expo']);
+      print(exps);
       return exps;
     } else
       return [];
@@ -134,6 +160,7 @@ class StarsState extends State<Stars> {
     _name = _getname();
     moneyd = loadMoney();
     expos = _getExpos();
+    expos2=_getExpos2();
   }
   Color background=Colors.white;
   @override
@@ -309,8 +336,8 @@ class StarsState extends State<Stars> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    ExpoStars(3,expos,_adata,0,i),
-                                    ExpoStars(2,expos,_adata,3,i),
+                                    ExpoStars(3,(i==0)?expos:expos2,_adata,0,i),
+                                    ExpoStars(2,(i==0)?expos:expos2,_adata,3,i),
                                     Container(height: 5)
                                   ])],
 
