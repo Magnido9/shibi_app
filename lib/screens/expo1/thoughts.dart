@@ -269,36 +269,50 @@ class _thought1_state extends State<thought1_1> {
                       context: context,
                       builder: (BuildContext context) =>
                           BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                            child:
-                            AlertDialog(
-                              backgroundColor: Color(0xffECECEC),
-                              content: RichText(
-                                textDirection: TextDirection.rtl,
-                                text: TextSpan(
-                                  style: GoogleFonts.assistant(
-                                    color: Colors.black,
-                                    fontSize: 18,
+                              filter: ImageFilter.blur(
+                                  sigmaX: 2, sigmaY: 2),
+                              child: Stack(children: [
+                                AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                          36)),
+                                  backgroundColor:
+                                  Color(0xffECECEC),
+                                  content: RichText(
+                                    textDirection:
+                                    TextDirection.rtl,
+                                    text: TextSpan(
+                                      style: GoogleFonts.assistant(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      ),
+                                      children: <TextSpan>[
+                                        //
+                                        TextSpan(
+                                            text:
+                                            'כאן נוכל להשלים את המחשבות שעולות לנו לראש בעת החרדה.\n'),
+
+
+                                      ],
+                                    ),
                                   ),
-                                  children: <TextSpan>[
-                                    //
-                                    TextSpan(
-                                        text:
-                                        'עוד לא הוכנס מלל.\n'),
+                                  actions: <Widget>[
 
                                   ],
                                 ),
-                              ),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context, 'Cancel'),
-                                  child: const Text(
-                                    'x',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                ),
-                              ],
-                            ),),
+                                Positioned(
+                                    top: height * 0.40,
+                                    left: width * 0.12,
+                                    child: GestureDetector(
+                                      child: Icon(
+                                          Icons.cancel_outlined,
+                                          size: 32,
+                                          color: Color(0xff35258A)),
+                                      onTap: () => Navigator.pop(
+                                          context, 'Cancel'),
+                                    ))
+                              ])),
                     ),
                   ),
                   Container(

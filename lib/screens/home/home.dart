@@ -545,36 +545,52 @@ class _HomeState extends State<Home> {
               ),
               onTap: () => showDialog<String>(
                 context: context,
-                builder: (BuildContext context) => BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                  child: AlertDialog(
-                    backgroundColor: Color(0xffECECEC),
-                    content: RichText(
-                      textDirection: TextDirection.rtl,
-                      text: TextSpan(
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 18,
-                        ),
-                        children: <TextSpan>[
-                          //
-                          TextSpan(
-                              text:
-                              'זה היומן האישי שלכם, כל מה שתכתבו כאן אישי לכם ואף אדם אחר לא יוכל לראות אותו.\n'),
-                        ],
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'Cancel'),
-                        child: const Text(
-                          'x',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                builder: (BuildContext context) =>
+                    BackdropFilter(
+                        filter: ImageFilter.blur(
+                            sigmaX: 2, sigmaY: 2),
+                        child: Stack(children: [
+                          AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(
+                                    36)),
+                            backgroundColor:
+                            Color(0xffECECEC),
+                            content: RichText(
+                              textDirection:
+                              TextDirection.rtl,
+                              text: TextSpan(
+                                style: GoogleFonts.assistant(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                children: <TextSpan>[
+                                  //
+                                  TextSpan(
+                                      text:
+                                      'זה היומן האישי שלכם, כל מה שתכתבו כאן הוא אישי וחשוף רק בפניכם.\n'),
+
+
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+
+                            ],
+                          ),
+                          Positioned(
+                              top: height * 0.40,
+                              left: width * 0.12,
+                              child: GestureDetector(
+                                child: Icon(
+                                    Icons.cancel_outlined,
+                                    size: 32,
+                                    color: Color(0xff35258A)),
+                                onTap: () => Navigator.pop(
+                                    context, 'Cancel'),
+                              ))
+                        ])),
               ),
             ),
             Container(width: 30),

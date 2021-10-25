@@ -518,6 +518,7 @@ class _Page2State extends State<_Page2> {
                 backgroundColor: Colors.grey.shade400,
                 onPressed: () {
                   Navigator.pop(context);
+
                 },
                 child: Icon(Icons.arrow_forward),
               ),
@@ -577,59 +578,76 @@ class _Page2State extends State<_Page2> {
                     ),
                     onTap: () => showDialog<String>(
                       context: context,
-                      builder: (BuildContext context) => BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                        child: AlertDialog(
-                          backgroundColor: Color(0xffECECEC),
-                          content: RichText(
-                            textDirection: TextDirection.rtl,
-                            text: TextSpan(
-                              style: GoogleFonts.assistant(
-                                color: Colors.black,
-                                fontSize: 18,
-                              ),
-                              children: <TextSpan>[
-                                //
-                                TextSpan(
-                                    text:
-                                        'עלייך לדרג מ-0 עד 100 יחידות מצוקה.\n'),
-                                TextSpan(
-                                    text: '0 - ',
-                                    style: GoogleFonts.assistant(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff35258A))),
-                                TextSpan(text: 'המצב לא מעורר חרדה.\n'),
-                                TextSpan(
-                                    text: '50 - ',
-                                    style: GoogleFonts.assistant(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff35258A))),
-                                TextSpan(
-                                    text:
-                                        'מצב מעורר חרדה אך, במאמץ את מרגישה שתוכלי להתמודד איתו.\n'),
-                                TextSpan(
-                                    text: '100 - ',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Color(0xff35258A))),
-                                TextSpan(
-                                    text:
-                                        'המצב שבו את מדמיינת שתחווי את החרדה הגרועה ביותר שתחויי בחייך.\n'),
-                              ],
-                            ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text(
-                                'x',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      builder: (BuildContext context) =>
+                          BackdropFilter(
+                              filter: ImageFilter.blur(
+                                  sigmaX: 2, sigmaY: 2),
+                              child: Stack(children: [
+                                AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                          36)),
+                                  backgroundColor:
+                                  Color(0xffECECEC),
+                                  content: RichText(
+                                    textDirection:
+                                    TextDirection.rtl,
+                                    text: TextSpan(
+                                      style: GoogleFonts.assistant(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      ),
+                                      children: <TextSpan>[
+                                        //
+                                        TextSpan(
+                                            text:
+                                            'עלייך לדרג מ-0 עד 100 יחידות מצוקה.\n'),
+                                        TextSpan(
+                                            text: '0 - ',
+                                            style: GoogleFonts.assistant(
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xff35258A))),
+                                        TextSpan(text: 'המצב לא מעורר חרדה.\n'),
+                                        TextSpan(
+                                            text: '50 - ',
+                                            style: GoogleFonts.assistant(
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xff35258A))),
+                                        TextSpan(
+                                            text:
+                                            'מצב מעורר חרדה אך, במאמץ את מרגישה שתוכלי להתמודד איתו.\n'),
+                                        TextSpan(
+                                            text: '100 - ',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xff35258A))),
+                                        TextSpan(
+                                            text:
+                                            'המצב שבו את מדמיינת שתחווי את החרדה הגרועה ביותר שתחויי בחייך.\n'),
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+
+                                  ],
+                                ),
+                                Positioned(
+                                    top: height * 0.34,
+                                    left: width * 0.12,
+                                    child: GestureDetector(
+                                      child: Icon(
+                                          Icons.cancel_outlined,
+                                          size: 32,
+                                          color: Color(0xff35258A)),
+                                      onTap: () => Navigator.pop(
+                                          context, 'Cancel'),
+                                    ))
+                              ])),
                     ),
+
+
+
                   ),
                   Container(
                     margin: EdgeInsets.only(right: 20, left: 20, bottom: 20),
@@ -1041,34 +1059,52 @@ class _MainState extends State<_Main> {
                     ),
                     onTap: () => showDialog<String>(
                       context: context,
-                      builder: (BuildContext context) => BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                        child: AlertDialog(
-                          backgroundColor: Color(0xffECECEC),
-                          content: RichText(
-                            textDirection: TextDirection.rtl,
-                            text: TextSpan(
-                              style: GoogleFonts.assistant(
-                                color: Colors.black,
-                                fontSize: 18,
-                              ),
-                              children: <TextSpan>[
-                                //
-                                TextSpan(text: 'עוד לא הוכנס מלל.\n'),
-                              ],
-                            ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.pop(context, 'Cancel'),
-                              child: const Text(
-                                'x',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      builder: (BuildContext context) =>
+                          BackdropFilter(
+                              filter: ImageFilter.blur(
+                                  sigmaX: 2, sigmaY: 2),
+                              child: Stack(children: [
+                                AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                          36)),
+                                  backgroundColor:
+                                  Color(0xffECECEC),
+                                  content: RichText(
+                                    textDirection:
+                                    TextDirection.rtl,
+                                    text: TextSpan(
+                                      style: GoogleFonts.assistant(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      ),
+                                      children: <TextSpan>[
+                                        //
+                                        TextSpan(
+                                            text:
+                                            'בחלון זה נוכל לזהות את החרדה במגוון אפשרויות וביטויים שונים.\n'),
+
+
+                                      ],
+                                    ),
+                                  ),
+                                  actions: <Widget>[
+
+                                  ],
+                                ),
+                                Positioned(
+                                    top: height * 0.40,
+                                    left: width * 0.12,
+                                    child: GestureDetector(
+                                      child: Icon(
+                                          Icons.cancel_outlined,
+                                          size: 32,
+                                          color: Color(0xff35258A)),
+                                      onTap: () => Navigator.pop(
+                                          context, 'Cancel'),
+                                    ))
+                              ])),
                     ),
                   ),
                   Container(width: 80),
