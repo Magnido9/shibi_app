@@ -56,13 +56,13 @@ class BodyTools extends StatelessWidget {
           // When navigating to the "/second" route, build the SecondScreen widget.
           '/4': (context) => _Page4(),
           // When navigating to the "/second" route, build the SecondScreen widget.
-          '/5': (context) => _Page5(),
+          '/5': (context) => _Page5(theCase:theCase),
           '/main': (context) => _Main(),
           '/thoughts/1': (context) => thought1_1(),
           '/thoughts/2': (context) => thought2_1(),
           '/feelings/1': (context) => feeling1_1(),
           '/body/1': (context) => body1_1(),
-          '/tools': (context) => tools(theCase: theCase, adata: adata),
+          '/tools': (context) => Home(),
         },
       ),
     ));
@@ -375,6 +375,60 @@ class _Page1State extends State<_Page1> {
                   ),
                 ),
                 Container(width: 20),
+              ],
+            )),
+        Positioned(
+            top: height * 0.92,
+            right: width * 0.8,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(0xff35258a),
+                    shape: CircleBorder(),
+                    fixedSize: Size(55, 55),
+                  ),
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    _getExpos() async {
+                      var n = (await FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(AuthRepository.instance().user?.uid)
+                          .get());
+                      if(n==null)
+                        return [];
+                      var name=n.data() ?? {};
+                      return name;
+                    }
+                    _setExpos() async {
+                      var n = (await FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(AuthRepository.instance().user?.uid)
+                          .get());
+                      if(n==null)
+                        return [];
+                      var name=n.data() ?? {};
+                      if(name.keys.contains('expos')){
+                        var exps=[];
+                        for(int i=0;i<name['expos'].length;i++){
+                          if(name['expos'][i]['expo']==this.widget.theCase);
+                          name['expos'][i]['finishedSecond']=true;
+                        }
+                      }
+                      print(name);
+                      await FirebaseFirestore.instance
+                          .collection("users")
+                          .doc(AuthRepository.instance().user?.uid).set(name);
+                    }
+                    _setExpos();
+                    Navigator.pushNamed(context, '/tools');
+                  },
+                )
               ],
             )),
         Positioned(
@@ -1854,6 +1908,9 @@ class _Page4State extends State<_Page4> {
 }
 
 class _Page5 extends StatefulWidget {
+  _Page5({required this.theCase});
+
+  String theCase;
   @override
   _Page5State createState() => _Page5State();
 }
@@ -2181,6 +2238,7 @@ class _Page5State extends State<_Page5> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
+
 
                               //                        " לחצו על הכפתור להתחלת התרגיל",
                               Container(height: 20),

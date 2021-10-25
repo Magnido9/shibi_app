@@ -636,19 +636,7 @@ class _thought2_state extends State<thought2_1> {
       ),
       body: Stack(
         children: [
-          Positioned(top:-150,child:
-      Container(
-        child: TweenAnimationBuilder<double>(
-            tween: Tween<double>(begin: 0, end: 0.7),
-            duration: Duration(seconds: 1),
-            builder:
-                (BuildContext context, double percent, Widget? child) {
-              return CustomPaint(
-                  painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
-                  size: MediaQuery.of(context).size);
-            }),
-        // color:Colors.green
-      )), TweenAnimationBuilder(
+          TweenAnimationBuilder(
               tween: Tween(begin: height, end: - width*1.7),
               duration: Duration(seconds: 10),
               builder: (context,double h,w){
@@ -667,16 +655,16 @@ class _thought2_state extends State<thought2_1> {
                             return Stack(
                               children: [
                                 Positioned(
-                                  top: height*0.2,
-                                  left: width*0.21,
-                                  child: Container(
-                                    width: width*0.5,
-                                    height: height*0.5,
-                                    child: FittedBox(
-                                      fit: BoxFit.fitHeight,
-                                      child: Image.asset('images/strings.png'),
-                                    ),
-                                  )
+                                    top: height*0.2,
+                                    left: width*0.21,
+                                    child: Container(
+                                      width: width*0.5,
+                                      height: height*0.5,
+                                      child: FittedBox(
+                                        fit: BoxFit.fitHeight,
+                                        child: Image.asset('images/strings.png'),
+                                      ),
+                                    )
                                 ),
 
                                 Align(
@@ -716,7 +704,22 @@ class _thought2_state extends State<thought2_1> {
                     top: h
                 );
               }
-          ),  Positioned(child:Container(
+          ),
+
+          Positioned(top:-150,child:
+      Container(
+        child: TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0, end: 0.7),
+            duration: Duration(seconds: 1),
+            builder:
+                (BuildContext context, double percent, Widget? child) {
+              return CustomPaint(
+                  painter: _LoadBar(percent: 0, size: MediaQuery.of(context).size),
+                  size: MediaQuery.of(context).size);
+            }),
+        // color:Colors.green
+      )),
+          Positioned(child:Container(
 
             padding: EdgeInsets.all(5),
             child: FittedBox(

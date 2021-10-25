@@ -74,7 +74,6 @@ class _Page1 extends StatefulWidget {
 
 class _Page1State extends State<_Page1> {
   @override
-
   Future<AvatarData>? _adata;
   Future<String>? _name;
   @override
@@ -91,6 +90,7 @@ class _Page1State extends State<_Page1> {
         .get())['name'];
     return name;
   }
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   /**/
 
@@ -98,7 +98,8 @@ class _Page1State extends State<_Page1> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     //C8F6B1
-    return Scaffold(key: scaffoldKey,
+    return Scaffold(
+        key: scaffoldKey,
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             DrawerHeader(
@@ -136,18 +137,18 @@ class _Page1State extends State<_Page1> {
                   ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
+                    future: _adata,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<AvatarData> snapshot) {
+                      // ...
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return AvatarStack(
+                            data: (snapshot.data ??
+                                AvatarData(body: AvatarData.body_default)));
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  )),
                 ])),
             ListTile(
               title: Text("עצב דמות",
@@ -169,10 +170,10 @@ class _Page1State extends State<_Page1> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
+                    builder: (BuildContext context) => Home()));
               },
-            ),ListTile(
+            ),
+            ListTile(
               title: Text("שאלון יומי",
                   textDirection: TextDirection.rtl,
                   style: GoogleFonts.assistant()),
@@ -182,8 +183,7 @@ class _Page1State extends State<_Page1> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
+                    builder: (BuildContext context) => MyQuestions()));
               },
             ),
             ListTile(
@@ -202,29 +202,30 @@ class _Page1State extends State<_Page1> {
           ]),
         ),
         body: Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0x79F13D), Colors.white])),
-      child: Stack(
-        children: [
-          Positioned(
-              top: -150,
-              child: Container(
-                child: TweenAnimationBuilder<double>(
-                    tween: Tween<double>(begin: 0, end: 0.7),
-                    duration: Duration(seconds: 1),
-                    builder:
-                        (BuildContext context, double percent, Widget? child) {
-                      return CustomPaint(
-                          painter: _LoadBar(
-                              percent: 0, size: MediaQuery.of(context).size),
-                          size: MediaQuery.of(context).size);
-                    }),
-                // color:Colors.green
-              )),
-          /*Positioned(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x79F13D), Colors.white])),
+          child: Stack(
+            children: [
+              Positioned(
+                  top: -150,
+                  child: Container(
+                    child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0, end: 0.7),
+                        duration: Duration(seconds: 1),
+                        builder: (BuildContext context, double percent,
+                            Widget? child) {
+                          return CustomPaint(
+                              painter: _LoadBar(
+                                  percent: 0,
+                                  size: MediaQuery.of(context).size),
+                              size: MediaQuery.of(context).size);
+                        }),
+                    // color:Colors.green
+                  )),
+              /*Positioned(
               left: -0.8 * MediaQuery.of(context).size.width,
               top: -1.25 * MediaQuery.of(context).size.height,
               child: Container(
@@ -232,137 +233,138 @@ class _Page1State extends State<_Page1> {
                   height: 0.8125 * MediaQuery.of(context).size.height * 1.8,
                   decoration: BoxDecoration(
                       shape: BoxShape.circle, color: Color(0xffdee8f3)))),*/
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              child: FloatingActionButton(
-                elevation: 0,
-                disabledElevation: 0,
-                backgroundColor: Colors.grey.shade400,
-                onPressed: () {},
-                child: Icon(Icons.arrow_forward),
-              ),
-              margin: EdgeInsets.all(30),
-            ),
-          ),
-          Column(
-            children: [
-              Container(
-                height: 40,
-              ),
-              Row(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlatButton(
-                    color: Colors.transparent,
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    disabledElevation: 0,
+                    backgroundColor: Colors.grey.shade400,
                     onPressed: () {},
-                    child: new IconTheme(
-                      data:
-                          new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                      child: new Icon(Icons.menu),
-                    ),
+                    child: Icon(Icons.arrow_forward),
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "        ביצוע החשיפה",
-                      //textAlign: TextAlign.center,
-                      style: GoogleFonts.assistant(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
+                  margin: EdgeInsets.all(30),
+                ),
+              ),
+              Column(
+                children: [
+                  Container(
+                    height: 40,
+                  ),
+                  Row(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton(
+                        color: Colors.transparent,
+                        onPressed: () {},
+                        child: new IconTheme(
+                          data: new IconThemeData(
+                              size: 35, color: Color(0xff6f6ca7)),
+                          child: new Icon(Icons.menu),
+                        ),
                       ),
-                    ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "        ביצוע החשיפה",
+                          //textAlign: TextAlign.center,
+                          style: GoogleFonts.assistant(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
                   Container(
-                      margin: EdgeInsets.all(20),
-                      child: Text(
-                        "כל הכבוד! הגעתם לחשיפה :)",
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.rtl,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ))
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
+                    height: MediaQuery.of(context).size.height * 0.15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(20),
+                          child: Text(
+                            "כל הכבוד! הגעתם לחשיפה :)",
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ))
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(20),
+                          child: Text(
+                            "חשוב מאוד להסתער על החשיפה ולא לגשת\nאליה בכניעה, או פחד. לכן, זקפי את הגוף, כווצי\nוהרפי את השרירים, קחו נשימה עמוקה וזכרו-\nזה לא צריך להיות מושלם, \nכל התנסות נחשבת. \n",
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ))
+                    ],
+                  ),
                   Container(
-                      margin: EdgeInsets.all(20),
-                      child: Text(
-                        "חשוב מאוד להסתער על החשיפה ולא לגשת\nאליה בכניעה, או פחד. לכן, זקפי את הגוף, כווצי\nוהרפי את השרירים, קחו נשימה עמוקה וזכרו-\nזה לא צריך להיות מושלם, \nכל התנסות נחשבת. \n",
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.rtl,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ))
-                ],
-              ),
-              Container(
-                  margin: EdgeInsets.all(40),
-                  child: Stack(children: [
-                    Container(
-                        width: 200,
-                        height: 39,
-                        child: MaterialButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/second');
-                            },
-                            minWidth: 200,
+                      margin: EdgeInsets.all(40),
+                      child: Stack(children: [
+                        Container(
+                            width: 200,
                             height: 39,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(36)),
-                            color: Color(0xff35258a),
-                            child: Stack(children: <Widget>[
-                              Positioned(
-                                top: 5,
-                                right: 25,
-                                child: Text(
-                                  "יוצאים לדרך!",
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.left,
-                                  style: GoogleFonts.assistant(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              )
-                            ]))),
-                    Positioned(
-                        top: 5,
-                        right: 165,
-                        child: Container(
-                            width: 28,
-                            height: 28,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(36),
-                              border: Border.all(color: Colors.white, width: 9),
-                            ))),
-                  ]))
+                            child: MaterialButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/second');
+                                },
+                                minWidth: 200,
+                                height: 39,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(36)),
+                                color: Color(0xff35258a),
+                                child: Stack(children: <Widget>[
+                                  Positioned(
+                                    top: 5,
+                                    right: 25,
+                                    child: Text(
+                                      "יוצאים לדרך!",
+                                      textDirection: TextDirection.rtl,
+                                      textAlign: TextAlign.left,
+                                      style: GoogleFonts.assistant(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  )
+                                ]))),
+                        Positioned(
+                            top: 5,
+                            right: 165,
+                            child: Container(
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(36),
+                                  border:
+                                      Border.all(color: Colors.white, width: 9),
+                                ))),
+                      ]))
+                ],
+              ),
+              Positioned(
+                  bottom: 0,
+                  child: Center(child: Image.asset('images/Soldier1.png')))
             ],
           ),
-          Positioned(
-              bottom: 0,
-              child: Center(child: Image.asset('images/Soldier1.png')))
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -390,12 +392,14 @@ class _Page2State extends State<_Page2> {
         .get())['name'];
     return name;
   }
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(key: scaffoldKey,
+    return Scaffold(
+        key: scaffoldKey,
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             DrawerHeader(
@@ -433,18 +437,18 @@ class _Page2State extends State<_Page2> {
                   ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
+                    future: _adata,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<AvatarData> snapshot) {
+                      // ...
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return AvatarStack(
+                            data: (snapshot.data ??
+                                AvatarData(body: AvatarData.body_default)));
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  )),
                 ])),
             ListTile(
               title: Text("עצב דמות",
@@ -466,10 +470,10 @@ class _Page2State extends State<_Page2> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
+                    builder: (BuildContext context) => Home()));
               },
-            ),ListTile(
+            ),
+            ListTile(
               title: Text("שאלון יומי",
                   textDirection: TextDirection.rtl,
                   style: GoogleFonts.assistant()),
@@ -479,8 +483,7 @@ class _Page2State extends State<_Page2> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
+                    builder: (BuildContext context) => MyQuestions()));
               },
             ),
             ListTile(
@@ -499,168 +502,170 @@ class _Page2State extends State<_Page2> {
           ]),
         ),
         body: Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0x79F13D), Colors.white])),
-      child: Stack(
-        children: [
-          Positioned(
-              top: -150,
-              child: Container(
-                child: TweenAnimationBuilder<double>(
-                    tween: Tween<double>(begin: 0, end: 0.7),
-                    duration: Duration(seconds: 1),
-                    builder:
-                        (BuildContext context, double percent, Widget? child) {
-                      return CustomPaint(
-                          painter: _LoadBar(
-                              percent: 0, size: MediaQuery.of(context).size),
-                          size: MediaQuery.of(context).size);
-                    }),
-                // color:Colors.green
-              )),
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              child: FloatingActionButton(
-                elevation: 0,
-                disabledElevation: 0,
-                backgroundColor: Colors.grey.shade400,
-                onPressed: () {},
-                child: Icon(Icons.arrow_forward),
-              ),
-              margin: EdgeInsets.all(30),
-            ),
-          ),
-          Positioned(
-              bottom: 0,
-              child: Center(child: Image.asset('images/Soldier2.png'))),
-          Column(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x79F13D), Colors.white])),
+          child: Stack(
             children: [
-              Container(
-                height: 40,
-              ),
-              Row(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlatButton(
-                    color: Colors.transparent,
+              Positioned(
+                  top: -150,
+                  child: Container(
+                    child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0, end: 0.7),
+                        duration: Duration(seconds: 1),
+                        builder: (BuildContext context, double percent,
+                            Widget? child) {
+                          return CustomPaint(
+                              painter: _LoadBar(
+                                  percent: 0,
+                                  size: MediaQuery.of(context).size),
+                              size: MediaQuery.of(context).size);
+                        }),
+                    // color:Colors.green
+                  )),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    disabledElevation: 0,
+                    backgroundColor: Colors.grey.shade400,
                     onPressed: () {},
-                    child: new IconTheme(
-                      data:
-                          new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                      child: new Icon(Icons.menu),
-                    ),
+                    child: Icon(Icons.arrow_forward),
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "        ביצוע החשיפה",
-                      //textAlign: TextAlign.center,
-                      style: GoogleFonts.assistant(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
+                  margin: EdgeInsets.all(30),
+                ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              Positioned(
+                  bottom: 0,
+                  child: Center(child: Image.asset('images/Soldier2.png'))),
+              Column(
                 children: [
                   Container(
-                      margin: EdgeInsets.all(20),
-                      child: Text(
-                        "זמן לבצע את החשיפה -",
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.rtl,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ))
-                ],
-              ),
-              Container(
-                  height: 400,
-                  child: Stack(
+                    height: 40,
+                  ),
+                  Row(
+                    //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(30),
-                        width: width * 0.9,
-                        height: height * 0.3,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Color(0xccebebeb),
+                      FlatButton(
+                        color: Colors.transparent,
+                        onPressed: () {},
+                        child: new IconTheme(
+                          data: new IconThemeData(
+                              size: 35, color: Color(0xff6f6ca7)),
+                          child: new Icon(Icons.menu),
                         ),
-                        child: SingleChildScrollView(
-                          child: Text(
-                            Provider.of<ExpoData>(context, listen: false)
-                                .theCase,
-                            textAlign: TextAlign.right,
-                            textDirection: TextDirection.rtl,
-                            style: GoogleFonts.assistant(
-                              color: Color(0xff6f6ca7),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            ),
+                      ),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "        ביצוע החשיפה",
+                          //textAlign: TextAlign.center,
+                          style: GoogleFonts.assistant(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ),
-                      Positioned(
-                        top: height * 0.19,
-                        left: width * 0.05,
-                        child: Container(
-                            margin: EdgeInsets.all(40),
-                            child: Stack(children: [
-                              Container(
-                                  width: 100,
-                                  height: 100,
-                                  child: MaterialButton(
-                                      disabledElevation: 0,
-                                      elevation: 0,
-                                      onPressed: () {
-                                        Navigator.pushNamed(context, '/main');
-                                      },
-                                      minWidth: 100,
-                                      height: 100,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100)),
-                                      color: Color(0xff35258a),
-                                      child: Stack(children: <Widget>[
-                                        Positioned(
-                                          top: 35,
-                                          right: 0,
-                                          child: Text(
-                                            "ביצעתי!",
-                                            textDirection: TextDirection.rtl,
-                                            textAlign: TextAlign.left,
-                                            style: GoogleFonts.assistant(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        )
-                                      ]))),
-                            ])),
-                      )
                     ],
-                  ))
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(20),
+                          child: Text(
+                            "זמן לבצע את החשיפה -",
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ))
+                    ],
+                  ),
+                  Container(
+                      height: 400,
+                      child: Stack(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(30),
+                            width: width * 0.9,
+                            height: height * 0.3,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xccebebeb),
+                            ),
+                            child: SingleChildScrollView(
+                              child: Text(
+                                Provider.of<ExpoData>(context, listen: false)
+                                    .theCase,
+                                textAlign: TextAlign.right,
+                                textDirection: TextDirection.rtl,
+                                style: GoogleFonts.assistant(
+                                  color: Color(0xff6f6ca7),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: height * 0.19,
+                            left: width * 0.05,
+                            child: Container(
+                                margin: EdgeInsets.all(40),
+                                child: Stack(children: [
+                                  Container(
+                                      width: 100,
+                                      height: 100,
+                                      child: MaterialButton(
+                                          disabledElevation: 0,
+                                          elevation: 0,
+                                          onPressed: () {
+                                            Navigator.pushNamed(
+                                                context, '/main');
+                                          },
+                                          minWidth: 100,
+                                          height: 100,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(100)),
+                                          color: Color(0xff35258a),
+                                          child: Stack(children: <Widget>[
+                                            Positioned(
+                                              top: 35,
+                                              right: 0,
+                                              child: Text(
+                                                "ביצעתי!",
+                                                textDirection:
+                                                    TextDirection.rtl,
+                                                textAlign: TextAlign.left,
+                                                style: GoogleFonts.assistant(
+                                                  color: Colors.white,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.w700,
+                                                ),
+                                              ),
+                                            )
+                                          ]))),
+                                ])),
+                          )
+                        ],
+                      ))
+                ],
+              ),
             ],
           ),
-
-        ],
-      ),
-    ));
+        ));
   }
 }
 
@@ -678,13 +683,14 @@ class _MainState extends State<_Main> {
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get());
-    var d=name.data()?? {};
-    for(int i=0;i<name['expos'].length;i++){
-      if(d['expos'][i]['expo']==this.widget.theCase)
-        d['expos'][i]['feelings'][2]=a;
+    var d = name.data() ?? {};
+    for (int i = 0; i < name['expos'].length; i++) {
+      if (d['expos'][i]['expo'] == this.widget.theCase)
+        d['expos'][i]['feelings'][2] = a;
     }
     await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
   }
+
   Future<AvatarData>? _adata;
   Future<String>? _name;
   @override
@@ -701,15 +707,17 @@ class _MainState extends State<_Main> {
         .get())['name'];
     return name;
   }
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  double feeling=0;
+  double feeling = 0;
   int choose = -1;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return Scaffold(key: scaffoldKey,
+    return Scaffold(
+        key: scaffoldKey,
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             DrawerHeader(
@@ -747,18 +755,18 @@ class _MainState extends State<_Main> {
                   ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
+                    future: _adata,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<AvatarData> snapshot) {
+                      // ...
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return AvatarStack(
+                            data: (snapshot.data ??
+                                AvatarData(body: AvatarData.body_default)));
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  )),
                 ])),
             ListTile(
               title: Text("עצב דמות",
@@ -780,10 +788,10 @@ class _MainState extends State<_Main> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
+                    builder: (BuildContext context) => Home()));
               },
-            ),ListTile(
+            ),
+            ListTile(
               title: Text("שאלון יומי",
                   textDirection: TextDirection.rtl,
                   style: GoogleFonts.assistant()),
@@ -793,8 +801,7 @@ class _MainState extends State<_Main> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
+                    builder: (BuildContext context) => MyQuestions()));
               },
             ),
             ListTile(
@@ -811,8 +818,8 @@ class _MainState extends State<_Main> {
               },
             ),
           ]),
-        ),body:
-        Container(
+        ),
+        body: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
                   begin: Alignment.topCenter,
@@ -826,11 +833,12 @@ class _MainState extends State<_Main> {
                     child: TweenAnimationBuilder<double>(
                         tween: Tween<double>(begin: 0, end: 0.7),
                         duration: Duration(seconds: 1),
-                        builder:
-                            (BuildContext context, double percent, Widget? child) {
+                        builder: (BuildContext context, double percent,
+                            Widget? child) {
                           return CustomPaint(
                               painter: _LoadBar(
-                                  percent: 0, size: MediaQuery.of(context).size),
+                                  percent: 0,
+                                  size: MediaQuery.of(context).size),
                               size: MediaQuery.of(context).size);
                         }),
                     // color:Colors.green
@@ -860,8 +868,8 @@ class _MainState extends State<_Main> {
                         color: Colors.transparent,
                         onPressed: () {},
                         child: new IconTheme(
-                          data:
-                          new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
+                          data: new IconThemeData(
+                              size: 35, color: Color(0xff6f6ca7)),
                           child: new Icon(Icons.menu),
                         ),
                       ),
@@ -886,7 +894,7 @@ class _MainState extends State<_Main> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                          margin: EdgeInsets.fromLTRB(20,20,20,0),
+                          margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
                           child: Text(
                             "מדהימים!\nדרגו את החרדה שלכם בשיא החשיפה",
                             textAlign: TextAlign.right,
@@ -898,11 +906,12 @@ class _MainState extends State<_Main> {
                             ),
                           ))
                     ],
-                  ),Row(
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                          margin: EdgeInsets.fromLTRB(20,10,20,20),
+                          margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
                           child: Text(
                             "דרגו יחידות מצוקה ברגע הכי קשה ומאתגר\n במהלך החשיפה.",
                             textAlign: TextAlign.right,
@@ -915,74 +924,70 @@ class _MainState extends State<_Main> {
                           ))
                     ],
                   ),
-              Container(
-                margin:
-                    EdgeInsets.only(left: 40, right: 40, top: 30, bottom: 0),
-                child: SfSliderTheme(
-                  data: SfSliderThemeData(
-                    activeTrackHeight: 20,
-                    inactiveTrackHeight: 20,
-                    thumbColor: Color(0xffefb3e2),
-                    inactiveTrackColor: Color(0xffececec),
-                    activeTrackColor: Color(0xffececec),
-                    thumbRadius: 20,
-                    activeDividerRadius: 0,
-                    activeDividerStrokeWidth: 0,
-                    thumbStrokeWidth: 0,
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: 40, right: 40, top: 30, bottom: 0),
+                    child: SfSliderTheme(
+                      data: SfSliderThemeData(
+                        activeTrackHeight: 20,
+                        inactiveTrackHeight: 20,
+                        thumbColor: Color(0xffefb3e2),
+                        inactiveTrackColor: Color(0xffececec),
+                        activeTrackColor: Color(0xffececec),
+                        thumbRadius: 20,
+                        activeDividerRadius: 0,
+                        activeDividerStrokeWidth: 0,
+                        thumbStrokeWidth: 0,
+                      ),
+                      child: SfSlider(
+                        value: feeling.round(),
+                        min: 0,
+                        max: 100,
+                        showLabels: true,
+                        onChanged: (dynamic value) {
+                          setState(() {
+                            feeling = value;
+                          });
+                        },
+                      ),
+                    ),
                   ),
-                  child: SfSlider(
-
-                    value: feeling.round(),
-                    min: 0,
-                    max: 100,
-                    showLabels: true,
-                    onChanged: (dynamic value) {
-                      setState(() {
-                        feeling = value;
-                      });
-                    },
+                  Container(
+                    height: 20,
                   ),
-                ),
+                ],
               ),
-              Container(
-                height: 20,
-              ),
-            ],
-          ),
               Positioned(
                   bottom: 0,
                   child: Center(child: Image.asset('images/Soldier3.png'))),
-          Positioned(
-              top: height * 0.92,
-              right: width * 0.8,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0xff35258a),
-                      shape: CircleBorder(),
-                      fixedSize: Size(55, 55),
-                    ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      size: 40,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      _save(feeling);
-                      Navigator.pushNamed(context, '/four');
-                    },
-                  )
-                ],
-              )),
-
-        ],
-      ),
-    ));
+              Positioned(
+                  top: height * 0.92,
+                  right: width * 0.8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color(0xff35258a),
+                          shape: CircleBorder(),
+                          fixedSize: Size(55, 55),
+                        ),
+                        child: Icon(
+                          Icons.arrow_back,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          _save(feeling);
+                          Navigator.pushNamed(context, '/four');
+                        },
+                      )
+                    ],
+                  )),
+            ],
+          ),
+        ));
   }
-
-
 
   String _title() {
     var x = Provider.of<ExpoData>(context, listen: false).introductions;
@@ -1091,6 +1096,7 @@ class _MyButton extends StatelessWidget {
     ));
   }
 }
+
 class _Page4 extends StatefulWidget {
   _Page4({required this.theCase});
   String theCase;
@@ -1099,21 +1105,21 @@ class _Page4 extends StatefulWidget {
 }
 
 class _Page4State extends State<_Page4> {
-
   void _save(a) async {
     String? pid = AuthRepository.instance().user?.uid;
     var name = (await FirebaseFirestore.instance
         .collection("users")
         .doc(AuthRepository.instance().user?.uid)
         .get());
-    var d=name.data()?? {};
-    for(int i=0;i<name['expos'].length;i++){
-      if(d['expos'][i]['expo']==this.widget.theCase)
-        d['expos'][i]['after']=a;
+    var d = name.data() ?? {};
+    for (int i = 0; i < name['expos'].length; i++) {
+      if (d['expos'][i]['expo'] == this.widget.theCase)
+        d['expos'][i]['after'] = a;
     }
     await FirebaseFirestore.instance.collection("users").doc(pid).set(d);
   }
-  String s='';
+
+  String s = '';
   Future<AvatarData>? _adata;
   Future<String>? _name;
   @override
@@ -1130,10 +1136,11 @@ class _Page4State extends State<_Page4> {
         .get())['name'];
     return name;
   }
+
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   TextEditingController? _controller;
-  double feeling=0;
+  double feeling = 0;
   int choose = -1;
   @override
   Widget build(BuildContext context) {
@@ -1146,23 +1153,26 @@ class _Page4State extends State<_Page4> {
 
       super.initState();
     }
-    Future<void> _add() async {
 
+    Future<void> _add() async {
       String? pid = AuthRepository.instance().user?.uid;
-      var v =
-      (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
-      int money=0;
-      if(v.data()==null){
-        money=0;}
-      else {
+      var v = (await FirebaseFirestore.instance
+          .collection("avatars")
+          .doc(pid)
+          .get());
+      int money = 0;
+      if (v.data() == null) {
+        money = 0;
+      } else {
         money = v['money'];
       }
-      money+=10;
+      money += 10;
       await FirebaseFirestore.instance
           .collection("avatars")
           .doc(pid)
-          .set({'money':money}, SetOptions(merge: true));
+          .set({'money': money}, SetOptions(merge: true));
     }
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         key: scaffoldKey,
@@ -1203,18 +1213,18 @@ class _Page4State extends State<_Page4> {
                   ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
-                        future: _adata,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<AvatarData> snapshot) {
-                          // ...
-                          if (snapshot.connectionState == ConnectionState.done) {
-                            return AvatarStack(
-                                data: (snapshot.data ??
-                                    AvatarData(body: AvatarData.body_default)));
-                          }
-                          return CircularProgressIndicator();
-                        },
-                      )),
+                    future: _adata,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<AvatarData> snapshot) {
+                      // ...
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        return AvatarStack(
+                            data: (snapshot.data ??
+                                AvatarData(body: AvatarData.body_default)));
+                      }
+                      return CircularProgressIndicator();
+                    },
+                  )),
                 ])),
             ListTile(
               title: Text("עצב דמות",
@@ -1236,10 +1246,10 @@ class _Page4State extends State<_Page4> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        Home()));
+                    builder: (BuildContext context) => Home()));
               },
-            ),ListTile(
+            ),
+            ListTile(
               title: Text("שאלון יומי",
                   textDirection: TextDirection.rtl,
                   style: GoogleFonts.assistant()),
@@ -1249,8 +1259,7 @@ class _Page4State extends State<_Page4> {
                 }
 
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        MyQuestions()));
+                    builder: (BuildContext context) => MyQuestions()));
               },
             ),
             ListTile(
@@ -1267,297 +1276,388 @@ class _Page4State extends State<_Page4> {
               },
             ),
           ]),
-        ),body:
-    Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(0x79F13D), Colors.white])),
-      child: Stack(
-        children: [
-          Positioned(
-              top: -150,
-              child: Container(
-                child: TweenAnimationBuilder<double>(
-                    tween: Tween<double>(begin: 0, end: 0.7),
-                    duration: Duration(seconds: 1),
-                    builder:
-                        (BuildContext context, double percent, Widget? child) {
-                      return CustomPaint(
-                          painter: _LoadBar(
-                              percent: 0, size: MediaQuery.of(context).size),
-                          size: MediaQuery.of(context).size);
-                    }),
-                // color:Colors.green
-              )),Positioned(bottom:0,
-            child:Image.asset("images/Soldier3.png")
-          ),
-
-          Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              child: FloatingActionButton(
-                elevation: 0,
-                disabledElevation: 0,
-                backgroundColor: Colors.grey.shade400,
-                onPressed: () {},
-                child: Icon(Icons.arrow_forward),
-              ),
-              margin: EdgeInsets.all(30),
-            ),
-          ),
-          Column(
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0x79F13D), Colors.white])),
+          child: Stack(
             children: [
-              Container(
-                height: 40,
-              ),
-              Row(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  FlatButton(
-                    color: Colors.transparent,
+              Positioned(
+                  top: -150,
+                  child: Container(
+                    child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0, end: 0.7),
+                        duration: Duration(seconds: 1),
+                        builder: (BuildContext context, double percent,
+                            Widget? child) {
+                          return CustomPaint(
+                              painter: _LoadBar(
+                                  percent: 0,
+                                  size: MediaQuery.of(context).size),
+                              size: MediaQuery.of(context).size);
+                        }),
+                    // color:Colors.green
+                  )),
+              Positioned(bottom: 0, child: Image.asset("images/Soldier3.png")),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                  child: FloatingActionButton(
+                    elevation: 0,
+                    disabledElevation: 0,
+                    backgroundColor: Colors.grey.shade400,
                     onPressed: () {},
-                    child: new IconTheme(
-                      data:
-                      new IconThemeData(size: 35, color: Color(0xff6f6ca7)),
-                      child: new Icon(Icons.menu),
-                    ),
+                    child: Icon(Icons.arrow_forward),
                   ),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "            דיווח שיא",
-                      //textAlign: TextAlign.center,
-                      style: GoogleFonts.assistant(
-                        color: Colors.black,
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ],
+                  margin: EdgeInsets.all(30),
+                ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+              Column(
                 children: [
                   Container(
-                      margin: EdgeInsets.fromLTRB(20,20,20,0),
-                      child: Text(
-                        "שתפו, איך הרגשתם?",
-                        textAlign: TextAlign.right,
-                        textDirection: TextDirection.rtl,
-                        style: GoogleFonts.assistant(
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
+                    height: 40,
+                  ),
+                  Row(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlatButton(
+                        color: Colors.transparent,
+                        onPressed: () {},
+                        child: new IconTheme(
+                          data: new IconThemeData(
+                              size: 35, color: Color(0xff6f6ca7)),
+                          child: new Icon(Icons.menu),
                         ),
-                      ))
-                ],
-              ),
-              Container(
-                height: 25),Container(
-                width: 370,
-                height: 252,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(31),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x3f000000),
-                      blurRadius: 7,
-                      offset: Offset(0, 2),
-                    ),
-                  ],
-                  color: Color(0xffe0dfd9),
-                ),
-                child: Stack(children: [Column(children: [
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
                       ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  Container(height: 42),
-                  Container(
-                    width: 360,
-                    height: 2,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color(0x2d34248a),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-
-                ],),
-                  Positioned(
-                      top: -10,
-                      right: 0,
-                      left: 0,
-                      child: TextFormField(
-                        onChanged: (String text){
-                          s=text;
-                        },
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          height: 2.25,
-                          fontFamily: "Assistant",
-                          fontWeight: FontWeight.w300,
-                        ),
-                        decoration: InputDecoration(
-                          hintText: '...',
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.transparent),
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          "            דיווח שיא",
+                          //textAlign: TextAlign.center,
+                          style: GoogleFonts.assistant(
+                            color: Colors.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                        textDirection: TextDirection.rtl,
-                        controller: _controller,
-                        maxLines: 5,
-                      )),
-                  Positioned(
-                      top: 193,
-                      left: 0,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                          margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                          child: Text(
+                            "שתפו, איך הרגשתם?",
+                            textAlign: TextAlign.right,
+                            textDirection: TextDirection.rtl,
+                            style: GoogleFonts.assistant(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ))
+                    ],
+                  ),
+                  Container(height: 25),
+                  Container(
+                    width: 370,
+                    height: 252,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(31),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x3f000000),
+                          blurRadius: 7,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                      color: Color(0xffe0dfd9),
+                    ),
+                    child: Stack(children: [
+                      Column(
                         children: [
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              backgroundColor: Color(0xff35258a),
-                              shape: CircleBorder(),
-                              fixedSize: Size(55, 55),
+                          Container(height: 42),
+                          Container(
+                            width: 360,
+                            height: 2,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0x2d34248a),
+                                width: 1,
+                              ),
                             ),
-                            child: Icon(
-                              Icons.arrow_back,
-                              size: 40,
-                              color: Colors.white,
+                          ),
+                          Container(height: 42),
+                          Container(
+                            width: 360,
+                            height: 2,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0x2d34248a),
+                                width: 1,
+                              ),
                             ),
-                            onPressed: () {
-                              var cont = _controller ?? TextEditingController(text:'a');
-                              _save(s);
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      Home()));
-                              showDialog<String>(
-                                context: context,
-                                builder: (BuildContext context) => BackdropFilter(
-                                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                                  child: AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(36)),
-                                    backgroundColor: Color(0xffECECEC),
-                                    content: Container(
-                                      height:height*0.6,
-                                      width:width*0.8,
-
-                                      child:Stack(children: [
-                                      Positioned(
-                                        bottom:-30,
-                                        right:-20,
-                                        child: Image.asset('images/Soldier4.png'),
-
-                                      ), Positioned(
-                                          bottom: 0.5*0.65* MediaQuery.of(context).size.height,
-                                          left: 0,
-                                          right:0,
-                                          top:0,
-                                          child:Column(
-
-                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
-                                              children:[
-
-                                                TextButton(
-                                                  onPressed: () =>
-                                        Navigator.pop(context, 'Cancel'),
-                                                  child: const Text(
-                                                    'x',
-                                                    style: TextStyle(fontSize: 20),
-                                                  ),
-                                                ),Text(
-                                                "יאייייי!",
-                                                textDirection: TextDirection.rtl,
-                                                textAlign: TextAlign.right,
-                                                style: GoogleFonts.assistant(
-                                                  color: Colors.black,
-                                                  fontSize: 30,
-                                                  fontWeight: FontWeight.w900,
-                                                ),),Text(
-                                                " זכית ב 10"+" מטבעות",
-                                                textDirection: TextDirection.rtl,
-                                                textAlign: TextAlign.right,
-                                                style: GoogleFonts.assistant(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w900,
-                                                ),),Text(
-                                                "השתמשו בהם בחוכמה ;]",
-                                                textDirection: TextDirection.rtl,
-                                                textAlign: TextAlign.right,
-                                                style: GoogleFonts.assistant(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                ),)
-
-
-
-                                              ]))],),)
-
-                                  ),
-                                ),
-                              );
-                            },
-                          )
+                          ),
+                          Container(height: 42),
+                          Container(
+                            width: 360,
+                            height: 2,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0x2d34248a),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          Container(height: 42),
+                          Container(
+                            width: 360,
+                            height: 2,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0x2d34248a),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          Container(height: 42),
+                          Container(
+                            width: 360,
+                            height: 2,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Color(0x2d34248a),
+                                width: 1,
+                              ),
+                            ),
+                          ),
                         ],
-                      )),
-              ]),
+                      ),
+                      Positioned(
+                          top: -10,
+                          right: 0,
+                          left: 0,
+                          child: TextFormField(
+                            onChanged: (String text) {
+                              s = text;
+                            },
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              height: 2.25,
+                              fontFamily: "Assistant",
+                              fontWeight: FontWeight.w300,
+                            ),
+                            decoration: InputDecoration(
+                              hintText: '...',
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
+                              ),
+                            ),
+                            textDirection: TextDirection.rtl,
+                            controller: _controller,
+                            maxLines: 5,
+                          )),
+                      Positioned(
+                          top: 193,
+                          left: 0,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Color(0xff35258a),
+                                  shape: CircleBorder(),
+                                  fixedSize: Size(55, 55),
+                                ),
+                                child: Icon(
+                                  Icons.arrow_back,
+                                  size: 40,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
 
-              /*Container(
+                                  Future<void> _add() async {
+
+                                    String? pid = AuthRepository.instance().user?.uid;
+                                    var v =
+                                    (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
+                                    int money=0;
+                                    if(v.data()==null){
+                                      money=0;}
+                                    else {
+                                      money = v['money'];
+                                    }
+                                    print(money);
+                                    money+=10;
+                                    await FirebaseFirestore.instance
+                                        .collection("avatars")
+                                        .doc(pid)
+                                        .set({'money':money}, SetOptions(merge: true));
+                                  }
+                                  _add();
+                                  var cont = _controller ??
+                                      TextEditingController(text: 'a');
+                                  _save(s);
+                                  _setExpos() async {
+                                    var n = (await FirebaseFirestore.instance
+                                        .collection("users")
+                                        .doc(
+                                            AuthRepository.instance().user?.uid)
+                                        .get());
+                                    if (n == null) return [];
+                                    var name = n.data() ?? {};
+                                    if (name.keys.contains('expos')) {
+                                      var exps = [];
+                                      for (int i = 0;
+                                          i < name['expos'].length;
+                                          i++) {
+                                        if (name['expos'][i]['expo'] ==
+                                            this.widget.theCase){
+                                        name['expos'][i]['done'] = true;
+                                        }
+                                      }
+                                    }
+                                    print(name);
+                                    await FirebaseFirestore.instance
+                                        .collection("users")
+                                        .doc(
+                                            AuthRepository.instance().user?.uid)
+                                        .set(name);
+                                  }
+
+                                  _setExpos();
+
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (BuildContext context) =>
+                                              Home()));
+                                  showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                          sigmaX: 2, sigmaY: 2),
+                                      child: AlertDialog(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(36)),
+                                          backgroundColor: Color(0xffECECEC),
+                                          content: Container(
+                                            height: height * 0.6,
+                                            width: width * 0.8,
+                                            child: Stack(
+                                              children: [
+                                                Positioned(
+                                                  bottom: -30,
+                                                  right: -20,
+                                                  child: Image.asset(
+                                                      'images/Soldier4.png'),
+                                                ),
+                                                Positioned(
+                                                    bottom: 0.5 *
+                                                        0.65 *
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .height,
+                                                    left: 0,
+                                                    right: 0,
+                                                    top: 0,
+                                                    child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Navigator.pop(
+                                                                    context,
+                                                                    'Cancel'),
+                                                            child: const Text(
+                                                              'x',
+                                                              style: TextStyle(
+                                                                  fontSize: 20),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "יאייייי!",
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                            textAlign:
+                                                                TextAlign.right,
+                                                            style: GoogleFonts
+                                                                .assistant(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 30,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            " זכית ב 10" +
+                                                                " מטבעות",
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                            textAlign:
+                                                                TextAlign.right,
+                                                            style: GoogleFonts
+                                                                .assistant(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w900,
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            "השתמשו בהם בחוכמה ;]",
+                                                            textDirection:
+                                                                TextDirection
+                                                                    .rtl,
+                                                            textAlign:
+                                                                TextAlign.right,
+                                                            style: GoogleFonts
+                                                                .assistant(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 16,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                            ),
+                                                          )
+                                                        ]))
+                                              ],
+                                            ),
+                                          )),
+                                    ),
+                                  );
+                                },
+                              )
+                            ],
+                          )),
+                    ]),
+
+                    /*Container(
                 child: Text
                   (
                   "0                                                   100",
@@ -1571,13 +1671,15 @@ class _Page4State extends State<_Page4> {
                 ),
 
               ),*/
-              )],
+                  )
+                ],
+              ),
+            ],
           ),
+        ));
+  }
+}
 
-        ],
-      ),
-    ));
-  }}
 class ExpoData {
   ExpoData(
       {required this.adata,

@@ -995,7 +995,6 @@ class _MainState extends State<_Main> {
                           }
                         }
                         print(name);
-                        print("=========================================================================================================================================================================================================================");
                         await FirebaseFirestore.instance
                             .collection("users")
                             .doc(AuthRepository.instance().user?.uid).set(name);

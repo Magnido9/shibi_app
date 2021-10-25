@@ -62,7 +62,7 @@ class FeelingsTools extends StatelessWidget {
           '/thoughts/2': (context) => thought2_1(),
           '/feelings/1': (context) => feeling1_1(),
           '/body/1': (context) => body1_1(),
-          '/tools': (context) => tools(theCase: theCase,adata: adata),
+          '/tools': (context) => Home(),
         },
       ),
     );
@@ -323,34 +323,52 @@ class _Page1State extends State<_Page1> {
                   ),
                   onTap: () => showDialog<String>(
                     context: context,
-                    builder: (BuildContext context) => BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                      child: AlertDialog(
-                        backgroundColor: Color(0xffECECEC),
-                        content: RichText(
-                          textDirection: TextDirection.rtl,
-                          text: TextSpan(
-                            style: GoogleFonts.assistant(
-                              color: Colors.black,
-                              fontSize: 18,
-                            ),
-                            children: <TextSpan>[
-                              //
-                              TextSpan(text: 'עוד לא הוכנס מלל.\n'),
-                            ],
-                          ),
-                        ),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text(
-                              'x',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    builder: (BuildContext context) =>
+                        BackdropFilter(
+                            filter: ImageFilter.blur(
+                                sigmaX: 2, sigmaY: 2),
+                            child: Stack(children: [
+                              AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(
+                                        36)),
+                                backgroundColor:
+                                Color(0xffECECEC),
+                                content: RichText(
+                                  textDirection:
+                                  TextDirection.rtl,
+                                  text: TextSpan(
+                                    style: GoogleFonts.assistant(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                    children: <TextSpan>[
+                                      //
+                                      TextSpan(
+                                          text:
+                                          'מצא את המקום שמתאים לך על הסקאלה ומתאר את הרגשתך באופן המדויק ביותר.\n'),
+
+
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+
+                                ],
+                              ),
+                              Positioned(
+                                  top: height * 0.40,
+                                  left: width * 0.12,
+                                  child: GestureDetector(
+                                    child: Icon(
+                                        Icons.cancel_outlined,
+                                        size: 32,
+                                        color: Color(0xff35258A)),
+                                    onTap: () => Navigator.pop(
+                                        context, 'Cancel'),
+                                  ))
+                            ])),
                   ),
                 ),
                 Container(width: 40),
@@ -538,7 +556,60 @@ class _Page1State extends State<_Page1> {
                       )
                     ],
                   )
-                : Container())
+                :    Positioned(
+                top: height * 0.92,
+                right: width * 0.8,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color(0xff35258a),
+                        shape: CircleBorder(),
+                        fixedSize: Size(55, 55),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 40,
+                        color: Colors.white,
+                      ),
+                      onPressed: () {
+                        _getExpos() async {
+                          var n = (await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(AuthRepository.instance().user?.uid)
+                              .get());
+                          if(n==null)
+                            return [];
+                          var name=n.data() ?? {};
+                          return name;
+                        }
+                        _setExpos() async {
+                          var n = (await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(AuthRepository.instance().user?.uid)
+                              .get());
+                          if(n==null)
+                            return [];
+                          var name=n.data() ?? {};
+                          if(name.keys.contains('expos')){
+                            var exps=[];
+                            for(int i=0;i<name['expos'].length;i++){
+                              if(name['expos'][i]['expo']==this.widget.theCase);
+                              name['expos'][i]['finishedThird']=true;
+                            }
+                          }
+                          print(name);
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(AuthRepository.instance().user?.uid).set(name);
+                        }
+                        _setExpos();
+                        Navigator.pushNamed(context, '/tools');
+                      },
+                    )
+                  ],
+                )))
 
 
         ]),
@@ -798,35 +869,52 @@ class _Page2State extends State<_Page2> {
                   ),
                 ),
                 onTap: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                    child: AlertDialog(
-                      backgroundColor: Color(0xffECECEC),
-                      content: RichText(
-                        textDirection: TextDirection.rtl,
-                        text: TextSpan(
-                          style: GoogleFonts.assistant(
-                            color: Colors.black,
-                            fontSize: 18,
+                  context: context,     builder: (BuildContext context) =>
+                    BackdropFilter(
+                        filter: ImageFilter.blur(
+                            sigmaX: 2, sigmaY: 2),
+                        child: Stack(children: [
+                          AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                BorderRadius.circular(
+                                    36)),
+                            backgroundColor:
+                            Color(0xffECECEC),
+                            content: RichText(
+                              textDirection:
+                              TextDirection.rtl,
+                              text: TextSpan(
+                                style: GoogleFonts.assistant(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                children: <TextSpan>[
+                                  //
+                                  TextSpan(
+                                      text:
+                                      'האזנה למוזיקה אהובה ומוכרת יכולה לסייע במיגור הרגשות והפחתת תחושת החרדה.\n'),
+
+
+                                ],
+                              ),
+                            ),
+                            actions: <Widget>[
+
+                            ],
                           ),
-                          children: <TextSpan>[
-                            //
-                            TextSpan(text: 'עוד לא הוכנס מלל.\n'),
-                          ],
-                        ),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Cancel'),
-                          child: const Text(
-                            'x',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                          Positioned(
+                              top: height * 0.40,
+                              left: width * 0.12,
+                              child: GestureDetector(
+                                child: Icon(
+                                    Icons.cancel_outlined,
+                                    size: 32,
+                                    color: Color(0xff35258A)),
+                                onTap: () => Navigator.pop(
+                                    context, 'Cancel'),
+                              ))
+                        ])),
                 ),
               ),
               Container(width: 10),

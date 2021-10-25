@@ -100,13 +100,55 @@ class StarsState extends State<Stars> {
     if(name.keys.contains('expos')){
       var exps=[];
       for(int i=0;i<name['expos'].length;i++)
-        if(name['expos'][i].keys.contains('finishedFirst'))
+        if(name['expos'][i].keys.contains('finishedFirst')&&!name['expos'][i].keys.contains('finishedSecond'))
           exps.add(name['expos'][i]['expo']);
       print(exps);
       return exps;
     } else
       return [];
   }
+  Future<List<dynamic>> _getExpos3() async {
+    var n = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get());
+    if(n==null)
+      return [];
+    var name=n.data() ?? {};
+    print("ASDA");
+    print(name);
+    if(name.keys.contains('expos')){
+      var exps=[];
+      for(int i=0;i<name['expos'].length;i++)
+        if(name['expos'][i].keys.contains('finishedSecond')&&!name['expos'][i].keys.contains('finishedThird'))
+          exps.add(name['expos'][i]['expo']);
+      print(exps);
+      return exps;
+    } else
+      return [];
+  }
+
+  Future<List<dynamic>> _getExpos4() async {
+    var n = (await FirebaseFirestore.instance
+        .collection("users")
+        .doc(AuthRepository.instance().user?.uid)
+        .get());
+    if(n==null)
+      return [];
+    var name=n.data() ?? {};
+    print("ASDA");
+    print(name);
+    if(name.keys.contains('expos')){
+      var exps=[];
+      for(int i=0;i<name['expos'].length;i++)
+        if(name['expos'][i].keys.contains('finishedThird')&&!name['expos'][i].keys.contains('done'))
+          exps.add(name['expos'][i]['expo']);
+      print(exps);
+      return exps;
+    } else
+      return [];
+  }
+
   int page=0;
   List<Color> colors=[Color(0xffEEDBEA),Color(0xffC7F5E1),Color(0xffA9E1F4),Color(0xffFBF6C6)];
   Color _chooseColor() {
@@ -148,7 +190,8 @@ class StarsState extends State<Stars> {
     {return page;}
 
   }
-
+var expos3;
+  var expos4;
   @override
   void initState() {
     super.initState();
@@ -161,6 +204,8 @@ class StarsState extends State<Stars> {
     moneyd = loadMoney();
     expos = _getExpos();
     expos2=_getExpos2();
+    expos3=_getExpos3();
+    expos4=_getExpos4();
   }
   Color background=Colors.white;
   @override
@@ -336,8 +381,8 @@ class StarsState extends State<Stars> {
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    ExpoStars(3,(i==0)?expos:expos2,_adata,0,i),
-                                    ExpoStars(2,(i==0)?expos:expos2,_adata,3,i),
+                                    ExpoStars(3,(i==0)?expos:(i==1)?expos2:(i==2)?expos3:expos4,_adata,0,i),
+                                    ExpoStars(2,(i==0)?expos:(i==1)?expos:(i==2)?expos:expos2,_adata,3,i),
                                     Container(height: 5)
                                   ])],
 
