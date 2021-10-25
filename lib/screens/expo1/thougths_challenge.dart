@@ -1823,7 +1823,8 @@ class _ballonState extends State<_BallonPage> {
                                               actions: <Widget>[
                                                 /*TextButton(
                                           onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
+
+                                              .pop(context, 'Cancel'),
                                           child: const Text(
                                             'x',
                                             style: TextStyle(fontSize: 20),

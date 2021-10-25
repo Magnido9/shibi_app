@@ -532,7 +532,9 @@ class _Page2State extends State<_Page2> {
                     elevation: 0,
                     disabledElevation: 0,
                     backgroundColor: Colors.grey.shade400,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                     child: Icon(Icons.arrow_forward),
                   ),
                   margin: EdgeInsets.all(30),
@@ -850,7 +852,8 @@ class _MainState extends State<_Main> {
                     elevation: 0,
                     disabledElevation: 0,
                     backgroundColor: Colors.grey.shade400,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);},
                     child: Icon(Icons.arrow_forward),
                   ),
                   margin: EdgeInsets.all(30),
@@ -1309,7 +1312,8 @@ class _Page4State extends State<_Page4> {
                     elevation: 0,
                     disabledElevation: 0,
                     backgroundColor: Colors.grey.shade400,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pop(context);},
                     child: Icon(Icons.arrow_forward),
                   ),
                   margin: EdgeInsets.all(30),
