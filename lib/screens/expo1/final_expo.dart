@@ -1546,6 +1546,7 @@ class _Page4State extends State<_Page4> {
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               Home()));
+                                  setState(() {});
                                   showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) =>

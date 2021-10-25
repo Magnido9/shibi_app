@@ -459,13 +459,14 @@ class AvatarStack extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
+
+                        height: constraints.maxHeight*dit.item3 ,
+                        width:  constraints.maxWidth,
                         // color: Colors.green,
                         child: FittedBox(
                             fit: BoxFit.fitHeight,
                             child: Image.asset(data.pants!)
-                        ),
-                        height: constraints.maxHeight*dit.item3 ,
-                        margin: EdgeInsets.only(
+                        ),margin: EdgeInsets.only(
                           top: constraints.maxHeight * dit.item1,
                           left: constraints.maxWidth * dit.item2,
                           // left: constraints.maxWidth/14

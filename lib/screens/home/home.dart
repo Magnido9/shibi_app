@@ -29,13 +29,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static Future<String> loadMoney() async {
+  static Future<int> loadMoney() async {
     String? pid = AuthRepository.instance().user?.uid;
     var v =
     (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
     var a = v['money'];
     var s = a.toString();
-    return s;
+    return a;
   }
 
   Future<AvatarData>? _adata;
@@ -913,46 +913,7 @@ class _HomeState extends State<Home> {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) =>
                               StarsExp(cur_star: 1)));
-                    })) /*Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Container(
-                  // color: Colors.green,
-                  height: 500),
-              Container(
-                  // color: Colors.green,
-                  width: size.width * 0.5,
-                  height: size.height,
-                  child: FutureBuilder<AvatarData>(
-                    future: _adata,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<AvatarData> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        var data = snapshot.data ??
-                            AvatarData(body: AvatarData.body_default);
-                        return AvatarStack(data: data);
-                      }
-                      return CircularProgressIndicator();
-                    },
-                  )),
-            ])
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              flex: 1,
-              child: Container(
-                width: 100,
-                height: 100,
-                child: _TaskIcon(
-                  daily: true,
-                  text: 'test',
-                  slices: 5,
-                  complete: 3,
-                ),
-              ),
-            ),
-         */
+                    }))
           ],
         ));
   }
@@ -963,9 +924,7 @@ class _HomeState extends State<Home> {
         title: Padding(
           padding: EdgeInsets.only(top: 25.0),
           child: Text(
-            "מפת דרכים",
-            //textAlign: TextAlign.center,
-            style: GoogleFonts.assistant(
+            "מפת דרכים", style: GoogleFonts.assistant(
               color: Colors.black,
               fontSize: 24,
               fontWeight: FontWeight.w700,
@@ -991,14 +950,16 @@ class _HomeState extends State<Home> {
           Padding(
               padding: EdgeInsets.only(right: 20.0, top: 25.0),
               child: GestureDetector(
-                onTap: () {},
-                child: FutureBuilder<String>(
+                onTap: () {setState(() {
+
+                });},
+                child: FutureBuilder<int>(
                   future: moneyd,
                   builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      (BuildContext context, AsyncSnapshot<int> snapshot) {
                     // ...
                     if (snapshot.connectionState == ConnectionState.done) {
-                      String data = snapshot.data ?? '';
+                      int data = snapshot.data ?? 0;
                       return build_money(data);
                     }
                     return CircularProgressIndicator();
@@ -1015,54 +976,6 @@ class _HomeState extends State<Home> {
     var size = Size(x, 0.7 * x);
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        // appBar: AppBar(
-        //     centerTitle: true,
-        //     title: Padding(
-        //       padding: EdgeInsets.only(top: 25.0),
-        //       child: Text(
-        //         "מפת דרכים",
-        //         //textAlign: TextAlign.center,
-        //         style: GoogleFonts.assistant(
-        //           color: Colors.black,
-        //           fontSize: 24,
-        //           fontWeight: FontWeight.w700,
-        //         ),
-        //       ),
-        //     ),
-        //     backgroundColor: Color(0x0),
-        //     elevation: 0.0,
-        //     iconTheme: IconThemeData(color: Colors.black),
-        //     leading: Builder(
-        //         builder: (context) => GestureDetector(
-        //               onTap: () {
-        //                 Scaffold.of(context).openDrawer();
-        //               },
-        //               child: Padding(
-        //                   padding: EdgeInsets.only(left: 20.0, top: 15.0),
-        //                   child: Icon(
-        //                     Icons.menu_rounded,
-        //                     size: 50,
-        //                   )),
-        //             )),
-        //     actions: <Widget>[
-        //       Padding(
-        //           padding: EdgeInsets.only(right: 20.0, top: 25.0),
-        //           child: GestureDetector(
-        //             onTap: () {},
-        //             child: FutureBuilder<String>(
-        //               future: moneyd,
-        //               builder: (BuildContext context,
-        //                   AsyncSnapshot<String> snapshot) {
-        //                 // ...
-        //                 if (snapshot.connectionState == ConnectionState.done) {
-        //                   String data = snapshot.data ?? '';
-        //                   return build_money(data);
-        //                 }
-        //                 return CircularProgressIndicator();
-        //               },
-        //             ),
-        //           )),
-        //     ]),
         backgroundColor: Colors.deepPurple,
         body: Stack(
           children: [
@@ -1122,13 +1035,13 @@ class _HomeState extends State<Home> {
                       padding: EdgeInsets.only(right: 20.0, top: 25.0),
                       child: GestureDetector(
                         onTap: () {},
-                        child: FutureBuilder<String>(
+                        child: FutureBuilder<int>(
                           future: moneyd,
                           builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
+                              AsyncSnapshot<int> snapshot) {
                             // ...
                             if (snapshot.connectionState == ConnectionState.done) {
-                              String data = snapshot.data ?? '';
+                              int data = snapshot.data ?? 0;
                               return build_money(data);
                             }
                             return CircularProgressIndicator();
@@ -1496,14 +1409,14 @@ Widget nameIt(Future<String> _name, color) {
   );
 }
 
-Widget build_money(String text) {
+Widget build_money(int text) {
   return Container(width:40,height:40,child:Stack(children: [
     Image.asset('images/coin.png'),
     Positioned(
       top: 12,
-      left: 15,
+      left: (text>=10)?10:15,
       child: Text(
-        text,
+        text.toString(),
         textAlign: TextAlign.center,
         style: GoogleFonts.assistant(
           height: 0.65,
