@@ -1480,6 +1480,9 @@ class _Page4State extends State<_Page4> {
                             onPressed: () {
                               var cont = _controller ?? TextEditingController(text:'a');
                               _save(s);
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      Home()));
                               showDialog<String>(
                                 context: context,
                                 builder: (BuildContext context) => BackdropFilter(
@@ -1509,9 +1512,8 @@ class _Page4State extends State<_Page4> {
                                               children:[
 
                                                 TextButton(
-                                                  onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                                      builder: (BuildContext context) =>
-                                                          Home())),
+                                                  onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
                                                   child: const Text(
                                                     'x',
                                                     style: TextStyle(fontSize: 20),

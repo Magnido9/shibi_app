@@ -312,7 +312,7 @@ class _HomeState extends State<Home> {
                 // width:MediaQuery.of(context).size.width,
               ]),
               Positioned(
-                right: 20,
+                right: 0,
                 top: height * 0.25,
                 child: GestureDetector(
                   child: Container(
@@ -1481,20 +1481,20 @@ Widget nameIt(Future<String> _name, color) {
 }
 
 Widget build_money(String text) {
-  return Stack(children: [
+  return Container(width:40,height:40,child:Stack(children: [
     Image.asset('images/coin.png'),
     Positioned(
-      top: 8,
-      left: 7,
+      top: 12,
+      left: 15,
       child: Text(
         text,
         textAlign: TextAlign.center,
         style: GoogleFonts.assistant(
           height: 0.65,
           color: Colors.black,
-          fontSize: 14,
+          fontSize: 16,
         ),
       ),
     ),
-  ]);
+  ]));
 }

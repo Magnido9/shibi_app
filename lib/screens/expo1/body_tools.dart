@@ -266,8 +266,8 @@ class _Page1State extends State<_Page1> {
           )
         ]),
         Positioned(
-          top: 130,
-          left: 190,
+          top: height*0.16,
+          left: width*0.49,
           child: Container(
             padding: EdgeInsets.all(5),
             child: FittedBox(

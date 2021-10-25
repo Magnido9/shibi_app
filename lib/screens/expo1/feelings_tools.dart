@@ -281,8 +281,8 @@ class _Page1State extends State<_Page1> {
           )
         ]),
         Positioned(
-          top: 115,
-          left: 320,
+          top: height*0.13,
+          right: width*0.1,
           child: Container(
             width: 40,
             height:40,
@@ -757,8 +757,8 @@ class _Page2State extends State<_Page2> {
         )
       ]),
       Positioned(
-        top: 115,
-        left: 320,
+        top: height*0.13,
+        right: width*0.1,
         child: Container(
           padding: EdgeInsets.all(5),
           width: 40,
