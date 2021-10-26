@@ -28,6 +28,7 @@ class _HomeState extends State<CareHome> {
       var t=  FirebaseFirestore.instance
           .collection("users")
           .doc(item['uid']).get();
+
       list.add( (b)?
       Column(children:[Text(
           "מטופל " +item['name'],
@@ -109,6 +110,8 @@ class _HomeState extends State<CareHome> {
             future: t,
             builder:
                 (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if(!snapshot.data.data().containsKey("expos"))
+                    return Container();
               if (snapshot.hasData) {
                 return Column(children:[
 
