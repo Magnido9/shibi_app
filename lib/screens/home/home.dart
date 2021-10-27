@@ -1115,7 +1115,7 @@ class _HomeState extends State<Home> {
                                 data: (snapshot.data ??
                                     AvatarData(body: AvatarData.body_default)));
                           }
-                          return CircularProgressIndicator();
+                          return AvatarStack(data: AvatarData(body: AvatarData.body_default));
                         },
                       )),
                 ])),
