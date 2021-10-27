@@ -116,7 +116,9 @@ class Avatar extends StatelessWidget {
                               hands: AvatarData.hand_default,
                               body_color: AvatarData.color_default)));
                 } else
-                  return CircularProgressIndicator();
+                  return CircularProgressIndicator(
+                    color: Colors.green,
+                  );
               }),
     );
   }
