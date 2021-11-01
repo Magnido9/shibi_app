@@ -270,8 +270,8 @@ class _AvatarPageState extends State<AvatarPage> {
                           textAlign: TextAlign.right,
                           style: GoogleFonts.assistant(
                             color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w900,
+                            fontSize: 26,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
                       ]))),
@@ -302,15 +302,15 @@ class _AvatarPageState extends State<AvatarPage> {
           ),
           Container(
             width: 96,
-            height: 29,
+            height: 32,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(88),
               color: Color(0xff35258a),
             ),
           ),
-          Positioned(  child:Text('חנות',style:GoogleFonts.assistant(color:Colors.white,fontWeight: FontWeight.w700)),left:30,top:3),
+          Positioned(  child:Text('חנות',style:GoogleFonts.assistant(color:Colors.white,fontWeight: FontWeight.w700)),left:30,top:6),
 
-            Positioned(  child:Text('המוצרים שלי',style:GoogleFonts.assistant(color:Colors.white,fontWeight: FontWeight.w700)),left:100,top:3)
+            Positioned(  child:Text('המוצרים שלי',style:GoogleFonts.assistant(color:Colors.white,fontWeight: FontWeight.w700)),left:105,top:6)
           ],)),
           Positioned(
             left: 45,

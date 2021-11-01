@@ -41,13 +41,13 @@ class Stars extends StatefulWidget {
 class StarsState extends State<Stars> {
   StarsState({required this.cur_star});
   int cur_star;
-  static Future<String> loadMoney() async {
+  static Future<int> loadMoney() async {
     String? pid = AuthRepository.instance().user?.uid;
     var v =
     (await FirebaseFirestore.instance.collection("avatars").doc(pid).get());
     var a = v['money'];
     var s = a.toString();
-    return s;
+    return a;
   }
   bool first=true;
   Future<AvatarData>? _adata;
@@ -326,13 +326,13 @@ var expos3;
                     padding: EdgeInsets.only(right: 20.0, top: 25.0),
                     child: GestureDetector(
                       onTap: () {},
-                      child: FutureBuilder<String>(
+                      child: FutureBuilder<int>(
                         future: moneyd,
-                        builder: (BuildContext context,
-                            AsyncSnapshot<String> snapshot) {
+                        builder:
+                            (BuildContext context, AsyncSnapshot<int> snapshot) {
                           // ...
                           if (snapshot.connectionState == ConnectionState.done) {
-                            String data = snapshot.data ?? '';
+                            int data = snapshot.data ?? 0;
                             return build_money(data);
                           }
                           return CircularProgressIndicator();
@@ -381,9 +381,10 @@ var expos3;
                                   mainAxisAlignment:
                                   MainAxisAlignment.spaceEvenly,
                                   children: [
+                                    Container(height: 5),
                                     ExpoStars(3,(i==0)?expos:(i==1)?expos2:(i==2)?expos3:expos4,_adata,0,i),
                                     ExpoStars(2,(i==0)?expos:(i==1)?expos:(i==2)?expos:expos2,_adata,3,i),
-                                    Container(height: 5)
+                                    Container(height: 50)
                                   ])],
 
                           ),
@@ -418,6 +419,14 @@ var expos3;
             child: Column(
               children: [
                 Container(
+                  height: 60,
+                  width:60,
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Color(0xff35258A),
+                  ),
+                child:Container(
                   height: 50,
                   width:50,
                   padding: EdgeInsets.all(5),
@@ -426,7 +435,8 @@ var expos3;
                     shape: BoxShape.circle,
                     color: Color(0xff35258A),
                   ),
-                ),
+                ),),
+
                 Text(
                   _chooseTitle(),
                   textAlign: TextAlign.center,
@@ -454,13 +464,13 @@ var expos3;
               size: 35,
               color: Colors.white,
             ),
-            onPressed:   ()   {Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    Home()));
-            }
-            ,
+            onPressed:   () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      Home()));
+            },
           ),
-              top:30,
+              top:90,
               left:width*0.8
           ),
           Positioned(
@@ -569,7 +579,7 @@ var expos3;
 
 ExpoStars(int amount,expos,_adata,prevs,curr_page){
 
-  List<Widget> stars=[Container(width: 20)];
+  List<Widget> stars=[Container(width: 40)];
   var a=0;
   for(int i=prevs; i<amount+prevs;i++){
 
@@ -641,27 +651,29 @@ ExpoStars(int amount,expos,_adata,prevs,curr_page){
     );
   }
   stars.add(
-      Container(width: 20));
+      Container(width: 40));
   return Row(
       mainAxisAlignment:
       MainAxisAlignment.spaceEvenly,
       children: stars);
 }
-Widget build_money(String text) {
-  return Stack(children: [
+
+Widget build_money(int text) {
+  return Container(width:40,height:40,child:Stack(children: [
     Image.asset('images/coin.png'),
     Positioned(
-      top: 10,
-      left: 10,
+      top: 12,
+      left: (text>=10)?10:15,
       child: Text(
-        text,
+        text.toString(),
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: GoogleFonts.assistant(
           height: 0.65,
           color: Colors.black,
-          fontSize: 14,
+          fontSize: 16,
         ),
       ),
     ),
-  ]);
+  ]));
 }
+

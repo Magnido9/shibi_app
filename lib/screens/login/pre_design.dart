@@ -67,8 +67,8 @@ class _PreDesignState extends State<PreDesign> {
                           textAlign: TextAlign.right,
                           style: GoogleFonts.assistant(
                             color: Colors.black,
-                            fontSize: 30,
-                            fontWeight: FontWeight.w900,
+                            fontSize: 28,
+                            fontWeight: FontWeight.w800,
                           ),
 
                           //,"לכן, האפליקציה לא מאפשרת מענה חירום. n\את מה שאת מעלה בזמן אמת - n\אבל, המטפל/ת שלך לא תמיד רואה n\n\n\n\n\המועלה לאפליקציה. n\רק למטפל/ת שלך יש גישה למידע "
@@ -77,7 +77,7 @@ class _PreDesignState extends State<PreDesign> {
                           height: 20,
                         ),
                         Text(
-                          "הדמות תלווה אותכם באפליקציה,\nתוכלו לעצב אותה כרצונכם \nולרכוש לה פריטים מיוחדים!",
+                          "הדמות תלווה אותכם באפליקציה,\nתוכלו לעצב אותה כרצונכם ולרכוש לה פריטים מיוחדים!",
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.start,
                           style: GoogleFonts.assistant(
@@ -100,7 +100,7 @@ class _PreDesignState extends State<PreDesign> {
                           ),
                         ),
                         Container(
-                          height: 5,
+                          height: 10,
                         ),
                         Container(
                           width: 313,
@@ -138,7 +138,7 @@ class _PreDesignState extends State<PreDesign> {
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               Money(
-                                                  to_give: 10, first: true)));
+                                                  to_give: 5, first: true)));
                                 },
                                 minWidth: 200,
                                 height: 39,

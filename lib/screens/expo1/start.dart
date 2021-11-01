@@ -225,7 +225,7 @@ class _Page1State extends State<_Page1> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (BuildContext context) => Stars(cur_star: 0)));
                 },
-                child: Icon(Icons.arrow_forward),
+                child: Icon(Icons.arrow_forward, size:50),
               ),
               margin: EdgeInsets.all(30),
             ),
@@ -270,7 +270,7 @@ class _Page1State extends State<_Page1> {
                   Container(
                       margin: EdgeInsets.all(20),
                       child: Text(
-                        "?מה עליי לבצע",
+                        "?מה עלייך לבצע",
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
                           color: Colors.black,
@@ -286,7 +286,7 @@ class _Page1State extends State<_Page1> {
                 height: height * 0.3,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
-                  color: Color(0xccebebeb),
+                  color: Color(0xffF0F0F0),
                 ),
                 child: SingleChildScrollView(
                   child: Text(
@@ -321,7 +321,7 @@ class _Page1State extends State<_Page1> {
                                 top: 5,
                                 right: 25,
                                 child: Text(
-                                  "בואו נתחיל!",
+                                  "יוצאים לדרך!",
                                   textDirection: TextDirection.rtl,
                                   textAlign: TextAlign.left,
                                   style: GoogleFonts.assistant(
@@ -520,7 +520,7 @@ class _Page2State extends State<_Page2> {
                   Navigator.pop(context);
 
                 },
-                child: Icon(Icons.arrow_forward),
+                child: Icon(Icons.arrow_forward, size:50),
               ),
               margin: EdgeInsets.all(30),
             ),
@@ -943,7 +943,7 @@ class _MainState extends State<_Main> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: Icon(Icons.arrow_forward),
+                child: Icon(Icons.arrow_forward, size:50),
               ),
               margin: EdgeInsets.all(30),
             ),

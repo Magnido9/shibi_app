@@ -40,13 +40,7 @@ class _PrivacyState extends State<Privacy> {
               body: Stack(children: [
                 Align(
                   alignment: FractionalOffset.bottomCenter,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.2,
-                    child: FittedBox(
-                      child: Image.asset('images/shibi_pages/'+((!isChecked)? 'lose' : 'angel')+'.png'),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
+                 child: Image.asset('images/shibi_pages/'+((!isChecked)? 'lose' : 'angel')+'.png'),
                 ),
                 Positioned(
                     left: -((0.8125 * MediaQuery.of(context).size.height) -
@@ -78,7 +72,7 @@ class _PrivacyState extends State<Privacy> {
                                 style: GoogleFonts.assistant(
                                   color: Colors.black,
                                   fontSize: 30,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.bold,
                                 ),
 
                                 //,"לכן, האפליקציה לא מאפשרת מענה חירום. n\את מה שאת מעלה בזמן אמת - n\אבל, המטפל/ת שלך לא תמיד רואה n\n\n\n\n\המועלה לאפליקציה. n\רק למטפל/ת שלך יש גישה למידע "
@@ -92,12 +86,12 @@ class _PrivacyState extends State<Privacy> {
                                 textAlign: TextAlign.start,
                                 style: GoogleFonts.assistant(
                                   color: Colors.black,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                               Container(
-                                height: 5,
+                                height: 10,
                               ),
                               Text(
                                 "כולל יומן מחשבות ורגשות, ",
@@ -105,7 +99,7 @@ class _PrivacyState extends State<Privacy> {
                                 textAlign: TextAlign.right,
                                 style: GoogleFonts.assistant(
                                   color: Color(0xff6f6ca7),
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w900,
                                 ),
                               ),
@@ -115,9 +109,13 @@ class _PrivacyState extends State<Privacy> {
                                 textDirection: TextDirection.rtl,
                                 style: GoogleFonts.assistant(
                                   color: Color(0xff6f6ca7),
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w900,
                                 ),
+                              ),
+
+                              Container(
+                                height: 10,
                               ),
                               Container(
                                 width: 313,
@@ -130,7 +128,7 @@ class _PrivacyState extends State<Privacy> {
                                 ),
                               ),
                               Container(
-                                height: 5,
+                                height: 15,
                               ),
                               Text(
                                 "אבל המטפל\\ת שלך לא תמיד רואה\nאת מה שאת מעלה בזמן אמת -\nלכן, האפליקציה לא מאפשרת מענה חירום.",
@@ -138,7 +136,7 @@ class _PrivacyState extends State<Privacy> {
                                 textAlign: TextAlign.right,
                                 style: GoogleFonts.assistant(
                                   color: Colors.black,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),

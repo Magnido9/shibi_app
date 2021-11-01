@@ -21,7 +21,8 @@ import 'dart:ui' as ui;
 class _Connection extends ChangeNotifier {
   List<QueryDocumentSnapshot> list = [];
 
-  void _getCare(int pass, String name, BuildContext context) async {
+  Future<bool> _getCare(int pass, String name, BuildContext context) async {
+    bool ret = false;
     list = (await FirebaseFirestore.instance
             .collection("caretakers")
             .where('usedId', isEqualTo: pass.toString())
@@ -30,8 +31,10 @@ class _Connection extends ChangeNotifier {
     //return q.docs[0].data()['uid'];
     if (list.isNotEmpty) {
       _signToCare(list[0].data()['uid'], name, context);
-    }
+    } else
+      ret = true;
     notifyListeners();
+    return ret;
   }
 
   void _signToCare(String carer, String name, BuildContext context) async {
@@ -94,53 +97,7 @@ class _CareTakerIdState extends State<CareTakerId> {
 
   @override
   Widget build(BuildContext context) {
-    return /*Scaffold(
-      backgroundColor: Colors.white,
-      body:  Column(
-        children: [
-          Container(
-              padding: const EdgeInsets.all(40.0),
-              child:  Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextField(
-                    decoration:  InputDecoration(labelText: "הכנס את הקוד שקיבלת מהמטפל"),
-                    controller: pid,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
-                    ], // Only numbers can be entered
-                  ),
-                ],
-              )),
-          Container(
-              padding: const EdgeInsets.all(40.0),
-              child:  Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  TextField(
-                    decoration:  InputDecoration(labelText: "הכנס את שמך"),
-                    controller: name,
-                  ),
-                ],
-              )),
-          Container(
-            height: 40,
-            width: MediaQuery.of(context).size.width / 3,
-            color: Colors.green,
-            child:  TextButton(
-              onPressed: () {
-                final int pass =int.parse(pid.text.trim()) ;
-                _Connection()._getCare(pass,name.text.trim(), context);
-                },
-              child: Text("המשך"),
-            ),
-          ),
-        ],
-      )
-
-    )*/
-        MaterialApp(
+    return MaterialApp(
       home: Material(
         child: Builder(
           builder: (context) {
@@ -166,7 +123,7 @@ class _CareTakerIdState extends State<CareTakerId> {
                             style: GoogleFonts.assistant(
                               color: Colors.black,
                               fontSize: 30,
-                              fontWeight: FontWeight.w800,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -177,8 +134,8 @@ class _CareTakerIdState extends State<CareTakerId> {
                             textAlign: TextAlign.right,
                             style: GoogleFonts.assistant(
                               color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -204,13 +161,21 @@ class _CareTakerIdState extends State<CareTakerId> {
                                       width: 60,
                                       child: TextFormField(
                                         autofocus: true,
-
                                         obscureText: true,
                                         style: GoogleFonts.assistant(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
-
                                           fontWeight: FontWeight.w700,
+                                        ),
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
                                         ),
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
@@ -246,15 +211,18 @@ class _CareTakerIdState extends State<CareTakerId> {
                                         style: GoogleFonts.assistant(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
-
                                           fontWeight: FontWeight.w700,
                                         ),
-                                       /* style: TextStyle(
-                                          color: Color(0xff6f6f6f),
-                                          fontSize: 36,
-                                          fontFamily: "Assistant",
-                                          fontWeight: FontWeight.w700,
-                                        ),*/
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
+                                        ),
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
                                         onChanged: (value) {
@@ -289,8 +257,17 @@ class _CareTakerIdState extends State<CareTakerId> {
                                         style: GoogleFonts.assistant(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
-
                                           fontWeight: FontWeight.w700,
+                                        ),
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
                                         ),
                                         /*style: TextStyle(
                                           color: Color(0xff6f6f6f),
@@ -338,8 +315,17 @@ class _CareTakerIdState extends State<CareTakerId> {
                                         style: GoogleFonts.assistant(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
-
                                           fontWeight: FontWeight.w700,
+                                        ),
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
                                         ),
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
@@ -382,8 +368,17 @@ class _CareTakerIdState extends State<CareTakerId> {
                                         style: GoogleFonts.assistant(
                                           color: Color(0xff6f6f6f),
                                           fontSize: 36,
-
                                           fontWeight: FontWeight.w700,
+                                        ),
+                                        decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.transparent),
+                                          ),
                                         ),
                                         keyboardType: TextInputType.number,
                                         textAlign: TextAlign.center,
@@ -402,54 +397,61 @@ class _CareTakerIdState extends State<CareTakerId> {
                         ),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1),
-                   Stack(children: [
-                              Container(
-                                  width:200,
+                        Stack(children: [
+                          Container(
+                              width: 200,
+                              height: 39,
+                              child: MaterialButton(
+                                  onPressed: () async {
+                                    print(code.toString());
+                                    int c = 0;
+                                    for (int i = 0; i < code.length; i++)
+                                      c = c * 10 + code[i];
+                                    print(c);
+                                    var b = await _Connection()
+                                        ._getCare(c, name.text.trim(), context);
+                                    print(b);
+                                    if (b) {
+                                      final snackBar = SnackBar(
+                                        content: const Text('Wrong Password'),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
+                                    }
+                                  },
+                                  minWidth: 200,
                                   height: 39,
-                                  child: MaterialButton(
-                                      onPressed: () {
-                                        print(code.toString());
-                                        int c = 0;
-                                        for (int i = 0; i < code.length; i++)
-                                          c = c * 10 + code[i];
-                                        print(c);
-                                        _Connection()
-                                            ._getCare(c, name.text.trim(), context);
-                                      },
-                                      minWidth: 200,
-                                      height: 39,
-                                      shape:RoundedRectangleBorder( borderRadius: BorderRadius.circular(36) ),
-                                      color: Color(0xff35258a),
-                                      child: Stack(children:<Widget>[
-
-                                        Positioned(
-                                          top:5,
-                                          right: 60,
-                                          child: Text(
-                                            "שלח",
-                                            textDirection: ui.TextDirection.rtl,
-                                            textAlign: TextAlign.left,
-                                            style: GoogleFonts.assistant(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        )
-                                      ]
-                                      )
-                                  )),
-                              Positioned(
-                                  top: 5,
-                                  right: 166,
-                                  child: Container(
-                                      width: 28,
-                                      height: 28,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(36),
-                                        border: Border.all(color: Colors.white, width: 9),
-                                      ))),
-                            ])
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(36)),
+                                  color: Color(0xff35258a),
+                                  child: Stack(children: <Widget>[
+                                    Positioned(
+                                      top: 5,
+                                      right: 60,
+                                      child: Text(
+                                        "שלח",
+                                        textDirection: ui.TextDirection.rtl,
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.assistant(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    )
+                                  ]))),
+                          Positioned(
+                              top: 5,
+                              right: 166,
+                              child: Container(
+                                  width: 28,
+                                  height: 28,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(36),
+                                    border: Border.all(
+                                        color: Colors.white, width: 9),
+                                  ))),
+                        ])
                       ],
                     ),
                   ),

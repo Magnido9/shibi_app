@@ -14,6 +14,7 @@ class Money extends StatelessWidget {
   Money({required this.to_give, required this.first});
   bool first;
   int to_give=0;
+
   Future<void> _add() async {
 
     String? pid = AuthRepository.instance().user?.uid;
@@ -46,6 +47,7 @@ class Money extends StatelessWidget {
 
   bool isChecked = false;
   @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Builder(
@@ -53,12 +55,79 @@ class Money extends StatelessWidget {
             return Scaffold(
                 body:  Stack(children: [
                   Positioned(
+                      right: 25,
+                      top: 75,
+                      child: Align(
+                          alignment: Alignment.topRight,
+                          child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: <Widget>[
+                                Text(
+                                  "עיצוב השיבי שלך",
+                                  textDirection: TextDirection.rtl,
+                                  textAlign: TextAlign.right,
+                                  style: GoogleFonts.assistant(
+                                    color: Colors.black,
+                                    fontSize: 26,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ]))),
+
+                  // Figma Flutter Generator Group304Widget - GROUP
+
+                  Positioned(
+                      left: 22,
+                      top: 131.32,
+                      child: build_money("0")),
+                  Positioned(
+                      right:  MediaQuery.of(context).size.width*0.08,
+                      top:  MediaQuery.of(context).size.height*0.19,child:Stack(children: [ Container(
+                    width: 192,
+                    height: 29,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(88),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0x19000000),
+                          blurRadius: 4,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                      color: Color(0xffc4c4c4),
+                    ),
+
+                  ),
+                    Container(
+                      width: 96,
+                      height: 32,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(88),
+                        color: Color(0xff35258a),
+                      ),
+                    ),
+                    Positioned(  child:Text('חנות',style:GoogleFonts.assistant(color:Colors.white,fontWeight: FontWeight.w700)),left:30,top:6),
+
+                    Positioned(  child:Text('המוצרים שלי',style:GoogleFonts.assistant(color:Colors.white,fontWeight: FontWeight.w700)),left:105,top:6)
+                  ],)),
+                  Positioned(
+                    left: 45,
+                    top: 120,
+                    child: IconButton(
+                      icon: const Icon(Icons.settings_outlined),
+                      onPressed: () {},
+                    ),
+                  ),
+                  Positioned(
                   left: 20,
                   bottom: 30,
                   child:  TextButton(
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0xff35258a),
                       shape: CircleBorder(),
+                      fixedSize: Size(55, 55),
                     ),
                     child: Icon(
                       Icons.arrow_back ,
@@ -173,4 +242,50 @@ class Money extends StatelessWidget {
         )
     );
   }
+
+  Widget build_money(String text) {
+    return Stack(children: [
+      Container(
+        width: 26,
+        height: 26,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+          color: Colors.white,
+        ),
+      ),
+      Container(
+        width: 24,
+        height: 26,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(100),
+          border: Border.all(
+            color: Colors.black,
+            width: 2,
+          ),
+          color: Colors.white,
+        ),
+      ),
+      Container(
+        width: 24,
+        height: 26,
+        child: Center(
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              height: 0.65,
+              color: Colors.black,
+              fontSize: 14,
+            ),
+          ),
+        ),
+      ),
+    ]);
+  }
+
+
 }

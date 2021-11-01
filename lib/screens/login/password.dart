@@ -75,8 +75,8 @@ class _MyHomePageState extends State<PasswordPage> {
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(
                           color: Colors.black,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w900,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       Container(height: 10),
@@ -349,7 +349,7 @@ class _Painter extends CustomPainter {
     double radius = size.width;
     var painter = Paint()
       ..style = PaintingStyle.fill
-      ..color = Color(0xffC1DBBF).withOpacity(0.26);
+      ..color = Color(0xffEFF6EE);
     canvas.drawCircle(center, radius, painter);
   }
 

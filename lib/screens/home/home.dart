@@ -976,8 +976,13 @@ class _HomeState extends State<Home> {
     var size = Size(x, 0.7 * x);
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.deepPurple,
-        body: Stack(
+        body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [Color(0xff231F9A),Color(0xff2260A8),Color(0xff5E2ADA),Color(0xff4D2FA4),Color(0xff38258A)])),
+            child:Stack(
           children: [
             Positioned(
               left: -((1.3 * MediaQuery.of(context).size.height) -
@@ -1068,7 +1073,7 @@ class _HomeState extends State<Home> {
                   : homeBody(size, _name))
             ])
           ],
-        ),
+        )),
         drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: [
             DrawerHeader(
