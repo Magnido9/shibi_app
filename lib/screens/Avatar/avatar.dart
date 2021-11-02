@@ -243,6 +243,78 @@ class _AvatarPageState extends State<AvatarPage> {
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
     double _min = min(_width, _height);
+
+    Future.delayed(Duration(milliseconds: 500),(){showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+        AlertDialog(
+          backgroundColor: Colors.transparent,
+          content: Container(
+              width:_width*0.8,
+              height:_height*0.7,
+              decoration: BoxDecoration(
+                // color: Colors.green,
+
+                borderRadius: BorderRadius.circular(25),
+                border: Border.all(color:  Color(0xff35258a), width: 3, ),
+                color: Color(0xfff4f4f4),
+              ),
+
+              child:Stack(children: [
+                Align(
+                  alignment: FractionalOffset.bottomRight,
+                  child: Container(
+                    child: FittedBox(
+                      child: Image.asset('images/shibi_pages/money.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ), Positioned(
+                    bottom: 0.5*0.65* MediaQuery.of(context).size.height,
+                    left: 0,
+                    right:0,
+                    top:0,
+                    child:Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+                        children:[  Text(
+                          "יאייייי!",
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.right,
+                          style: GoogleFonts.assistant(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900,
+                          ),),Text(
+                          " זכית ב-"+"5 "+" מטבעות",
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.right,
+                          style: GoogleFonts.assistant(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                          ),),Text(
+                          "השתמשו בהם בחוכמה ;]",
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.right,
+                          style: GoogleFonts.assistant(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),)
+
+
+
+                        ]
+                    )
+                )
+              ]
+                ,)
+          )
+        )
+    );
+    }
+    );
+
     return Scaffold(
         body: Stack(children: [
           Positioned(

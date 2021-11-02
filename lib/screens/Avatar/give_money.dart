@@ -55,6 +55,16 @@ class Money extends StatelessWidget {
             return Scaffold(
                 body:  Stack(children: [
                   Positioned(
+                      left: -0.8*MediaQuery.of(context).size.width ,
+                      top: -1.25* MediaQuery.of(context).size.height,
+                      child: Container(
+                          width: 0.8125 * MediaQuery.of(context).size.height*2,
+                          height: 0.8125 * MediaQuery.of(context).size.height*1.8,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(
+                                0x2beb7a99,
+                              )))),              Positioned(
                       right: 25,
                       top: 75,
                       child: Align(
@@ -141,45 +151,10 @@ class Money extends StatelessWidget {
                     },
                   ),
                 ),
-                  Positioned(
-                      left: -0.8*MediaQuery.of(context).size.width ,
-                      top: -1.25* MediaQuery.of(context).size.height,
-                      child: Container(
-                          width: 0.8125 * MediaQuery.of(context).size.height*2,
-                          height: 0.8125 * MediaQuery.of(context).size.height*1.8,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Color(
-                                0x2beb7a99,
-                              )))),
-                  Positioned(
-                      right: 25,
-                      top: 75,
-                      child: Align(
-                          alignment: Alignment.topRight,
-                          child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(
-                                  "קיבלת מטבעות!",
-                                  textDirection: TextDirection.rtl,
-                                  textAlign: TextAlign.right,
-                                  style: GoogleFonts.assistant(
-                                    color: Colors.black,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w900,
-                                  ),
-
-                                  //,"לכן, האפליקציה לא מאפשרת מענה חירום. n\את מה שאת מעלה בזמן אמת - n\אבל, המטפל/ת שלך לא תמיד רואה n\n\n\n\n\המועלה לאפליקציה. n\רק למטפל/ת שלך יש גישה למידע "
-                                ),
-
-                              ]))),
 
                   Positioned(
                   top: 0.25* MediaQuery.of(context).size.height,
-                      bottom:0.1* MediaQuery.of(context).size.height,
+                      bottom:0.2* MediaQuery.of(context).size.height,
                       right: 0.1* MediaQuery.of(context).size.width,
                       left:  0.1* MediaQuery.of(context).size.width,
                       child:Container(
@@ -214,7 +189,7 @@ class Money extends StatelessWidget {
                           fontSize: 30,
                           fontWeight: FontWeight.w900,
                         ),),Text(
-                        " זכית ב"+this.to_give.toString()+" מטבעות",
+                        " זכית ב-"+this.to_give.toString()+" מטבעות",
                         textDirection: TextDirection.rtl,
                         textAlign: TextAlign.right,
                         style: GoogleFonts.assistant(

@@ -103,34 +103,6 @@ class _Page1State extends State<_Page1> {
                 color: Colors.white,
               ),
               child: Stack(children: [
-                Stack(
-                  children: [
-                    Positioned(
-                        child: Image.asset('images/talky.png'),
-                        top: 0,
-                        right: 0),
-                    Positioned(
-                        top: 10,
-                        right: 6,
-                        child: FutureBuilder<String>(
-                          future: _name,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            // ...
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              String data = snapshot.data ?? '';
-                              return Text(
-                                'היי $data\n מה קורה?',
-                                textDirection: TextDirection.rtl,
-                                style: GoogleFonts.assistant(),
-                              );
-                            }
-                            return CircularProgressIndicator();
-                          },
-                        )),
-                  ],
-                ),
                 Positioned(
                     child: FutureBuilder<AvatarData>(
                   future: _adata,
@@ -249,13 +221,12 @@ class _Page1State extends State<_Page1> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "    חשיפה ראשונה",
+                      "        חשיפה ראשונה",
                       //textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: GoogleFonts.assistant(
                         color: Colors.black,
                         fontSize: 24,
-                        fontFamily: "Assistant",
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -406,34 +377,6 @@ class _Page2State extends State<_Page2> {
                 color: Colors.white,
               ),
               child: Stack(children: [
-                Stack(
-                  children: [
-                    Positioned(
-                        child: Image.asset('images/talky.png'),
-                        top: 0,
-                        right: 0),
-                    Positioned(
-                        top: 10,
-                        right: 6,
-                        child: FutureBuilder<String>(
-                          future: _name,
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
-                            // ...
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              String data = snapshot.data ?? '';
-                              return Text(
-                                'היי $data\n מה קורה?',
-                                textDirection: TextDirection.rtl,
-                                style: GoogleFonts.assistant(),
-                              );
-                            }
-                            return CircularProgressIndicator();
-                          },
-                        )),
-                  ],
-                ),
                 Positioned(
                     child: FutureBuilder<AvatarData>(
                   future: _adata,
@@ -684,6 +627,9 @@ class _Page2State extends State<_Page2> {
               Consumer<ExpoData>(
                 builder: (context, data, x) {
                   AvatarData x = data.adata.clone();
+                  x.body_color=Color(0xffEFB3E2);
+                  x.glasses="images/glasses3.png";
+                  x.pants="images/skirt2.png";
                   if (feeling > 50)
                     x.hands = 'images/handsclosed.png';
                   else
@@ -833,32 +779,6 @@ class _MainState extends State<_Main> {
                 child: Stack(children: [
                   Stack(
                     children: [
-                      Positioned(
-                          child: Image.asset('images/talky.png'),
-                          top: 0,
-                          right: 0),
-                      Positioned(
-                          top: 10,
-                          right: 6,
-                          child: FutureBuilder<String>(
-                            future: _name,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              // ...
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                String data = snapshot.data ?? '';
-                                return Text(
-                                  'היי $data\n מה קורה?',
-                                  textDirection: TextDirection.rtl,
-                                  style: GoogleFonts.assistant(),
-                                );
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          )),
-                    ],
-                  ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
                     future: _adata,

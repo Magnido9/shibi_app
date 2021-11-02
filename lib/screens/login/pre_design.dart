@@ -62,7 +62,7 @@ class _PreDesignState extends State<PreDesign> {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: <Widget>[
                         Text(
-                          "בואי נעצב לך דמות משלך",
+                          "בואו נעצב לכם דמות משלכם!",
                           textDirection: TextDirection.rtl,
                           textAlign: TextAlign.right,
                           style: GoogleFonts.assistant(
@@ -70,8 +70,6 @@ class _PreDesignState extends State<PreDesign> {
                             fontSize: 28,
                             fontWeight: FontWeight.w800,
                           ),
-
-                          //,"לכן, האפליקציה לא מאפשרת מענה חירום. n\את מה שאת מעלה בזמן אמת - n\אבל, המטפל/ת שלך לא תמיד רואה n\n\n\n\n\המועלה לאפליקציה. n\רק למטפל/ת שלך יש גישה למידע "
                         ),
                         Container(
                           height: 20,
@@ -100,7 +98,7 @@ class _PreDesignState extends State<PreDesign> {
                           ),
                         ),
                         Container(
-                          height: 10,
+                          height: 20,
                         ),
                         Container(
                           width: 313,
@@ -116,16 +114,20 @@ class _PreDesignState extends State<PreDesign> {
                           height: 5,
                         ),
                       ]))),
-          Align(
-            alignment: Alignment.bottomCenter,
+              Center(
               child: Column(
+
                 mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
+
+                    Container(
+                      height: 30,
+                    ),
                       Image.asset('images/shibi_pages/gangster.png'),
 
 
                     Container(
-                      height: 16,
+                      height: 30,
                     ),
                     Container(
                       child: Stack(children: [
@@ -137,8 +139,7 @@ class _PreDesignState extends State<PreDesign> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (BuildContext context) =>
-                                              Money(
-                                                  to_give: 5, first: true)));
+                                              Avatar(first: true,)));
                                 },
                                 minWidth: 200,
                                 height: 39,
@@ -174,7 +175,11 @@ class _PreDesignState extends State<PreDesign> {
                                 ))),
                       ]),
                       height: 40,
-                    )
+                    ),
+
+                    Container(
+                      height: 30,
+                    ),
                   ])),
         ]));
       },

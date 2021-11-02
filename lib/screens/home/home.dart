@@ -1054,8 +1054,6 @@ class _HomeState extends State<Home> {
                         ),
                       )),
                 ),
-
-
               ],
             ),
             Column(children: [
@@ -1081,34 +1079,6 @@ class _HomeState extends State<Home> {
                   color: Colors.white,
                 ),
                 child: Stack(children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                          child: Image.asset('images/talky.png'),
-                          top: 0,
-                          right: 0),
-                      Positioned(
-                          top: 10,
-                          right: 6,
-                          child: FutureBuilder<String>(
-                            future: _name,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              // ...
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                String data = snapshot.data ?? '';
-                                return Text(
-                                  'היי $data\n מה קורה?',
-                                  textDirection: TextDirection.rtl,
-                                  style: GoogleFonts.assistant(),
-                                );
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          )),
-                    ],
-                  ),
                   Positioned(
                       child: FutureBuilder<AvatarData>(
                         future: _adata,
@@ -1169,7 +1139,16 @@ class _HomeState extends State<Home> {
         ),
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Color(0xb2ffffff),
+            fixedColor: Colors.black,
+            unselectedLabelStyle: GoogleFonts.assistant(
+                color:Colors.black,
+                fontWeight:FontWeight.w900
+            ),
+            selectedLabelStyle: GoogleFonts.assistant(
+                color:Colors.black,
+                fontWeight:FontWeight.w900
+            ),
+            backgroundColor: Color(0xffCBC3E3),
             currentIndex: page_index,
             onTap: (int page) {
               setState(() {
@@ -1190,6 +1169,7 @@ class _HomeState extends State<Home> {
                   child: Image.asset('images/thumbsup.png'),
                 ),
                 label: 'מפת דרכים',
+
               ),
               BottomNavigationBarItem(
                 icon: Container(
