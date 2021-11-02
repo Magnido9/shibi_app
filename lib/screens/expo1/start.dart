@@ -793,7 +793,7 @@ class _MainState extends State<_Main> {
                       return CircularProgressIndicator();
                     },
                   )),
-                ])),
+                ])])),
             ListTile(
               title: Text("עצב דמות",
                   textDirection: TextDirection.rtl,

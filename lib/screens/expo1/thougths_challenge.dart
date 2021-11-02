@@ -232,34 +232,7 @@ class _Page1State extends State<_Page1> {
                   color: Colors.white,
                 ),
                 child: Stack(children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                          child: Image.asset('images/talky.png'),
-                          top: 0,
-                          right: 0),
-                      Positioned(
-                          top: 10,
-                          right: 6,
-                          child: FutureBuilder<String>(
-                            future: _name,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<String> snapshot) {
-                              // ...
-                              if (snapshot.connectionState ==
-                                  ConnectionState.done) {
-                                String data = snapshot.data ?? '';
-                                return Text(
-                                  'היי $data\n מה קורה?',
-                                  textDirection: TextDirection.rtl,
-                                  style: GoogleFonts.assistant(),
-                                );
-                              }
-                              return CircularProgressIndicator();
-                            },
-                          )),
-                    ],
-                  ),
+
                   Positioned(
                       child: FutureBuilder<AvatarData>(
                     future: _adata,
