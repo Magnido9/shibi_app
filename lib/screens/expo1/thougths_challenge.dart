@@ -825,7 +825,10 @@ class _Page2State extends State<_Page2> {
                     width: 125,
                     height: 90,
                     child: Text(
-                      "תוכלו לבחור גם בדרכים אחרות כמו בתעמלות שיחה עם חבר, אומנות או יצירה",
+                      "תוכלי לבחור גם בדרכים אחרות כמו בתעמלות שיחה עם חבר, אומנות או יצירה",
+                     style: TextStyle(
+                       fontSize: 18,
+                     ),
                       textDirection: TextDirection.rtl,
                     )))
           ])),

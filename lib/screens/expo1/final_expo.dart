@@ -872,7 +872,7 @@ class _MainState extends State<_Main> {
                       Container(
                           margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
                           child: Text(
-                            "מדהימים!\nדרגו את החרדה שלכם בשיא החשיפה",
+                            "מדהימה!\nדרגי את החרדה שלכם בשיא החשיפה",
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
                             style: GoogleFonts.assistant(
@@ -889,7 +889,7 @@ class _MainState extends State<_Main> {
                       Container(
                           margin: EdgeInsets.fromLTRB(20, 10, 20, 20),
                           child: Text(
-                            "דרגו יחידות מצוקה ברגע הכי קשה ומאתגר\n במהלך החשיפה.",
+                            "דרגי יחידות מצוקה ברגע הכי קשה ומאתגר\n במהלך החשיפה.",
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
                             style: GoogleFonts.assistant(
@@ -1332,7 +1332,7 @@ class _Page4State extends State<_Page4> {
                       Container(
                           margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
                           child: Text(
-                            "שתפו, איך הרגשתם?",
+                            "שתפי, איך הרגשת?",
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
                             style: GoogleFonts.assistant(
@@ -1607,7 +1607,7 @@ class _Page4State extends State<_Page4> {
                                                             ),
                                                           ),
                                                           Text(
-                                                            "השתמשו בהם בחוכמה ;]",
+                                                            "השתמשי בהם בחוכמה ;]",
                                                             textDirection:
                                                                 TextDirection
                                                                     .rtl,

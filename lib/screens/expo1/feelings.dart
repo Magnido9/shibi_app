@@ -412,12 +412,12 @@ class _feeling1_state extends State<feeling1_1> {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            "בואו נזהה יחד את הרגשות המוצפים.",
+                            "בואי נזהה יחד את הרגשות המוצפים.",
                             textDirection: TextDirection.rtl,
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 20,
+                              fontSize: 18,
                               fontFamily: "Assistant",
                               fontWeight: FontWeight.w700,
                             ),
