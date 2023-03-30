@@ -58,7 +58,7 @@ class _ImageColorSwitcherState extends State<ImageColorSwitcher> {
     final image = External.decodeImage(bytes);
 
     // Convert the [Image] to RGBA formatted pixels
-    final pixels = image!.getBytes(format: External.Format.rgba);
+    final pixels = image!.getBytes(order: External.ChannelOrder.rgba);
 
     // Get the Pixel Length
     final int length = pixels.lengthInBytes;

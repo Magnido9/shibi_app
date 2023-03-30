@@ -1,6 +1,5 @@
 library authantication;
 
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:application/screens/home/home.dart';
@@ -9,7 +8,6 @@ import 'package:application/screens/login/password.dart';
 import 'package:application/screens/login/privacy.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../../services/auth_services.dart';
@@ -30,7 +28,7 @@ class _Connection extends ChangeNotifier {
         .docs;
     //return q.docs[0].data()['uid'];
     if (list.isNotEmpty) {
-      _signToCare(list[0].data()['uid'], name, context);
+      _signToCare((list[0].data()! as Map)['uid'], name, context);
     } else
       ret = true;
     notifyListeners();

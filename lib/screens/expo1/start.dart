@@ -210,7 +210,7 @@ class _Page1State extends State<_Page1> {
               Row(
                 //mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
@@ -475,7 +475,7 @@ class _Page2State extends State<_Page2> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
@@ -932,7 +932,7 @@ class _MainState extends State<_Main> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(

@@ -2,6 +2,7 @@ library home;
 
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:application/screens/Avatar/give_money.dart';
 import 'package:application/screens/home/personal_diary.dart';
@@ -14,7 +15,6 @@ import 'package:application/screens/map/questioneer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../Avatar/avatar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

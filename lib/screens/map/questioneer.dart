@@ -472,7 +472,7 @@ class Result extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ), //Text
-          FlatButton(
+          MaterialButton(
             child: Text(
               'חזור למסך הבית',
               style:  GoogleFonts.assistant(
@@ -485,7 +485,7 @@ class Result extends StatelessWidget {
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (BuildContext context) => Home()))
             },
-          ), //FlatButton
+          ), //MaterialButton
         ], //<Widget>[]
       ), //Column
     ); //Center

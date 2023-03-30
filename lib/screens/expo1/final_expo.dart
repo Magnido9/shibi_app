@@ -254,7 +254,7 @@ class _Page1State extends State<_Page1> {
                   Row(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FlatButton(
+                      MaterialButton(
                         color: Colors.transparent,
                         onPressed: () {},
                         child: new IconTheme(
@@ -524,7 +524,7 @@ class _Page2State extends State<_Page2> {
                   Row(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FlatButton(
+                      MaterialButton(
                         color: Colors.transparent,
                         onPressed: () {},
                         child: new IconTheme(
@@ -840,7 +840,7 @@ class _MainState extends State<_Main> {
                   Row(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FlatButton(
+                      MaterialButton(
                         color: Colors.transparent,
                         onPressed: () {},
                         child: new IconTheme(
@@ -1300,7 +1300,7 @@ class _Page4State extends State<_Page4> {
                   Row(
                     //mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FlatButton(
+                      MaterialButton(
                         color: Colors.transparent,
                         onPressed: () {},
                         child: new IconTheme(

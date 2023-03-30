@@ -237,7 +237,7 @@ class _body1_state extends State<body1_1> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(

@@ -257,7 +257,7 @@ class _Page1State extends State<_Page1> {
           ),
           Row(
             children: [
-              FlatButton(
+              MaterialButton(
                 color: Colors.transparent,
                 onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                 child: new IconTheme(
@@ -640,16 +640,16 @@ class _Page2State extends State<_Page2> {
     _adata = AvatarData.load();
     _name = _getname();
     var androidInitialize = new AndroidInitializationSettings('ic_launcher');
-    var iOSinitialize = new IOSInitializationSettings();
+    // var iOSinitialize = new IOSInitializationSettings();
     var initilizationsSettings =
-    new InitializationSettings(android: androidInitialize , iOS:iOSinitialize);
+    new InitializationSettings(android: androidInitialize , iOS:null);
     fltrNotification = new FlutterLocalNotificationsPlugin();
     fltrNotification.initialize(initilizationsSettings);
   }
   Future _showNotification() async{
     var androidDetails= new AndroidNotificationDetails("ChannelId","Local Notification");
-    var iosDetails= new IOSNotificationDetails();
-    var generalNotificationDetails=new NotificationDetails(android: androidDetails, iOS: iosDetails);
+    // var iosDetails= new IOSNotificationDetails();
+    var generalNotificationDetails=new NotificationDetails(android: androidDetails, iOS: null);
 
     var scheduledTime = DateTime.now().add(Duration(minutes : 3));
     fltrNotification.schedule(1, "הרפיית רגש", "מקווה שנהניתם מהשיר! אל תשכחו לחזור אלי להמשך ההרפייה",
@@ -777,7 +777,7 @@ class _Page2State extends State<_Page2> {
         ),
         Row(
           children: [
-            FlatButton(
+            MaterialButton(
               color: Colors.transparent,
               onPressed:  () => scaffoldKey.currentState!.openDrawer(),
               child: new IconTheme(
@@ -1199,7 +1199,7 @@ class _MainState extends State<_Main> {
           ),
           Row(
             children: [
-              FlatButton(
+              MaterialButton(
                 color: Colors.transparent,
                 onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                 child: new IconTheme(

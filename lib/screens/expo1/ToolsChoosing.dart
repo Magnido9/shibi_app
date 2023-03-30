@@ -164,7 +164,7 @@ class _tools_state extends State<tools> {
           ),
           Row(
             children: [
-              FlatButton(
+              MaterialButton(
                 color: Colors.transparent,
                 onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                 child: new IconTheme(

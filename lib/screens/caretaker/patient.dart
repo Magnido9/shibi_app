@@ -49,7 +49,7 @@ class _PatientState extends State<PatientPage> {
                   height: 200.0,
                   child: ListView.separated(
                       itemBuilder: (context, index) {
-                        final Map<String, dynamic> item = data[index].data();
+                        final Map<String, dynamic> item = data[index].data() as Map<String, dynamic>;
                         String docId = data[index].reference.id;
                         return ListTile(
                           title: Text(

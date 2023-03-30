@@ -222,7 +222,7 @@ class _thought1_state extends State<thought1_1> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
@@ -737,7 +737,7 @@ class _thought2_state extends State<thought2_1> {
           ),
           Positioned(left: -width*0.07,top:height*0.005,child:
             Container(
-              child:FlatButton(
+              child:MaterialButton(
                 color: Colors.transparent,
                 onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                 child: new IconTheme(

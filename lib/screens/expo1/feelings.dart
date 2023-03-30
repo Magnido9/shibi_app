@@ -309,7 +309,7 @@ class _feeling1_state extends State<feeling1_1> {
                 ),
                 Row(
                   children: [
-                    FlatButton(
+                    MaterialButton(
                       color: Colors.transparent,
                       onPressed:  () => scaffoldKey.currentState!.openDrawer(),
                       child: new IconTheme(

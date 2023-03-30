@@ -242,7 +242,7 @@ class _Page1State extends State<_Page1> {
           ),
           Row(
             children: [
-              FlatButton(
+              MaterialButton(
                 color: Colors.transparent,
                 onPressed: () => scaffoldKey.currentState!.openDrawer(),
                 child: new IconTheme(
@@ -763,13 +763,13 @@ class _Page2State extends State<_Page2> {
   Widget _btn(String txt, VoidCallback onPressed) {
     return ButtonTheme(
         minWidth: 48.0,
-        child: RaisedButton(child: Text(txt), onPressed: onPressed));
+        child: MaterialButton(child: Text(txt), onPressed: onPressed));
   }
 
   Widget localAsset() {
     return _tab([
       Text('Play Local Asset \'audio.mp3\':'),
-      _btn('Play', () => audioCache.play('audio.mp3'))
+      // _btn('Play', () => audioCache.play('audio.mp3'))
     ]);
   }
 
@@ -778,7 +778,7 @@ class _Page2State extends State<_Page2> {
   void _playFile() async {
     if (first) {
       startTimer();
-      music = await audioCache.play('music/muscles.mp3');
+      // music = await audioCache.play('music/muscles.mp3');
     }
     // assign player here
     else {
@@ -904,7 +904,7 @@ class _Page2State extends State<_Page2> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
@@ -1129,13 +1129,13 @@ class _Page3State extends State<_Page3> {
   Widget _btn(String txt, VoidCallback onPressed) {
     return ButtonTheme(
         minWidth: 48.0,
-        child: RaisedButton(child: Text(txt), onPressed: onPressed));
+        child: MaterialButton(child: Text(txt), onPressed: onPressed));
   }
 
   Widget localAsset() {
     return _tab([
       Text('Play Local Asset \'audio.mp3\':'),
-      _btn('Play', () => audioCache.play('audio.mp3'))
+      // _btn('Play', () => audioCache.play('audio.mp3'))
     ]);
   }
 
@@ -1144,7 +1144,7 @@ class _Page3State extends State<_Page3> {
   void _playFile() async {
     if (first) {
       startTimer();
-      music = await audioCache.play('music/breathing.mp3');
+      // music = await audioCache.play('music/breathing.mp3');
     }
     // assign player here
     else {
@@ -1352,7 +1352,7 @@ class _Page3State extends State<_Page3> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
@@ -1574,13 +1574,13 @@ class _Page4State extends State<_Page4> {
   Widget _btn(String txt, VoidCallback onPressed) {
     return ButtonTheme(
         minWidth: 48.0,
-        child: RaisedButton(child: Text(txt), onPressed: onPressed));
+        child: MaterialButton(child: Text(txt), onPressed: onPressed));
   }
 
   Widget localAsset() {
     return _tab([
       Text('Play Local Asset \'audio.mp3\':'),
-      _btn('Play', () => audioCache.play('audio.mp3'))
+      // _btn('Play', () => audioCache.play('audio.mp3'))
     ]);
   }
 
@@ -1589,7 +1589,7 @@ class _Page4State extends State<_Page4> {
   void _playFile() async {
     if (first) {
       startTimer();
-      music = await audioCache.play('music/guided.mp3');
+      // music = await audioCache.play('music/guided.mp3');
     }
     // assign player here
     else {
@@ -1742,7 +1742,7 @@ class _Page4State extends State<_Page4> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
@@ -1970,13 +1970,13 @@ class _Page5State extends State<_Page5> {
   Widget _btn(String txt, VoidCallback onPressed) {
     return ButtonTheme(
         minWidth: 48.0,
-        child: RaisedButton(child: Text(txt), onPressed: onPressed));
+        child: MaterialButton(child: Text(txt), onPressed: onPressed));
   }
 
   Widget localAsset() {
     return _tab([
       Text('Play Local Asset \'audio.mp3\':'),
-      _btn('Play', () => audioCache.play('audio.mp3'))
+      // _btn('Play', () => audioCache.play('audio.mp3'))
     ]);
   }
 
@@ -1985,7 +1985,7 @@ class _Page5State extends State<_Page5> {
   void _playFile() async {
     if (first) {
       startTimer();
-      music = await audioCache.play('music/meditation.mp3');
+      // music = await audioCache.play('music/meditation.mp3');
     }
     // assign player here
     else {
@@ -2138,7 +2138,7 @@ class _Page5State extends State<_Page5> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
@@ -2443,7 +2443,7 @@ class _MainState extends State<_Main> {
               ),
               Row(
                 children: [
-                  FlatButton(
+                  MaterialButton(
                     color: Colors.transparent,
                     onPressed: () => scaffoldKey.currentState!.openDrawer(),
                     child: new IconTheme(
